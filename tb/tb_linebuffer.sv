@@ -8,16 +8,15 @@ module tb_linebuffer_3x3;
     // Inputs
     reg clk;
     reg [2:0] sel;
-    reg [7:0] ifmap_stream;
+    reg [15:0] ifmap_stream;
 
     // Outputs
-    wire [8:0][7:0] ifmap_3x3;
+    wire [8:0][15:0] ifmap_3x3;
     int i;
 
     // Instantiate the Unit Under Test (UUT)
     linebuffer_3x3  uut (
         .clk(clk),
-        .sel(sel),
         .ifmap_stream(ifmap_stream),
         .ifmap_3x3(ifmap_3x3)
     );
@@ -30,14 +29,12 @@ module tb_linebuffer_3x3;
         $vcdpluson;
         $vcdplusmemon();
         clk = 0;
-        sel = 0;
         ifmap_stream = 0;
 
         // Wait 100 ns for global reset to finish
         #100;
         
         // Stimulus: Apply different selections and input streams
-        sel = 0; // Example: Select a specific shift register output
         i = 0;
         repeat(16) begin
             @(posedge clk);
