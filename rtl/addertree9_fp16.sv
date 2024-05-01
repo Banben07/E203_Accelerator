@@ -3,30 +3,36 @@
 
 module addertree9_fp16 (
     input  wire clk,
-    input  wire signed [8:0][15:0] a, 
+    input  wire  [8:0][15:0] a, 
 
-    output reg 	signed [17:0] dout //The input significant value bit is 14, so output significant value bit is 17.
+    output reg 	 [17:0] dout //The input significant value bit is 14, so output significant value bit is 17.
 
 );
 
-    reg signed [8:0][17:0] a_r1;
-	
-	reg signed [8:0][17:0] a_r2;
-	
-	always_comb begin: bit_expend
-		for (int i=0; i<9; i++) begin
-			a_r1[i] = {{a[i][15]}, {a[i][15]}, a[i]};
-		end
-	end
+    reg  [8:0][15:0] a_tmp;
 
-	always_ff @(posedge clk) begin: level1
-		for (int i=0; i<3; i++) begin
-			a_r2[i] <= a_r1[3*i] + a_r1[3*i+1] + a_r1[3*i+2];
-		end
-	end
+	generate
+        for (genvar i=0; i<2; i++) begin
+            float_adder u_float_adder_1(
+                //ports
+                .num1   		( weight_3x3_ch1[i] ),
+                .num2   		( ifmap_3x3[i]      ),
+                .result  		( ch1_out[i]        )
+            );
+            float_adder u_float_adder_2(
+                //ports
+                .num1   		( weight_3x3_ch1[i] ),
+                .num2   		( ifmap_3x3[i]      ),
+                .result  		( ch2_out[i]        )
+            );
+        end
+    endgenerate
+	
 
-	always_ff @(posedge clk) begin: level2
-		dout <= a_r2[0] + a_r2[1] + a_r2[2];
+	always @(posedge clk) begin
+		
 	end
+	
+	
 
 endmodule //addertree9_int16
