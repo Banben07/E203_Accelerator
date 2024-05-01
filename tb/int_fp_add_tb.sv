@@ -1,4 +1,4 @@
-`define PATTERN "/home/liuwd/SOC_Design/utils/add_golden_pattern.txt"
+`define PATTERN "./utils/add_golden_pattern.txt"
 `define PATTERN_NUM 20
 module int_fp_add_tb ();
 
@@ -11,7 +11,7 @@ module int_fp_add_tb ();
     integer i;
 
     wire [15:0] result;
-    float_adder u1 (mode,input1,input2,result);
+    float_adder u1 (input1,input2,result);
     real decimal_input1, decimal_input2, decimal_expected, decimal_result;
     real tolerance = 0.001; // Allowable tolerance for comparison
     

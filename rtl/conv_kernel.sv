@@ -6,7 +6,7 @@ module conv_kernal (
     input  wire [8:0][15:0] weight_3x3_ch1,
     // input  wire [8:0][15:0] weight_3x3_ch2,
 
-    output wire [15:0] ofmap_ch1,
+    output wire [15:0] ofmap_ch1
     // output wire [15:0] ofmap_ch2
 );
 

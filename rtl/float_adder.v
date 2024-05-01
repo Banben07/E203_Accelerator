@@ -167,4 +167,5 @@ module float_adder(num1, num2, result);
           smallNum = num2;
         end
     end
+    
 endmodule

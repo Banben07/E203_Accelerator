@@ -27,7 +27,7 @@ def main():
     ifmap_size = (4, 4)  # 4x4 input feature map
     kernel_size = (3, 3)  # 3x3 kernel
 
-    for _ in range(10):  # Generate and print 10 different test cases
+    for _ in range(30):  # Generate and print 10 different test cases
         # Generate random data for the input feature map and kernel
         ifmap = np.random.uniform(-1, 1, ifmap_size).astype(np.float16)
         kernel = np.random.uniform(-1, 1, kernel_size).astype(np.float16)

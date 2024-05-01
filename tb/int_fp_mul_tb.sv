@@ -1,4 +1,4 @@
-`define PATTERN "/home/liuwd/SOC_Design/utils/mul_golden_pattern.txt"
+`define PATTERN "./utils/mul_golden_pattern.txt"
 `define PATTERN_NUM 30
 
 module int_fp_mul_tb ();
@@ -15,7 +15,7 @@ module int_fp_mul_tb ();
     wire [15:0] result;
     // int_fp_mul u1 (mode, input1, input2, result, error);
 
-    float_multi u2 (mode, input1, input2, result);
+    float_multi u2 (input1, input2, result);
     
     real decimal_input1, decimal_input2, decimal_expected, decimal_result;
     real tolerance = 0.001; // Allowable tolerance for comparison
