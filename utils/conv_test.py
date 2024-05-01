@@ -1,5 +1,4 @@
 import numpy as np
-import random
 
 def fp16_to_bin(value):
     """Convert a float16 value to a binary string."""
@@ -23,6 +22,7 @@ def format_fp16_with_output_single_line(ifmap, kernel, output):
     return formatted_output
 
 def main():
+    golden_list = ""
     # Define the size of the input feature map and kernel
     ifmap_size = (4, 4)  # 4x4 input feature map
     kernel_size = (3, 3)  # 3x3 kernel
@@ -36,8 +36,12 @@ def main():
         output = perform_convolution(ifmap, kernel)
 
         # Generate the single line output
-        single_line_output = format_fp16_with_output_single_line(ifmap, kernel, output)
-        print(single_line_output)
+        golden_list += format_fp16_with_output_single_line(ifmap, kernel, output)
+        golden_list += "\n"
+        # print(golden_list)
+        
+    with open("conv_golden_pattern.txt",'w') as f:
+        f.write(golden_list)
 
 if __name__ == "__main__":
     main()
