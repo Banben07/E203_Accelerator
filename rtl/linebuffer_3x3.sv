@@ -5,25 +5,25 @@ module linebuffer_3x3 #(
     parameter LEN = 4
 ) (
     input wire       clk,
-    input wire [7:0] ifmap_stream,
+    input wire [15:0] ifmap_stream,
 
-    output wire [8:0][7:0] ifmap_3x3
+    output wire [8:0][15:0] ifmap_3x3
 );
 
-  wire [7:0] ifmap_tmp1, ifmap_tmp2;
-  reg [7:0] ifmap1_1, ifmap1_2, ifmap1_3;
-  reg [7:0] ifmap2_1, ifmap2_2, ifmap2_3;
-  reg [7:0] ifmap3_1, ifmap3_2, ifmap3_3;
+  wire [15:0] ifmap_tmp1, ifmap_tmp2;
+  reg [15:0] ifmap1_1, ifmap1_2, ifmap1_3;
+  reg [15:0] ifmap2_1, ifmap2_2, ifmap2_3;
+  reg [15:0] ifmap3_1, ifmap3_2, ifmap3_3;
 
-  wire [7:0] line1_in, line1_out;
-  wire [7:0] line2_in, line2_out;
+  wire [15:0] line1_in, line1_out;
+  wire [15:0] line2_in, line2_out;
 
   assign line1_in = ifmap_stream;
   assign line2_in = line1_out;
 
   mem_shift_reg #(
       .DEPTH(LEN),
-      .WIDTH(8)
+      .WIDTH(16)
   ) u_mem_shift_reg1 (
       //ports
       .clk (clk),
@@ -33,7 +33,7 @@ module linebuffer_3x3 #(
 
   mem_shift_reg #(
       .DEPTH(LEN),
-      .WIDTH(8)
+      .WIDTH(16)
   ) u_mem_shift_reg2 (
       //ports
       .clk (clk),

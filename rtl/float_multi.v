@@ -44,7 +44,6 @@ module float_multi(
 
   //Flags
   assign zero = zero_num_in | zero_calculated;
-  assign NaN = (&num1[14:10] & |num1[9:0]) | (&num2[14:10] & |num2[9:0]);
   assign inf_num = (&num1[14:10] & ~|num1[9:0]) | (&num2[14:10] & ~|num2[9:0]); //check for infinate number
   assign overflow = inf_num | (~exSum[6] & exSum[5]);
   assign subNormal = ~|float_res[11:10];

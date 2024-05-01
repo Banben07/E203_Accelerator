@@ -4,9 +4,8 @@
 *   i.e. SEEEEEFFFFFFFFFF = (-1)^S * 1.FFFFFFFFFF * 2^(EEEEE - 15)
 */
 
-module float_adder(mode, num1, num2, result);
+module float_adder(num1, num2, result);
   //Ports
-  input mode; 
   input [15:0] num1, num2;
   output [15:0] result;
   wire overflow; //overflow flag

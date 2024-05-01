@@ -1,16 +1,16 @@
 module mem_shift_reg
 #(
     parameter DEPTH = 8,  // 默认深度
-    parameter WIDTH = 8   // 默认数据宽度
+    parameter WIDTH = 16   // 默认数据宽度
 )
 (
     input wire clk,
-    input wire [31:0] din,
-    output wire [31:0] dout
+    input wire [WIDTH-1:0] din,
+    output wire [WIDTH-1:0] dout
 );
 
 // 移位寄存器数组
-reg [31:0] shift_reg [300:0];
+reg [WIDTH-1:0] shift_reg [300:0];
 
 // 顺序逻辑以移动数据
 always_ff @(posedge clk) begin
