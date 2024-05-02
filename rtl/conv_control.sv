@@ -14,12 +14,11 @@ module conv_control (
     //parameter
     localparam IDLE = 0;
     localparam CONV_1 = 1;
-    localparam DONE = 2;
-    localparam LB = 3;
-    localparam CONV_2 = 4;
+    localparam LB = 2;
+    localparam CONV_2 = 3;
 
     //state
-    reg [2:0] state, next_state;
+    reg [1:0] state, next_state;
     reg [15:0] ifmap_cnt;
     reg [15:0] conv_cnt;
     reg [15:0] ofmap_cnt;
@@ -48,7 +47,7 @@ module conv_control (
         .weight_3x3_ch1(kernel_num),
         .ofmap_ch1(dout)
     );
-
+    
     always @(posedge clk or negedge rst_n) begin
         if (!rst_n) begin
             state <= IDLE;
