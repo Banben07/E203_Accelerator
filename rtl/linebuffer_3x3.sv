@@ -1,13 +1,10 @@
-`timescale 1ns / 1ps
-
-
 module linebuffer_3x3 #(
     parameter LEN = 4
 ) (
-    input wire       clk,
-    input wire [15:0] ifmap_stream,
+    input        clk,
+    input [15:0] ifmap_stream,
 
-    output wire [8:0][15:0] ifmap_3x3
+    output [8:0][15:0] ifmap_3x3
 );
 
   wire [15:0] ifmap_tmp1, ifmap_tmp2;
@@ -63,4 +60,3 @@ module linebuffer_3x3 #(
 
 
 endmodule  //linebuffer_3x3
-

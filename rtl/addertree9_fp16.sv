@@ -1,6 +1,3 @@
-`timescale 1ns / 1ps 
-
-
 module addertree9_fp16 (
     input  wire clk,
     input  wire  [8:0][15:0] a, 

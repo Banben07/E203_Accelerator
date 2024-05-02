@@ -38,7 +38,7 @@ module tb_linebuffer_3x3;
         i = 0;
         repeat(16) begin
             @(posedge clk);
-            ifmap_stream = i;
+            ifmap_stream = i+1;
             i = i + 1;
         end
 

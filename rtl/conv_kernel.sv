@@ -1,5 +1,3 @@
-`timescale 1ns / 1ps 
-
 module conv_kernal (
     input  wire clk,
     input  wire [8:0][15:0] ifmap_3x3,
