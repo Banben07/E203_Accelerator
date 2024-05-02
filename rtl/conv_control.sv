@@ -13,12 +13,12 @@ module conv_control (
 
     //parameter
     localparam IDLE = 0;
-    localparam CONV_1 = 1;
-    localparam LB = 2;
+    localparam LB = 1;
+    localparam CONV_1 = 2;
     localparam CONV_2 = 3;
 
     //state
-    reg [1:0] state, next_state;
+    reg [1:0] state;
     reg [15:0] ifmap_cnt;
     reg [15:0] conv_cnt;
     reg [15:0] ofmap_cnt;
@@ -51,98 +51,103 @@ module conv_control (
     always @(posedge clk or negedge rst_n) begin
         if (!rst_n) begin
             state <= IDLE;
+            ifmap_cnt <= 0;
+            dout_reg <= 0;
+            dout_valid_reg <= 0;
+            done_reg <= 0;
+            ofmap_cnt <= 0;
+            of_line_num <= 0;
+            conv_cnt <= 0;
         end
         else begin
-            state <= next_state;
+            case(state)
+                IDLE: begin
+                    if (start) begin
+                        ifmap_cnt <= 0;
+                        dout_reg <= 0;
+                        dout_valid_reg <= 0;
+                        done_reg <= 0;
+                        ofmap_cnt <= 0;
+                        of_line_num <= 0;
+                        conv_cnt <= 0;
+
+                        state <= LB;
+                    end
+                    else begin
+                        state <= IDLE;
+                    end
+                end
+                LB: begin
+                    if (ifmap_cnt < 16'h9) begin
+                        state <= LB;
+                        ifmap_cnt <= ifmap_cnt + 16'h1;
+                    end
+                    else begin
+                        state <= CONV_1;
+                        ifmap_cnt <= 0;
+                    end
+                end
+                CONV_1: begin
+                    if (conv_cnt < 16'h2) begin
+                        state <= CONV_1;
+                        conv_cnt <= conv_cnt + 16'h1;
+                    end
+                    else begin
+                        if (of_line_num < 16'h2) begin
+                            of_line_num <= of_line_num + 16'h1;
+                            state <= CONV_1;
+                            dout_reg <= dout;
+                            ofmap_cnt <= ofmap_cnt + 16'h1;
+                            dout_valid_reg <= 16'h1;
+                        end
+                        else begin
+                            state <= CONV_2;
+                            dout_reg <= 0;
+                            conv_cnt <= 0;
+                            dout_valid_reg <= 0;
+                            of_line_num <= 0;
+                        end
+                    end
+                end
+                CONV_2: begin
+                    if (conv_cnt < 16'h1) begin
+                        state <= CONV_2;
+                        conv_cnt <= conv_cnt + 16'h1;
+                    end
+                    else begin
+                        if (ofmap_cnt < 16'h4) begin
+                            if (of_line_num < 16'h2) begin
+                                of_line_num <= of_line_num + 16'h1;
+                                state <= CONV_2;
+                                dout_reg <= dout;
+                                ofmap_cnt <= ofmap_cnt + 16'h1;
+                                dout_valid_reg <= 16'h1;
+                            end
+                            else begin
+                                state <= CONV_2;
+                                dout_reg <= 0;
+                                conv_cnt <= 0;
+                                dout_valid_reg <= 0;
+                                of_line_num <= 0;
+                            end
+                        end
+                        else begin
+                            state <= IDLE;
+                            ofmap_cnt <= 0;
+                            dout_reg <= 0;
+                            dout_valid_reg <= 0;
+                            done_reg <= 1;
+                        end
+                    end
+                end
+                default: begin
+                    state = IDLE;
+                end
+
+        endcase
         end       
     end
 
-    always @(*) begin
-
-        case(state)
-            IDLE: begin
-                if (start) begin
-                    ifmap_cnt = 0;
-                    next_state = LB;
-                    dout_reg = 0;
-                    dout_valid_reg = 0;
-                    done_reg = 0;
-                    ofmap_cnt = 0;
-                    of_line_num = 0;
-                    conv_cnt = 0;
-                end
-                else begin
-                    next_state = IDLE;
-                end
-            end
-            LB: begin
-                if (ifmap_cnt < 9) begin
-                    next_state = LB;
-                    ifmap_cnt = ifmap_cnt + 1;
-                end
-                else begin
-                    next_state = CONV_1;
-                    ifmap_cnt = 0;
-                end
-            end
-            CONV_1: begin
-                if (conv_cnt < 2) begin
-                    next_state = CONV_1;
-                    conv_cnt = conv_cnt + 1;
-                end
-                else begin
-                    if (of_line_num < 2) begin
-                        of_line_num = of_line_num + 1;
-                        next_state = CONV_1;
-                        dout_reg = dout;
-                        ofmap_cnt = ofmap_cnt + 1;
-                        dout_valid_reg = 1;
-                    end
-                    else begin
-                        next_state = CONV_2;
-                        dout_reg = 0;
-                        conv_cnt = 0;
-                        dout_valid_reg = 0;
-                        of_line_num = 0;
-                    end
-                end
-            end
-            CONV_2: begin
-                if (conv_cnt < 3) begin
-                    next_state = CONV_2;
-                    conv_cnt = conv_cnt + 1;
-                end
-                else begin
-                    if (ofmap_cnt < 5) begin
-                        if (of_line_num < 2) begin
-                            of_line_num = of_line_num + 1;
-                            next_state = CONV_2;
-                            dout_reg = dout;
-                            ofmap_cnt = ofmap_cnt + 1;
-                            dout_valid_reg = 1;
-                        end
-                        else begin
-                            next_state = CONV_2;
-                            dout_reg = 0;
-                            conv_cnt = 0;
-                            dout_valid_reg = 0;
-                            of_line_num = 0;
-                        end
-                    end
-                    else begin
-                        next_state = IDLE;
-                        dout_reg = 0;
-                        dout_valid_reg = 0;
-                        done_reg = 1;
-                    end
-                end
-            end
-            default: begin
-                next_state = IDLE;
-            end
-
-        endcase
-    end
 
     
 endmodule
