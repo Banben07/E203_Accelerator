@@ -123,11 +123,11 @@ module conv_tb ();
           #1;
           ofmap[3] = result;
 
-          $display("Test for ifmap[%0h]", i);
+          $display("Test for ifmap[%0d]", i);
           for (int j = 0; j < 4; j++) begin
             fp16_to_decimal(of_map_expected[j], decimal_expected);
             fp16_to_decimal(ofmap[j], decimal_result);
-            $display("expected[%0h]: %f, actual[%0h]: %f", j, decimal_expected, j, decimal_result);
+            $display("expected[%0d]: %f, actual[%0d]: %f", j, decimal_expected, j, decimal_result);
             if ((decimal_expected > decimal_result ? decimal_expected - decimal_result : decimal_result - decimal_expected) <= tolerance) begin
               $display("Check PASSED");
               $display("--------------------");
