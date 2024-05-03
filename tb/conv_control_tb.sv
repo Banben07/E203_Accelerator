@@ -11,11 +11,11 @@ module conv_control_tb ();
   reg  [  7:0]       error_cnt;
   reg                clk;
   reg                start;
+  reg                din_valid;
   reg                rst_n;
   wire               done;
   wire               dout_valid;
 
-  reg  [  3:0][15:0] ofmap;
   integer i, j;
   wire [ 15:0]       result;
   reg  [ 15:0]       conv_num;
@@ -28,6 +28,7 @@ module conv_control_tb ();
       rst_n,
       start,
       conv_num,
+      din_valid,
       weight_3x3,
       result,
       done,
@@ -69,31 +70,37 @@ module conv_control_tb ();
     rst_n       = 0;
     ofmap_out_1 = 0;
     ofmap_out_2 = 0;
+    din_valid   = 0;
     #30;
     rst_n = 1;
+    #30;
+    start = 1;
+    
     fork
-      for (i = 0; i < `PATTERN_NUM; i = i + 1) begin
+      begin
 
-        begin
-          @(posedge clk);
-          start                                    = 1;
-          {ifmap_4x4, weight_3x3, of_map_expected} = pattern[i];
-          ofmap_out_1[i*4]                         = of_map_expected[0];
-          ofmap_out_1[i*4+1]                       = of_map_expected[1];
-          ofmap_out_1[i*4+2]                       = of_map_expected[2];
-          ofmap_out_1[i*4+3]                       = of_map_expected[3];
-          for (int k = 0; k < 16; k++) begin
-            if (k == 1) begin
-              start = 0;
-            end
-            conv_num = ifmap_4x4[k];
+        
+        for (i = 0; i < `PATTERN_NUM; i = i + 1) begin
+          begin
             @(posedge clk);
+            start = 0;
+            {ifmap_4x4, weight_3x3, of_map_expected} = pattern[i];
+
+            for (int l = 0; l < 4; l++) begin
+              ofmap_out_1[i*4+l] = of_map_expected[l];
+            end
+            
+            din_valid = 1;
+            for (int k = 0; k < 16; k++) begin
+              if (k != 0) begin
+                @(posedge clk);
+              end
+              conv_num = ifmap_4x4[k];
+            end
           end
-
-          wait (done);
-          start = 1;
-
         end
+
+        din_valid = 0;
 
       end
 

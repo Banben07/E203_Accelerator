@@ -3,6 +3,7 @@ module conv_control (
     input              rst_n,
     input              start,
     input [15:0]       conv_num,
+    input              conv_num_valid,
     // input wire [15:0] conv_len,
     input [ 8:0][15:0] kernel_num,
 
@@ -15,7 +16,7 @@ module conv_control (
   localparam IDLE = 0;
   localparam LB = 1;
   localparam CONV_1 = 2;
-  localparam CONV_2 = 3;
+  localparam CONV_OTHER = 3;
 
   //state
   reg  [ 1:0]       state;
@@ -26,6 +27,7 @@ module conv_control (
   reg  [15:0]       of_line_num;
   reg               dout_valid_reg;
   reg               done_reg;
+  reg               lb_finish;
   wire [ 8:0][15:0] ifmap_3x3;
   wire [15:0]       dout;
 
@@ -50,8 +52,30 @@ module conv_control (
 
   always @(posedge clk or negedge rst_n) begin
     if (!rst_n) begin
+        ifmap_cnt <= 0;
+        lb_finish <= 0;
+    end else if (conv_num_valid) begin
+        if (ifmap_cnt <= 16'h9) begin
+            ifmap_cnt <= ifmap_cnt + 1;
+            lb_finish <= (ifmap_cnt == 16'h9);
+        end else if (ifmap_cnt == 16'h10) begin
+            ifmap_cnt <= 16'h1;  
+            lb_finish <= 0;  
+        end else begin
+            ifmap_cnt <= ifmap_cnt + 1;
+            lb_finish <= 0;
+        end
+    end
+    else begin
+        ifmap_cnt <= ifmap_cnt;
+        lb_finish <= 0;
+    end
+end
+
+
+  always @(posedge clk or negedge rst_n) begin
+    if (!rst_n) begin
       state          <= IDLE;
-      ifmap_cnt      <= 0;
       dout_reg       <= 0;
       dout_valid_reg <= 0;
       done_reg       <= 0;
@@ -62,7 +86,6 @@ module conv_control (
       case (state)
         IDLE: begin
           if (start) begin
-            ifmap_cnt      <= 0;
             dout_reg       <= 0;
             dout_valid_reg <= 0;
             done_reg       <= 0;
@@ -76,12 +99,15 @@ module conv_control (
           end
         end
         LB: begin
-          if (ifmap_cnt < 16'h9) begin
-            state     <= LB;
-            ifmap_cnt <= ifmap_cnt + 16'h1;
+          dout_reg       <= 0;
+          dout_valid_reg <= 0;
+          done_reg       <= 0;
+          of_line_num    <= 0;
+          conv_cnt       <= 0;
+          if (lb_finish) begin
+            state <= CONV_1;
           end else begin
-            state     <= CONV_1;
-            ifmap_cnt <= 0;
+            state <= LB;
           end
         end
         CONV_1: begin
@@ -96,7 +122,7 @@ module conv_control (
               ofmap_cnt      <= ofmap_cnt + 16'h1;
               dout_valid_reg <= 16'h1;
             end else begin
-              state          <= CONV_2;
+              state          <= CONV_OTHER;
               dout_reg       <= 0;
               conv_cnt       <= 0;
               dout_valid_reg <= 0;
@@ -104,31 +130,38 @@ module conv_control (
             end
           end
         end
-        CONV_2: begin
+        CONV_OTHER: begin
           if (conv_cnt < 16'h1) begin
-            state    <= CONV_2;
+            state    <= CONV_OTHER;
             conv_cnt <= conv_cnt + 16'h1;
           end else begin
-            if (ofmap_cnt < 16'h4) begin
+            if ((ofmap_cnt < 5 && (ofmap_cnt % 5) < 16'h4) || (ofmap_cnt >= 5 && ((ofmap_cnt - 1) % 4) < 16'h3)) begin
               if (of_line_num < 16'h2) begin
                 of_line_num    <= of_line_num + 16'h1;
-                state          <= CONV_2;
+                state          <= CONV_OTHER;
                 dout_reg       <= dout;
                 ofmap_cnt      <= ofmap_cnt + 16'h1;
                 dout_valid_reg <= 16'h1;
               end else begin
-                state          <= CONV_2;
+                state          <= CONV_OTHER;
                 dout_reg       <= 0;
                 conv_cnt       <= 0;
                 dout_valid_reg <= 0;
                 of_line_num    <= 0;
               end
             end else begin
-              state          <= IDLE;
-              ofmap_cnt      <= 0;
-              dout_reg       <= 0;
-              dout_valid_reg <= 0;
-              done_reg       <= 1;
+              if (ofmap_cnt < 16'd150) begin
+                state          <= LB;
+                dout_reg       <= 0;
+                dout_valid_reg <= 0;
+                done_reg       <= 1;
+              end else begin
+                state          <= IDLE;
+                ofmap_cnt      <= 0;
+                dout_reg       <= 0;
+                dout_valid_reg <= 0;
+                done_reg       <= 1;
+              end
             end
           end
         end
