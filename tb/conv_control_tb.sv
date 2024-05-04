@@ -4,10 +4,12 @@
 module conv_control_tb ();
 
 
-  reg  [ 15:0][15:0] ifmap_4x4;
-  reg  [  8:0][15:0] weight_3x3;
+  reg  [ 15:0][15:0] ifmap_1;
+  reg  [ 15:0][15:0] ifmap_2;
+  reg  [  8:0][15:0] weight_1;
+  reg  [  8:0][15:0] weight_2;
   reg  [  3:0][15:0] of_map_expected;
-  reg  [463:0]       pattern         [0:`PATTERN_NUM-1];
+  reg  [863:0]       pattern         [0:`PATTERN_NUM-1];
   reg  [  7:0]       error_cnt;
   reg                clk;
   reg                start;
@@ -18,10 +20,9 @@ module conv_control_tb ();
 
   integer i, j;
   wire [ 15:0]       result;
-  reg  [ 15:0]       conv_num;
+  reg  [ 31:0]       conv_num;
   reg  [119:0][15:0] ofmap_out_1;
   reg  [119:0][15:0] ofmap_out_2;
-  // int_fp_mul u1 (mode, input1, input2, result, error);
 
   conv_control u2 (
       clk,
@@ -29,7 +30,8 @@ module conv_control_tb ();
       start,
       conv_num,
       din_valid,
-      weight_3x3,
+      weight_1,
+      weight_2,
       result,
       done,
       dout_valid
@@ -84,7 +86,7 @@ module conv_control_tb ();
           begin
             @(posedge clk);
             start = 0;
-            {ifmap_4x4, weight_3x3, of_map_expected} = pattern[i];
+            {ifmap_1, ifmap_2, weight_1, weight_2, of_map_expected} = pattern[i];
 
             for (int l = 0; l < 4; l++) begin
               ofmap_out_1[i*4+l] = of_map_expected[l];
@@ -95,21 +97,25 @@ module conv_control_tb ();
               if (k != 0) begin
                 @(posedge clk);
               end
-              conv_num = ifmap_4x4[k];
+              conv_num[15:0] = ifmap_1[k];
+              conv_num[31:16] = ifmap_2[k];
             end
           end
         end
-
+        
+        @(posedge clk);
         din_valid = 0;
 
       end
+
+      begin
 
       for (j = 0; j < 120; j++) begin
         @(posedge clk);
         #1;
         wait (dout_valid);
         ofmap_out_2[j] = result;
-        $display("Test for ifmap[%0d]", j);
+        $display("Test for ofmap[%0d]", j);
 
         fp16_to_decimal(ofmap_out_1[j], decimal_expected);
         fp16_to_decimal(result, decimal_result);
@@ -123,7 +129,9 @@ module conv_control_tb ();
           $display("--------------------");
         end
 
+      end
 
+      #200;
       end
 
     join
