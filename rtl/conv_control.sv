@@ -91,7 +91,7 @@ module conv_control (
 
   always @(posedge clk or negedge rst_n) begin
     if (!rst_n) begin
-      state          <= IDLE;
+      state          <= LB;
       dout_reg       <= 0;
       dout_valid_reg <= 0;
       done_reg       <= 0;
@@ -116,6 +116,7 @@ module conv_control (
         LB: begin
           dout_reg       <= 0;
           dout_valid_reg <= 0;
+          done_reg       <= 0;
           of_line_num    <= 0;
           conv_cnt       <= 0;
           if (lb_finish) begin
@@ -164,22 +165,24 @@ module conv_control (
                 of_line_num    <= 0;
               end
             end else begin
-              if (ofmap_cnt < 16'd120) begin
+              if (ofmap_cnt < 16'd60) begin
                 state          <= LB;
                 dout_reg       <= 0;
                 dout_valid_reg <= 0;
               end else begin
-                state          <= IDLE;
+                state          <= LB;
                 ofmap_cnt      <= 0;
                 dout_reg       <= 0;
                 dout_valid_reg <= 0;
                 done_reg       <= 1;
+                of_line_num    <= 0;
+                conv_cnt       <= 0;
               end
             end
           end
         end
         default: begin
-          state <= IDLE;
+          state <= LB;
         end
 
       endcase

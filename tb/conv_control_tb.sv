@@ -24,6 +24,7 @@ module conv_control_tb ();
   reg  [119:0][15:0] ofmap_out_1;
   reg  [119:0][15:0] ofmap_out_2;
 
+
   conv_control u2 (
       clk,
       rst_n,
