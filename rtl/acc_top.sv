@@ -138,7 +138,7 @@ module acc_top (
             state <= WEIGHT_CFG;
           end
           else
-          beginx
+          begin
             state <= IDLE;
           end
         end
