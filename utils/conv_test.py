@@ -11,6 +11,7 @@ def perform_convolution(ifmap, kernel):
     output_width = ifmap.shape[2] - kernel_width + 1
     output = np.zeros((output_height, output_width), dtype=np.float16)
     
+    
     for c in range(num_channels):  # Loop over channels
         for i in range(output_height):
             for j in range(output_width):
@@ -32,10 +33,11 @@ def main():
     golden_list = ""
     ifmap_size = (2, 4, 4)  # 2 channels, 4x4 input feature map per channel
     kernel_size = (2, 3, 3)  # 2 channels, 3x3 kernel per channel
-
+    
+    kernel = np.random.uniform(-1, 1, kernel_size).astype(np.float16)
     for _ in range(30):  # Generate and print 10 different test cases
         ifmap = np.random.uniform(-1, 1, ifmap_size).astype(np.float16)
-        kernel = np.random.uniform(-1, 1, kernel_size).astype(np.float16)
+        
 
         # Perform convolution
         output = perform_convolution(ifmap, kernel)

@@ -165,7 +165,7 @@ module conv_control (
                 of_line_num    <= 0;
               end
             end else begin
-              if (ofmap_cnt < 16'd60) begin
+              if (ofmap_cnt < 16'd120) begin
                 state          <= LB;
                 dout_reg       <= 0;
                 dout_valid_reg <= 0;
