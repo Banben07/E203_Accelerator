@@ -78,6 +78,14 @@ module icb_slave_tb();
     $vcdpluson;
     $vcdplusmemon();
 
+    clk   = 0;
+    rst_n = 0;
+    error_cnt = 0;
+    #20;
+    rst_n = 1;
+    icb_cmd_read  = 0;
+    #10;
+
     for (i = 0; i < `PATTERN_NUM; i = i + 1)
     begin
       begin
@@ -88,17 +96,34 @@ module icb_slave_tb();
           ofmap_out_1[i*4+l] = of_map_expected[l];
         end
 
+        for (int k = 0; k < 16; k++)
+        begin
+          @(posedge(clk));
+          icb_cmd_valid = 1;
+          icb_rsp_ready = 1;
+          icb_cmd_read  = 0;
+          icb_cmd_addr  = 32'h1004_2008 + k + i*16;
+          icb_cmd_wdata = {ifmap_2[k], ifmap_1[k]};
+          @(posedge(clk));
+        end
+
       end
     end
 
-    clk   = 0;
-    rst_n = 0;
-    error_cnt = 0;
-    #20;
-    rst_n = 1;
-    icb_cmd_read  = 0;
+    for (int m = 0; m < 9; m++)
+    begin
+      @(posedge(clk));
+      icb_cmd_valid = 1;
+      icb_rsp_ready = 1;
+      icb_cmd_read  = 0;
+      icb_cmd_addr  = 32'h1004_2008 + m + 4079;
+      icb_cmd_wdata = {weight_2[m], weight_1[m]};
+      @(posedge(clk));
+    end
 
-    #10;
+
+
+
     @(posedge(clk));
     icb_cmd_valid = 1;
     icb_rsp_ready = 1;
@@ -112,7 +137,7 @@ module icb_slave_tb();
     icb_cmd_addr  = 32'h1004_2000;
     icb_cmd_wdata = 32'h0000_0000;
     @(posedge(clk));
-    @(posedge(clk));
+
 
     for (j = 0; j < 120; j++)
     begin

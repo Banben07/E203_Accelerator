@@ -19,8 +19,7 @@ module acc_top (
     output            dout_valid      // for test
 );
 
-  logic [15:0] STAT_REG_CAL, STAT_REG_RD;
-  logic [31:0] CONFIG_REG, CALCBASE_REG, RWBASE_REG;
+  logic [15:0] STAT_REG_CAL;
 
   logic WEIGHT_FINISH_REG;
 
@@ -45,7 +44,7 @@ module acc_top (
   logic [12:0] bn_cnt, bn_valid_cnt;
   logic [16*4-1:0] bn_input;
   logic [16*4-1:0] bn_input_reg;
-  logic [16*4-1:0] bn_output;
+  logic [3:0][15:0] bn_output;
   logic            bn_start;
 
   logic bn_update, bn_state, bn_valid;
@@ -56,7 +55,7 @@ module acc_top (
   localparam WEIGHT_CFG = 1;
   localparam START_CAL = 2;
 
-  localparam WEIGHT_ADDR_BASE = 7680;
+  localparam WEIGHT_ADDR_BASE = 4080;
 
   icb_slave u_icb_slave (
       .clk  (clk),
@@ -74,10 +73,7 @@ module acc_top (
       .icb_rsp_err  (icb_rsp_err),
 
       .STAT_REG_CAL(STAT_REG_CAL),
-      .CONFIG_REG  (CONFIG_REG),
-      .CALCBASE_REG(CALCBASE_REG),
-      .RWBASE_REG  (RWBASE_REG),
-      .STAT_REG_RD (STAT_REG_RD),
+      .DONE_REG  (done),
 
       .sram_wr_data(sram_wr_data),
       .sram_wr_addr(sram_wr_addr),
@@ -91,7 +87,7 @@ module acc_top (
   assign input_read_addr = WEIGHT_FINISH_REG ? ifmap_addr : weight_addr;
   assign input_read_en   = ifmap_read_en || weight_read_en;
 
-  sram_8k_32b_input u_sram_input (  // 8k x 32b for input
+  sram_8k_32b u_sram_input (  // 8k x 32b for input
       .clk  (clk),
       .wsbn (sram_wr_en),
       .waddr(sram_wr_addr),
@@ -101,7 +97,7 @@ module acc_top (
       .rdata(input_read_data)
   );
 
-  sram_8k_32b_output u_sram_output (  // 8k x 32b for output
+  sram_8k_32b u_sram_output (  // 8k x 32b for output
       .clk  (clk),
       .wsbn (dout_valid),
       .waddr(ofmap_addr),
