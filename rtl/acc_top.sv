@@ -258,26 +258,21 @@ module acc_top (
           bn_update <= 0;
         end
 
-        if (bn_update) begin
-          bn_start <= 1;
-          bn_input <= bn_input_reg;
-        end
-        else begin
-          bn_start <= 0;
-        end
-
         case(bn_state)
           0: begin
             bn_valid_cnt <= 0;
             bn_valid <= 0;
             if (bn_update) begin
               bn_state <= 1;
+              bn_start <= 1;
+              bn_input <= bn_input_reg;
             end
             else begin
               bn_state <= 0;
             end
           end
           1: begin
+            bn_start <= 0;
             if (bn_valid_cnt < 12) begin
               bn_valid_cnt <= bn_valid_cnt + 1;
               bn_state <= 1;
