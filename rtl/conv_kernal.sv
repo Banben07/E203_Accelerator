@@ -9,20 +9,19 @@ module conv_kernal (
 );
 
     wire [8:0][15:0] ch1_out, ch2_out;
-
     reg  [8:0][15:0] ch1_out_reg, ch2_out_reg;
 
     wire [15:0] ofmap_ch1, ofmap_ch2;
    
     generate
         for (genvar i=0; i<9; i++) begin
-            float_multi u_float_multi_1(
+            floatMult u_float_multi_1(
                 //ports
                 .num1   		( weight_3x3_ch1[i] ),
                 .num2   		( ifmap_1[i]      ),
                 .result  		( ch1_out[i]        )
             );
-            float_multi u_float_multi_2(
+            floatMult u_float_multi_2(
                 //ports
                 .num1   		( weight_3x3_ch2[i] ),
                 .num2   		( ifmap_2[i]      ),
@@ -50,7 +49,7 @@ module conv_kernal (
         .dout 		( ofmap_ch2 	  )
     );
 
-    float_adder u_float_adder_stage2_2(
+    floatAdd u_float_adder_stage2_2(
         //ports
         .num1   		( ofmap_ch1 ),
         .num2   		( ofmap_ch2     ),

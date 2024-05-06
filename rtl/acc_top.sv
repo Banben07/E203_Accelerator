@@ -43,6 +43,14 @@ module acc_top (
   logic              ifmap_read_en;
   logic              conv_num_valid;
 
+  logic [12:0]       bn_cnt, bn_valid_cnt;
+  logic [16*4-1:0]   bn_input;
+  logic [16*4-1:0]   bn_input_reg;
+  logic [16*4-1:0]   bn_output;
+  logic bn_start;
+
+  logic bn_update, bn_state, bn_valid;
+
   logic [1:0] state;
 
   localparam IDLE = 0;
@@ -221,16 +229,71 @@ module acc_top (
     always @(posedge clk or negedge rst_n) begin
       if (!rst_n) begin
         ofmap_addr <= 0;
+        bn_cnt <= 0;
+        bn_input_reg <= 0;
+        bn_start <= 0;
+        bn_valid_cnt <= 0;
+        bn_state <= 0;
+        bn_valid <= 0;
+        
+        bn_update <= 0;
+        bn_input <= 0;
       end
       else begin
+
         if (dout_valid) begin
-          ofmap_addr <= ofmap_addr + 1;
+          if (bn_cnt < 4) begin
+            bn_input_reg <= {ofmap_out[15:0], bn_input_reg[16*4-1:16]};
+            if (bn_cnt == 3) begin
+              bn_cnt <= 0;
+              bn_update <= 1;
+            end
+            else begin
+              bn_cnt <= bn_cnt + 1;
+              bn_update <= 0;
+            end
+          end
         end
         else begin
-          ofmap_addr <= ofmap_addr;
+          bn_update <= 0;
         end
+
+        if (bn_update) begin
+          bn_start <= 1;
+          bn_input <= bn_input_reg;
+        end
+        else begin
+          bn_start <= 0;
+        end
+
+        case(bn_state)
+          0: begin
+            bn_valid_cnt <= 0;
+            bn_valid <= 0;
+            if (bn_update) begin
+              bn_state <= 1;
+            end
+            else begin
+              bn_state <= 0;
+            end
+          end
+          1: begin
+            if (bn_valid_cnt < 12) begin
+              bn_valid_cnt <= bn_valid_cnt + 1;
+              bn_state <= 1;
+              bn_valid <= 0;
+            end
+            else begin
+              bn_valid_cnt <= 0;
+              bn_state <= 0;
+              bn_valid <= 1;
+            end
+          end
+        endcase
+
       end
     end
 
+    bn_multi  u_bn_multi (bn_input,bn_output,clk,bn_start);
 
 endmodule

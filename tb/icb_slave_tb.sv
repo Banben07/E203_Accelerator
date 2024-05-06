@@ -35,14 +35,14 @@ module icb_slave_tb();
   logic            done;
   logic            dout_valid;
   reg  [ 15:0][15:0] ifmap_1;
-    reg  [ 15:0][15:0] ifmap_2;
-    reg  [  8:0][15:0] weight_1;
-    reg  [  8:0][15:0] weight_2;
-    reg  [  3:0][15:0] of_map_expected;
-    reg  [863:0]       pattern         [0:`PATTERN_NUM-1];
-    reg  [  7:0]       error_cnt;
-    integer i, j;
-    reg  [119:0][15:0] ofmap_out_1;
+  reg  [ 15:0][15:0] ifmap_2;
+  reg  [  8:0][15:0] weight_1;
+  reg  [  8:0][15:0] weight_2;
+  reg  [  3:0][15:0] of_map_expected;
+  reg  [863:0]       pattern         [0:`PATTERN_NUM-1];
+  reg  [  7:0]       error_cnt;
+  integer i, j;
+  reg  [119:0][15:0] ofmap_out_1;
 
   real tolerance = 0.004;
   real decimal_input1, decimal_input2, decimal_expected, decimal_result;
@@ -68,7 +68,8 @@ module icb_slave_tb();
     end
   endtask
 
-  initial begin
+  initial
+  begin
     $readmemb(`PATTERN, pattern);
   end
 
@@ -113,23 +114,27 @@ module icb_slave_tb();
     @(posedge(clk));
     @(posedge(clk));
 
-    for (j = 0; j < 120; j++) begin
-        @(posedge clk);
-        #1;
-        wait (dout_valid);
-        $display("Test for ofmap[%0d]", j);
+    for (j = 0; j < 120; j++)
+    begin
+      @(posedge clk);
+      #1;
+      wait (dout_valid);
+      $display("Test for ofmap[%0d]", j);
 
-        fp16_to_decimal(ofmap_out_1[j], decimal_expected);
-        fp16_to_decimal(ofmap_out[15:0], decimal_result);
-        $display("expected[%0d]: %f, actual[%0d]: %f", j, decimal_expected, j, decimal_result);
-        if ((decimal_expected > decimal_result ? decimal_expected - decimal_result : decimal_result - decimal_expected) <= tolerance) begin
-          $display("Check PASSED");
-          $display("--------------------");
-        end else begin
-          error_cnt = error_cnt + 1;
-          $display("Check FAILED");
-          $display("--------------------");
-        end
+      fp16_to_decimal(ofmap_out_1[j], decimal_expected);
+      fp16_to_decimal(ofmap_out[15:0], decimal_result);
+      $display("expected[%0d]: %f, actual[%0d]: %f", j, decimal_expected, j, decimal_result);
+      if ((decimal_expected > decimal_result ? decimal_expected - decimal_result : decimal_result - decimal_expected) <= tolerance)
+      begin
+        $display("Check PASSED");
+        $display("--------------------");
+      end
+      else
+      begin
+        error_cnt = error_cnt + 1;
+        $display("Check FAILED");
+        $display("--------------------");
+      end
     end
 
     $display("Total error count: %d", error_cnt);

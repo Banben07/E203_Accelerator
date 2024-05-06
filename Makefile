@@ -47,6 +47,7 @@ verdi: sim
 	verdi  -f filelist.f -ssf test.fsdb &
 
 find:
+	rm -f filelist.f
 	find -name "*.sv" >> filelist.f
 	find -name "*.v" >> filelist.f
 

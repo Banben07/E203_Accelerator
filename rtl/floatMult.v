@@ -4,7 +4,7 @@
 *   i.e. SEEEEEFFFFFFFFFF = (-1)^S * 1.FFFFFFFFFF * 2^(EEEEE - 15)
 */
 
-module float_multi(
+module floatMult(
       //Operands
       input [15:0] num1,
       input [15:0] num2,

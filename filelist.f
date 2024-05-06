@@ -13,5 +13,19 @@
 // ./tb/conv_tb.sv
 // ./tb/int_fp_mul_tb.sv
 // ./tb/conv_control_tb.sv
-./rtl/float_multi.v
-./rtl/float_adder.v
+./rtl/floatMult.v
+./rtl/floatAdd.v
+./bn/AvgUnit.v
+./bn/Bn_complete.v
+./bn/equal.v
+./bn/bn_multi.v
+./bn/Bn.v
+// ./bn/Bn_tb.v
+./bn/x_sub_u.v
+// ./bn/Square_root_tb.v
+// ./bn/Bn_complete_tb.v
+// ./bn/floatADivB16_tb.v
+./bn/Square_root.v
+// ./bn/AvgUnit_tb.v
+// ./bn/x_sub_u_tb.v
+// ./bn/bn_multi_tb.v

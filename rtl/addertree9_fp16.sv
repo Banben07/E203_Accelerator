@@ -14,13 +14,13 @@ module addertree9_fp16 (
 
     generate
         for (genvar i= 0; i<3; i++) begin
-            float_adder u_float_adder_stage1_1(
+            floatAdd u_float_adder_stage1_1(
                 //ports
                 .num1   		( a[3*i+0] ),
                 .num2   		( a[3*i+1]      ),
                 .result  		( c_mid[i]   )
             );
-            float_adder u_float_adder_stage1_2(
+            floatAdd u_float_adder_stage1_2(
                 //ports
                 .num1   		( a[3*i+2] ),
                 .num2   		( c_mid[i]      ),
@@ -36,13 +36,13 @@ module addertree9_fp16 (
 		c_reg <= c_0;
 	end
 
-    float_adder u_float_adder_stage2_1(
+    floatAdd u_float_adder_stage2_1(
         //ports
         .num1   		( c_reg[0]   ),
         .num2   		( c_reg[1]   ),
         .result  		( o_mid   )
     );
-    float_adder u_float_adder_stage2_2(
+    floatAdd u_float_adder_stage2_2(
         //ports
         .num1   		( c_reg[2] ),
         .num2   		( o_mid     ),

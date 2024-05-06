@@ -4,7 +4,7 @@
 *   i.e. SEEEEEFFFFFFFFFF = (-1)^S * 1.FFFFFFFFFF * 2^(EEEEE - 15)
 */
 
-module float_adder(num1, num2, result);
+module floatAdd(num1, num2, result);
   //Ports
   input [15:0] num1, num2;
   output [15:0] result;
