@@ -11,7 +11,7 @@ endif
 
 # 编译选项
 VCSDIY = vcs
-VCS_FLAGS = -sverilog +v2k $(VCS_FLAGS_COVER) -debug_all +define+SVA+ASSERT_ON -fsdb -l com.log
+VCS_FLAGS = -sverilog +v2k $(VCS_FLAGS_COVER) -debug_all +define+SVA+ASSERT_ON -fsdb -l com.log +define+A
 
 
 # 仿真选项
@@ -24,6 +24,11 @@ all: sim
 # 编译目标
 sim: compile
 	$(SIM) $(SIM_FLAGS) -l sim.log
+
+xrun: 
+	xrun -f filelist.f -sv -access +rwc -svseed random -sva -input run.tcl
+
+indago:
 
 compile: filelist.f
 	$(VCSDIY) $(VCS_FLAGS) -o $(SIM) -f $^

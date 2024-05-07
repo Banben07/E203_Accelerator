@@ -75,8 +75,10 @@ module icb_slave_tb();
 
   initial
   begin
+    `ifdef A
     $vcdpluson;
     $vcdplusmemon();
+    `endif
 
     clk   = 0;
     rst_n = 0;
