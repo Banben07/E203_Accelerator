@@ -14,7 +14,7 @@ module acc_top (
     input             icb_rsp_ready,
     output reg [31:0] icb_rsp_rdata,
     output            icb_rsp_err,
-    output     [31:0] ofmap_out,      // for test
+    output     [15:0] ofmap_out,      // for test
     output            done,           // for test
     output            dout_valid      // for test
 );
@@ -46,6 +46,7 @@ module acc_top (
   logic [16*4-1:0] bn_input_reg;
   logic [3:0][15:0] bn_output;
   logic            bn_start;
+  logic [15:0]     bn_input_data;
 
   logic bn_update, bn_state, bn_valid;
 
@@ -197,6 +198,12 @@ module acc_top (
       .dout_valid    (dout_valid),
       .done          (done)
   );
+  
+  floatMult u_div_100 (
+      .num1(ofmap_out),
+      .num2(16'h1419),
+      .result(bn_input_data)
+  );
 
   always @(posedge clk or negedge rst_n) begin
     if (!rst_n) begin
@@ -214,7 +221,7 @@ module acc_top (
 
       if (dout_valid) begin
         if (bn_cnt < 4) begin
-          bn_input_reg <= {ofmap_out[15:0], bn_input_reg[16*4-1:16]};
+          bn_input_reg <= {bn_input_data, bn_input_reg[16*4-1:16]};
           if (bn_cnt == 3) begin
             bn_cnt    <= 0;
             bn_update <= 1;
@@ -241,7 +248,7 @@ module acc_top (
         end
         1: begin
           bn_start <= 0;
-          if (bn_valid_cnt < 12) begin
+          if (bn_valid_cnt < 13) begin
             bn_valid_cnt <= bn_valid_cnt + 1;
             bn_state     <= 1;
             bn_valid     <= 0;

@@ -34,9 +34,14 @@ def main():
     ifmap_size = (2, 4, 4)  # 2 channels, 4x4 input feature map per channel
     kernel_size = (2, 3, 3)  # 2 channels, 3x3 kernel per channel
     
-    kernel = np.random.uniform(-1, 1, kernel_size).astype(np.float16)
+    large_int_part_kernel = np.random.uniform(-10, 10, kernel_size).astype(np.float16)
+    small_decimal_part_kernel = np.random.uniform(-1, 1, kernel_size).astype(np.float16) * 0.1
+    kernel = large_int_part_kernel + small_decimal_part_kernel
+    
     for _ in range(30):  # Generate and print 10 different test cases
-        ifmap = np.random.uniform(-1, 1, ifmap_size).astype(np.float16)
+        large_int_part_ifmap = np.random.uniform(-10, 10, ifmap_size).astype(np.float16)
+        small_decimal_part_ifmap = np.random.uniform(-1, 1, ifmap_size).astype(np.float16) * 0.1
+        ifmap = large_int_part_ifmap + small_decimal_part_ifmap
         
 
         # Perform convolution
@@ -46,7 +51,7 @@ def main():
         golden_list += format_fp16_with_output_single_line(ifmap, kernel, output)
         golden_list += "\n"
     
-    with open("conv_golden_pattern.txt", 'w') as f:
+    with open("./utils/conv_golden_pattern.txt", 'w') as f:
         f.write(golden_list)
 
 if __name__ == "__main__":

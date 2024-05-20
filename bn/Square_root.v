@@ -21,6 +21,7 @@
 
 module Square_root(x,out,clk,reset);
 parameter DATA_WIDTH = 16;
+parameter EPSILON = 16'b0011001100110011; // 对应0.1的容错范围
 
 input clk,reset;
 input [DATA_WIDTH-1:0] x;
@@ -39,7 +40,7 @@ a[15] <= ~ans[15];
 a[14:0] <= ans[14:0];
 end
 
-floatAdd a5 (ans_o,ans,sub);
+floatAdd a5 (ans_o,{~ans[DATA_WIDTH-1], ans[DATA_WIDTH-2:0]},sub);
 
 always @ (mul3)begin
 pre_i[15] <= ~mul3[15];
@@ -58,7 +59,7 @@ end
 equal e1 (ans,yi_pai,flag1);
 equal e2 (ans,ans_o,flag2);
 always@(sub) begin
-if(sub[14:0]<= 15'b000001000000000)
+if(sub[14:0]<= EPSILON[14:0])
 flag3<=1'b1;
 else 
 flag3<=1'b0;

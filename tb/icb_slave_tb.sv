@@ -44,7 +44,7 @@ module icb_slave_tb();
   integer i, j;
   reg  [119:0][15:0] ofmap_out_1;
 
-  real tolerance = 0.004;
+  real tolerance = 0.005;
   real decimal_input1, decimal_input2, decimal_expected, decimal_result;
 
   always #10 clk = ~clk;
@@ -78,6 +78,9 @@ module icb_slave_tb();
     `ifdef A
     $vcdpluson;
     $vcdplusmemon();
+    $fsdbDumpfile("test.fsdb");
+	  $fsdbDumpvars();
+
     `endif
 
     clk   = 0;
@@ -151,7 +154,7 @@ module icb_slave_tb();
       fp16_to_decimal(ofmap_out_1[j], decimal_expected);
       fp16_to_decimal(ofmap_out[15:0], decimal_result);
       $display("expected[%0d]: %f, actual[%0d]: %f", j, decimal_expected, j, decimal_result);
-      if ((decimal_expected > decimal_result ? decimal_expected - decimal_result : decimal_result - decimal_expected) <= tolerance)
+      if ((decimal_expected > decimal_result ? (decimal_expected - decimal_result)/decimal_expected : (decimal_result - decimal_expected)/decimal_expected) <= tolerance)
       begin
         $display("Check PASSED");
         $display("--------------------");

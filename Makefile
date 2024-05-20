@@ -19,16 +19,19 @@ SIM = ./simv $(VCS_FLAGS_COVER) +fsdb+sva_success
 SIM_FLAGS =
 
 # 默认目标
-all: sim 
+all: xrun 
 
+generate:
+	python /home/liuwd/SOC_Design/utils/conv_test.py
 # 编译目标
-sim: compile
+sim: generate compile
 	$(SIM) $(SIM_FLAGS) -l sim.log
 
-xrun: 
-	xrun -f filelist.f -sv -access +rwc -svseed random -sva -input run.tcl
+xrun: generate
+	xrun -f filelist.f -sv -access +rwc -svseed random -fast_recompilation -sva -input run.tcl
 
 indago:
+	indago -db SmartLogWaves.db
 
 compile: filelist.f
 	$(VCSDIY) $(VCS_FLAGS) -o $(SIM) -f $^
@@ -48,7 +51,7 @@ cover:
 	urg -dir simv.vdb -format both -report cover
 	dve -cov -dir simv.vdb &
 
-verdi: sim
+verdi:
 	verdi  -f filelist.f -ssf test.fsdb &
 
 find:
@@ -57,7 +60,7 @@ find:
 	find -name "*.v" >> filelist.f
 
 # 清理目标、uvm环境中已有
-# clean:
-# 	rm -rf *.log csrc simv* *.key *.vpd DVEfile coverage *.vdb
+clean:
+	rm -rf *~ core csrc simv* vc_hdrs.h ucli.key urg* *.log cover *.fsdb *.vpd DVEfiles transcript .ida* .indago* *.db indago* *.d xrun* novas.*
 
 .PHONY: all sim compile dve verdi clean find

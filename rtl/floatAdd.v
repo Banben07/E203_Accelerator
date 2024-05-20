@@ -8,6 +8,7 @@ module floatAdd(num1, num2, result);
   //Ports
   input [15:0] num1, num2;
   output [15:0] result;
+  wire [15:0] mid_result;
   wire overflow; //overflow flag
   wire zero; //zero flag
   //Reassing numbers as big and small
@@ -34,17 +35,19 @@ module floatAdd(num1, num2, result);
   wire inf_num; //at least on of the operands is inf.
 
   wire [4:0] res_exp_same_s, res_exp_diff_s;
+
+  assign result = mid_result & {16{~zero}}; //return result with zero flag
   
   //Flags
   assign zero = (num1[14:0] == num2[14:0]) & (~num1[15] == num2[15]);
   assign overflow = ((&big_ex[4:1] & ~big_ex[0]) & sum_carry & sameSign) | inf_num;
   assign inf_num = (&num1[14:10] & ~|num1[9:0]) | (&num2[14:10] & ~|num2[9:0]); //check for infinate number
-  //Get result
-  assign result[15] = big_sig; //result sign same as big sign
-  assign res_exp_same_s = big_ex + {4'd0, (~zeroSmall & sum_carry & sameSign)} - {4'd0,({1'b0,result[9:0]} == sum)};
+  //Get mid_result
+  assign mid_result[15] = big_sig; //mid_result sign same as big sign
+  assign res_exp_same_s = big_ex + {4'd0, (~zeroSmall & sum_carry & sameSign)} - {4'd0,({1'b0,mid_result[9:0]} == sum)};
   assign res_exp_diff_s = (neg_exp | (shift_am == 4'd10)) ? 5'd0 : (~shift_am + big_ex + 5'd1);
-  assign result[14:10] = ((sameSign) ? res_exp_same_s : res_exp_diff_s) | {5{overflow}}; //result exponent
-  assign result[9:0] = ((zeroSmall) ? big_fra : ((sameSign) ? ((sum_carry) ? sum[10:1] : sum[9:0]) : ((neg_exp) ? 10'd0 : sum_shifted))) & {10{~overflow}};
+  assign mid_result[14:10] = ((sameSign) ? res_exp_same_s : res_exp_diff_s) | {5{overflow}}; //mid_result exponent
+  assign mid_result[9:0] = ((zeroSmall) ? big_fra : ((sameSign) ? ((sum_carry) ? sum[10:1] : sum[9:0]) : ((neg_exp) ? 10'd0 : sum_shifted))) & {10{~overflow}};
 
   //decode numbers
   assign {big_sig, big_ex_pre, big_fra} = bigNum;
@@ -80,7 +83,7 @@ module floatAdd(num1, num2, result);
       endcase
     end
 
-  //Shift result for sub.
+  //Shift mid_result for sub.
   always@* 
     begin
       case (shift_am)

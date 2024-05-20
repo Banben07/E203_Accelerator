@@ -4,6 +4,6 @@ ida_database -open -name=SmartLogWaves.db
 ida_probe -log 
 
 # Probe all HDL, all levels
-ida_probe -wave -wave_probe_args="uart_ctrl_top -all -depth all -memories -packed 0 -unpacked 0 -tasks"
+ida_probe -wave -wave_probe_args=" -all -depth all -memories -packed 0 -unpacked 0 -tasks"
 
 run
