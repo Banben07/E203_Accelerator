@@ -1,18 +1,38 @@
 import numpy as np
 
-def fp16_to_binary(fp16):
-    return np.binary_repr(np.float16(fp16).view('H'), width=16)
+def float_to_fp16_bin(val):
+    f16 = np.float16(val)
+    return f16.view(np.uint16)
 
-def cube_lut():
-    lut_size = 1024
-    x_values = np.linspace(-4, 4, lut_size)  # FP16 tanh range
-    cube_values = x_values ** 3
+def generate_continuous_fp16_values(min_val, max_val):
+    # Create an array to store all possible FP16 values
+    fp16_all_values = np.arange(0x0000, 0x10000, dtype=np.uint16)
+    fp16_all_floats = fp16_all_values.view(np.float16)
     
-    with open('cube_lut.vh', 'w') as f:
-        f.write('`define CUBE_LUT_SIZE 1024\n')
-        f.write('`define CUBE_LUT_BITS 10\n')  # log2(1024)
-        for i in range(lut_size):
-            binary_value = fp16_to_binary(cube_values[i])
-            f.write(f'`define CUBE_LUT_{i} 16\'h{binary_value}\n')
+    # Filter values to only those in the desired range
+    valid_indices = np.where((fp16_all_floats >= min_val) & (fp16_all_floats <= max_val))[0]
+    fp16_values = fp16_all_floats[valid_indices]
+    
+    return fp16_values
 
-cube_lut()
+def generate_cube_lut():
+    min_val = -3.0
+    max_val = 3.0
+    fp16_values = generate_continuous_fp16_values(min_val, max_val)
+    cube_values = fp16_values ** 3
+
+    with open('cube_lut.vh', 'w') as f:
+        f.write('`define CUBE_LUT_SIZE {}\n'.format(len(fp16_values)))
+        f.write('`define CUBE_LUT_BITS {}\n'.format(int(np.ceil(np.log2(len(fp16_values))))))
+        for i in range(len(fp16_values)):
+            binary_value = float_to_fp16_bin(cube_values[i])
+            in_binary_value = float_to_fp16_bin(fp16_values[i])
+            f.write(f'`define CUBE_LUT_{in_binary_value:04X} 16\'h{binary_value:04X}\n')
+    
+    # Save fp16 values for use in SystemVerilog mapping
+    with open('fp16_values_in_range.mem', 'w') as f:
+        for value in fp16_values:
+            binary_value = float_to_fp16_bin(value)
+            f.write(f'{binary_value:04X}\n')
+
+generate_cube_lut()

@@ -28,7 +28,7 @@ sim: generate compile
 	$(SIM) $(SIM_FLAGS) -l sim.log
 
 xrun: generate
-	xrun -f filelist.f -sv -access +rwc -svseed random -fast_recompilation -sva -input run.tcl
+	xrun -f filelist.f -sv -access +rwc -svseed random -sva -input run.tcl
 
 indago:
 	indago -db SmartLogWaves.db
@@ -44,7 +44,7 @@ run: uvm
 	$(SIMV) +UVM_TESTNAME=$(UVM_TESTNAME)
 	$(CHECK)
 
-dve: 
+dve: sim
 	dve -vpd vcdplus.vpd &
 
 cover:

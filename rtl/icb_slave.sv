@@ -22,6 +22,9 @@ module icb_slave (
 
     // reg IO
     output reg [15:0] STAT_REG_CAL,
+    output reg [15:0] RAM_SEL,
+
+
     input      [15:0] DONE_REG,
 
     output reg [31:0] sram_wr_data,
@@ -62,9 +65,11 @@ module icb_slave (
       if (icb_cmd_valid & icb_cmd_ready & !icb_cmd_read) begin
         if (icb_cmd_addr[11:0] == 0) begin
             STAT_REG_CAL <= icb_cmd_wdata;
+        end else if (icb_cmd_addr[11:0] == 4) begin
+            RAM_SEL <= icb_cmd_wdata[15:0];
         end else begin
           sram_wr_data <= icb_cmd_wdata;
-          sram_wr_addr <= icb_cmd_addr[11:0]-7;
+          sram_wr_addr <= icb_cmd_addr[11:0] - 8;
           sram_wr_en   <= 1;
         end
       end else begin

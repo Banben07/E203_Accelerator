@@ -23,11 +23,11 @@ def check_variance_overflow(data, float16_max=65504):
     return overflow
 
 # 十六进制数据输入
-hex_data   = "2B0F3008B54FB35B"
+hex_data   = "BBF6A11FA7B12BE9"
 hex_values = [hex_data[i:i+4] for i in range(0, len(hex_data), 4)]
 
 # 长十六进制字符串输入
-long_hex_data = "39A13C24BC70B90D"
+long_hex_data = "bba83765BDB5B456"
 
 # 将长十六进制字符串分成16位块（假设每个十六进制值代表16位）
 chunks = [long_hex_data[i:i+4] for i in range(0, len(long_hex_data), 4)]
