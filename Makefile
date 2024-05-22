@@ -22,7 +22,7 @@ SIM_FLAGS =
 all: xrun 
 
 generate:
-	python /home/liuwd/SOC_Design/utils/conv_test.py
+	python ./utils/conv_test.py
 # 编译目标
 sim: generate compile
 	$(SIM) $(SIM_FLAGS) -l sim.log
