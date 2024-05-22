@@ -55,10 +55,6 @@ module acc_top (
   logic [    12:0]       ofmap_in_cnt;
 
   logic [     3:0][15:0] lut_result;
-  logic [     3:0][15:0] lut_result_pos;
-  logic [     3:0][15:0] lut_result_neg;
-
-
 
   logic [     3:0][11:0] lut_addr;
   logic [     3:0]       lut_sign;
@@ -70,6 +66,14 @@ module acc_top (
   logic       gelu_state;
   logic [2:0] gelu_cnt;
   logic       gelu_valid;
+
+  logic [2:0] lut_state_next;
+  logic [2:0] lut_state;
+
+  logic       lut_sign_cur;
+  logic [11:0] lut_addr_cur;
+  logic [31:0] lut_result_cur;
+  logic       lut_addr_valid;
 
   logic       ofmap_in_state;
 
@@ -132,93 +136,17 @@ module acc_top (
       .rdata(sram_rd_data)
   );
 
-  sram_8k_32b u_sram_8k_32b_pos_0 (
+  sram_8k_32b u_sram_8k_32b_lut (
       .clk  (clk),
       .wsbn (sram_wr_en & RAM_SEL[1]),
       .waddr(sram_wr_addr),
       .wdata(sram_wr_data),
 
       .csbn (1),
-      .raddr(lut_addr[0]),
-      .rdata(lut_result_pos[0])
+      .raddr(lut_addr_cur),
+      .rdata(lut_result_cur)
   );
 
-  sram_8k_32b u_sram_8k_32b_pos_1 (
-      .clk  (clk),
-      .wsbn (sram_wr_en & RAM_SEL[1]),
-      .waddr(sram_wr_addr),
-      .wdata(sram_wr_data),
-
-      .csbn (1),
-      .raddr(lut_addr[1]),
-      .rdata(lut_result_pos[1])
-  );
-
-  sram_8k_32b u_sram_8k_32b_pos_2 (
-      .clk  (clk),
-      .wsbn (sram_wr_en & RAM_SEL[1]),
-      .waddr(sram_wr_addr),
-      .wdata(sram_wr_data),
-
-      .csbn (1),
-      .raddr(lut_addr[2]),
-      .rdata(lut_result_pos[2])
-  );
-
-  sram_8k_32b u_sram_8k_32b_pos_3 (
-      .clk  (clk),
-      .wsbn (sram_wr_en & RAM_SEL[1]),
-      .waddr(sram_wr_addr),
-      .wdata(sram_wr_data),
-
-      .csbn (1),
-      .raddr(lut_addr[3]),
-      .rdata(lut_result_pos[3])
-  );
-
-  sram_8k_32b u_sram_8k_32b_neg_0 (
-      .clk  (clk),
-      .wsbn (sram_wr_en & RAM_SEL[2]),
-      .waddr(sram_wr_addr),
-      .wdata(sram_wr_data),
-
-      .csbn (1),
-      .raddr(lut_addr[0]),
-      .rdata(lut_result_neg[0])
-  );
-
-  sram_8k_32b u_sram_8k_32b_neg_1 (
-      .clk  (clk),
-      .wsbn (sram_wr_en & RAM_SEL[2]),
-      .waddr(sram_wr_addr),
-      .wdata(sram_wr_data),
-
-      .csbn (1),
-      .raddr(lut_addr[1]),
-      .rdata(lut_result_neg[1])
-  );
-
-  sram_8k_32b u_sram_8k_32b_neg_2 (
-      .clk  (clk),
-      .wsbn (sram_wr_en & RAM_SEL[2]),
-      .waddr(sram_wr_addr),
-      .wdata(sram_wr_data),
-
-      .csbn (1),
-      .raddr(lut_addr[2]),
-      .rdata(lut_result_neg[2])
-  );
-
-  sram_8k_32b u_sram_8k_32b_neg_3 (
-      .clk  (clk),
-      .wsbn (sram_wr_en & RAM_SEL[2]),
-      .waddr(sram_wr_addr),
-      .wdata(sram_wr_data),
-
-      .csbn (1),
-      .raddr(lut_addr[3]),
-      .rdata(lut_result_neg[3])
-  );
 
   always @(posedge clk or negedge rst_n) begin
     if (!rst_n) begin
@@ -331,6 +259,8 @@ module acc_top (
       gelu_state   <= 0;
       gelu_cnt     <= 0;
       gelu_valid   <= 0;
+
+      lut_addr_valid <= 0;
     end else begin
 
       if (dout_valid) begin
@@ -377,19 +307,22 @@ module acc_top (
       case (gelu_state)
         0: begin
           gelu_valid <= 0;
+          lut_addr_valid <= 0;
           if (bn_valid) begin
             gelu_state <= 1;
           end
         end
         1: begin
-          if (gelu_cnt < 3) begin
+          if (gelu_cnt < 7) begin
             gelu_cnt   <= gelu_cnt + 1;
             gelu_state <= 1;
             gelu_valid <= 0;
+            lut_addr_valid <= (gelu_cnt == 1);
           end else begin
             gelu_cnt   <= 0;
             gelu_state <= 0;
             gelu_valid <= 1;
+            lut_addr_valid <= 0;
           end
         end
 
@@ -419,9 +352,52 @@ module acc_top (
           .lut_sign    (lut_sign[j])
       );
 
-      assign lut_result[j] = lut_sign[j] ? lut_result_neg[j] : lut_result_pos[j];
+      // assign lut_result[j] = lut_sign[j] ? lut_result_neg[j] : lut_result_pos[j];
     end
   endgenerate
+
+  always @(posedge clk or negedge rst_n) begin
+    if (!rst_n) begin
+      lut_state <= 0;
+    end else begin
+      lut_state <= lut_state_next;
+    end
+  end
+
+  always @(*) begin
+        lut_state_next = lut_state;
+        case (lut_state)
+          0: begin
+            lut_result[3] = lut_sign[3] ? lut_result_cur[31:16] : lut_result_cur[15:0];
+            if (lut_addr_valid) begin
+              lut_state_next = 1;
+            end
+          end
+          1: begin
+            lut_sign_cur = lut_sign[0];
+            lut_addr_cur = lut_addr[0];
+            lut_state_next = 2;
+          end
+          2: begin
+            lut_sign_cur = lut_sign[1];
+            lut_addr_cur = lut_addr[1];
+            lut_result[0] = lut_sign[0] ? lut_result_cur[31:16] : lut_result_cur[15:0];
+            lut_state_next = 3;
+          end
+          3: begin
+            lut_sign_cur = lut_sign[2];
+            lut_addr_cur = lut_addr[2];
+            lut_result[1] = lut_sign[1] ? lut_result_cur[31:16] : lut_result_cur[15:0];
+            lut_state_next = 4;
+          end
+          4: begin
+            lut_sign_cur = lut_sign[3];
+            lut_addr_cur = lut_addr[3];
+            lut_result[2] = lut_sign[2] ? lut_result_cur[31:16] : lut_result_cur[15:0];
+            lut_state_next = 0;
+          end
+        endcase
+  end
 
   always @(posedge clk or negedge rst_n) begin
     if (!rst_n) begin

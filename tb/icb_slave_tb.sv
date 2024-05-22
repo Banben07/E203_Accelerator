@@ -48,7 +48,8 @@ module icb_slave_tb ();
   integer i, j;
   reg  [119:0][15:0] ofmap_out_1;
 
-  reg  [ 15:0]       pattern_data;
+  reg  [ 15:0]       pattern_data_pos;
+  reg  [ 15:0]       pattern_data_neg;
   reg  [ 15:0]       pattern_addr;
 
   real               tolerance = 0.005;
@@ -76,8 +77,8 @@ module icb_slave_tb ();
 
   initial begin
     $readmemb(`PATTERN, pattern);
-    $readmemb("/home/liuwd/SOC_Design/utils/tanh_lut_positive.txt", pattern_pos);
-    $readmemb("/home/liuwd/SOC_Design/utils/tanh_lut_negative.txt", pattern_neg);
+    $readmemh("/home/liuwd/SOC_Design/utils/tanh_lut_positive.txt", pattern_pos);
+    $readmemh("/home/liuwd/SOC_Design/utils/tanh_lut_negative.txt", pattern_neg);
   end
 
   initial begin
@@ -107,36 +108,37 @@ module icb_slave_tb ();
     @(posedge (clk));
 
     for (int i = 0; i < 2141; i++) begin
-      pattern_data = pattern_pos[i][15:0];
+      pattern_data_pos = pattern_pos[i][15:0];
+      pattern_data_neg = pattern_neg[i][15:0];
       pattern_addr = pattern_pos[i][31:16];
       @(posedge (clk));
       icb_cmd_valid = 1;
       icb_rsp_ready = 1;
       icb_cmd_read  = 0;
       icb_cmd_addr  = 32'h1004_2008 + pattern_addr[14:3];
-      icb_cmd_wdata = pattern_data;
+      icb_cmd_wdata = {pattern_data_neg, pattern_data_pos};
       @(posedge (clk));
     end
 
-    @(posedge (clk));
-    icb_cmd_valid = 1;
-    icb_rsp_ready = 1;
-    icb_cmd_read  = 0;
-    icb_cmd_addr  = 32'h1004_2004;
-    icb_cmd_wdata = 32'h0000_0004;
-    @(posedge (clk));
+    // @(posedge (clk));
+    // icb_cmd_valid = 1;
+    // icb_rsp_ready = 1;
+    // icb_cmd_read  = 0;
+    // icb_cmd_addr  = 32'h1004_2004;
+    // icb_cmd_wdata = 32'h0000_0004;
+    // @(posedge (clk));
 
-    for (int i = 0; i < 2141; i++) begin
-      pattern_data = pattern_neg[i][15:0];
-      pattern_addr = pattern_neg[i][31:16];
-      @(posedge (clk));
-      icb_cmd_valid = 1;
-      icb_rsp_ready = 1;
-      icb_cmd_read  = 0;
-      icb_cmd_addr  = 32'h1004_2008 + pattern_addr[14:3];
-      icb_cmd_wdata = pattern_data;
-      @(posedge (clk));
-    end
+    // for (int i = 0; i < 2141; i++) begin
+    //   pattern_data = pattern_neg[i][15:0];
+    //   pattern_addr = pattern_neg[i][31:16];
+    //   @(posedge (clk));
+    //   icb_cmd_valid = 1;
+    //   icb_rsp_ready = 1;
+    //   icb_cmd_read  = 0;
+    //   icb_cmd_addr  = 32'h1004_2008 + pattern_addr[14:3];
+    //   icb_cmd_wdata = pattern_data;
+    //   @(posedge (clk));
+    // end
 
     @(posedge (clk));
     icb_cmd_valid = 1;

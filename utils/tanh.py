@@ -34,13 +34,13 @@ def generate_tanh_lut():
        for i in range(len(positive_values)):
             binary_value = float_to_fp16_bin(tanh_positive_values[i])
             in_binary_value = float_to_fp16_bin(positive_values[i])
-            f.write(f'{in_binary_value:016b}_{binary_value:016b}\n')
+            f.write(f'{in_binary_value:04x}_{binary_value:04x}\n')
     
     # Generate negative values LUT
     with open('tanh_lut_negative.txt', 'w') as f:
         for i in range(len(negative_values)):
             binary_value = float_to_fp16_bin(tanh_negative_values[i])
             in_binary_value = float_to_fp16_bin(negative_values[i])
-            f.write(f'{in_binary_value:016b}_{binary_value:016b}\n')
+            f.write(f'{in_binary_value:04x}_{binary_value:04x}\n')
 
 generate_tanh_lut()

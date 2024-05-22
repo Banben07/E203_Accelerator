@@ -20,6 +20,7 @@ module gelu (
   logic [15:0] coeff_mul_add_reg;
   logic [15:0] tanh_input;
   logic [15:0] tanh_output;
+  logic [15:0] tanh_output_reg;
   logic [15:0] gelu_part1;
   logic [15:0] gelu_part1_reg;
   logic [15:0] gelu_part2;
@@ -43,11 +44,13 @@ module gelu (
       in_fp16_Cube_reg   <= 16'h0;
       coeff_mul_add_reg  <= 16'h0;
       gelu_part1_reg     <= 16'h0;
+      tanh_output_reg   <= 16'h0;
     end else begin
       in_fp16_Square_reg <= in_fp16_Square;
       in_fp16_Cube_reg   <= in_fp16_Cube;
       coeff_mul_add_reg  <= coeff_mul_add;
       gelu_part1_reg     <= gelu_part1;
+      tanh_output_reg   <= tanh_output;
     end
   end
 
@@ -105,7 +108,7 @@ module gelu (
 
   floatAdd u_float_add_2 (
       // ports
-      .num1  (tanh_output),
+      .num1  (tanh_output_reg),
       .num2  (16'b0011110000000000),
       .result(gelu_part2)
   );
