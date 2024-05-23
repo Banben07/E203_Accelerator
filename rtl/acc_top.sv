@@ -62,20 +62,31 @@ module acc_top (
 
   logic bn_update, bn_state, bn_valid;
 
-  logic [1:0] state;
-  logic       gelu_state;
-  logic [2:0] gelu_cnt;
-  logic       gelu_valid;
+  logic [ 1:0]       state;
+  logic              gelu_state;
+  logic [ 2:0]       gelu_cnt;
+  logic              gelu_valid;
 
-  logic [2:0] lut_state_next;
-  logic [2:0] lut_state;
+  logic [ 2:0]       lut_state_next;
+  logic [ 2:0]       lut_state;
 
-  logic       lut_sign_cur;
-  logic [11:0] lut_addr_cur;
-  logic [31:0] lut_result_cur;
-  logic       lut_addr_valid;
+  logic              lut_sign_cur;
+  logic [11:0]       lut_addr_cur;
+  logic [31:0]       lut_result_cur;
+  logic              lut_addr_valid;
 
-  logic       ofmap_in_state;
+  logic              ofmap_in_state;
+
+  logic [ 1:0]       next_state;
+  logic [12:0]       next_weight_addr;
+  logic [ 8:0][31:0] next_weight_data;
+  logic              next_weight_read_en;
+  logic              next_WEIGHT_FINISH_REG;
+  logic [12:0]       next_ifmap_addr;
+  logic [31:0]       next_ifmap_data;
+  logic              next_ifmap_read_en;
+  logic              next_conv_num_valid;
+
 
   localparam IDLE = 0;
   localparam WEIGHT_CFG = 1;
@@ -160,61 +171,83 @@ module acc_top (
       ifmap_read_en     <= 0;
       conv_num_valid    <= 0;
     end else begin
-      case (state)
-        IDLE: begin
-          weight_addr       <= WEIGHT_ADDR_BASE - 1;
-          weight_data       <= 0;
-          weight_read_en    <= 0;
-          WEIGHT_FINISH_REG <= 0;
-          ifmap_addr        <= 0;
-          ifmap_data        <= 0;
-          ifmap_read_en     <= 0;
-          conv_num_valid    <= 0;
-
-          if (STAT_REG_CAL[0]) begin
-            state <= WEIGHT_CFG;
-          end else begin
-            state <= IDLE;
-          end
-        end
-
-        WEIGHT_CFG: begin
-          if (weight_addr < WEIGHT_ADDR_BASE - 1 + 9 + 2) begin
-            weight_data       <= {input_read_data, weight_data[8:1]};
-            weight_addr       <= weight_addr + 1;
-            weight_read_en    <= 1;
-            state             <= WEIGHT_CFG;
-            WEIGHT_FINISH_REG <= 0;
-          end else begin
-            weight_addr       <= WEIGHT_ADDR_BASE - 1;
-            weight_data       <= weight_data;
-            weight_read_en    <= 0;
-            state             <= START_CAL;
-            WEIGHT_FINISH_REG <= 1;
-          end
-        end
-
-        START_CAL: begin
-          if (ifmap_addr < 480 + 2) begin
-            ifmap_data     <= input_read_data;
-            ifmap_addr     <= ifmap_addr + 1;
-            ifmap_read_en  <= 1;
-            conv_num_valid <= (ifmap_addr < 2) ? 0 : 1;
-            state          <= START_CAL;
-          end else begin
-            ifmap_addr     <= ifmap_addr;
-            conv_num_valid <= 0;
-            ifmap_data     <= 0;
-            ifmap_read_en  <= 0;
-            state          <= IDLE;
-          end
-        end
-
-        default: begin
-          state <= IDLE;
-        end
-      endcase
+      state             <= next_state;
+      weight_addr       <= next_weight_addr;
+      weight_data       <= next_weight_data;
+      weight_read_en    <= next_weight_read_en;
+      WEIGHT_FINISH_REG <= next_WEIGHT_FINISH_REG;
+      ifmap_addr        <= next_ifmap_addr;
+      ifmap_data        <= next_ifmap_data;
+      ifmap_read_en     <= next_ifmap_read_en;
+      conv_num_valid    <= next_conv_num_valid;
     end
+  end
+
+  always @(*) begin
+    next_state             = state;
+    next_weight_addr       = weight_addr;
+    next_weight_data       = weight_data;
+    next_weight_read_en    = weight_read_en;
+    next_WEIGHT_FINISH_REG = WEIGHT_FINISH_REG;
+    next_ifmap_addr        = ifmap_addr;
+    next_ifmap_data        = ifmap_data;
+    next_ifmap_read_en     = ifmap_read_en;
+    next_conv_num_valid    = conv_num_valid;
+
+    case (state)
+      IDLE: begin
+        next_weight_addr       = WEIGHT_ADDR_BASE - 1;
+        next_weight_data       = 0;
+        next_weight_read_en    = 0;
+        next_WEIGHT_FINISH_REG = 0;
+        next_ifmap_addr        = 0;
+        next_ifmap_data        = 0;
+        next_ifmap_read_en     = 0;
+        next_conv_num_valid    = 0;
+
+        if (STAT_REG_CAL[0]) begin
+          next_state = WEIGHT_CFG;
+        end else begin
+          next_state = IDLE;
+        end
+      end
+
+      WEIGHT_CFG: begin
+        if (weight_addr < WEIGHT_ADDR_BASE - 1 + 9 + 2) begin
+          next_weight_data       = {input_read_data, weight_data[8:1]};
+          next_weight_addr       = weight_addr + 1;
+          next_weight_read_en    = 1;
+          next_state             = WEIGHT_CFG;
+          next_WEIGHT_FINISH_REG = 0;
+        end else begin
+          next_weight_addr       = WEIGHT_ADDR_BASE - 1;
+          next_weight_data       = weight_data;
+          next_weight_read_en    = 0;
+          next_state             = START_CAL;
+          next_WEIGHT_FINISH_REG = 1;
+        end
+      end
+
+      START_CAL: begin
+        if (ifmap_addr < 480 + 2) begin
+          next_ifmap_data     = input_read_data;
+          next_ifmap_addr     = ifmap_addr + 1;
+          next_ifmap_read_en  = 1;
+          next_conv_num_valid = (ifmap_addr < 2) ? 0 : 1;
+          next_state          = START_CAL;
+        end else begin
+          next_ifmap_addr     = ifmap_addr;
+          next_conv_num_valid = 0;
+          next_ifmap_data     = 0;
+          next_ifmap_read_en  = 0;
+          next_state          = IDLE;
+        end
+      end
+
+      default: begin
+        next_state = IDLE;
+      end
+    endcase
   end
 
   generate
@@ -246,19 +279,19 @@ module acc_top (
 
   always @(posedge clk or negedge rst_n) begin
     if (!rst_n) begin
-      bn_cnt       <= 0;
-      bn_input_reg <= 0;
-      bn_start     <= 0;
-      bn_valid_cnt <= 0;
-      bn_state     <= 0;
-      bn_valid     <= 0;
+      bn_cnt         <= 0;
+      bn_input_reg   <= 0;
+      bn_start       <= 0;
+      bn_valid_cnt   <= 0;
+      bn_state       <= 0;
+      bn_valid       <= 0;
 
-      bn_update    <= 0;
-      bn_input     <= 0;
+      bn_update      <= 0;
+      bn_input       <= 0;
 
-      gelu_state   <= 0;
-      gelu_cnt     <= 0;
-      gelu_valid   <= 0;
+      gelu_state     <= 0;
+      gelu_cnt       <= 0;
+      gelu_valid     <= 0;
 
       lut_addr_valid <= 0;
     end else begin
@@ -306,7 +339,7 @@ module acc_top (
 
       case (gelu_state)
         0: begin
-          gelu_valid <= 0;
+          gelu_valid     <= 0;
           lut_addr_valid <= 0;
           if (bn_valid) begin
             gelu_state <= 1;
@@ -314,14 +347,14 @@ module acc_top (
         end
         1: begin
           if (gelu_cnt < 7) begin
-            gelu_cnt   <= gelu_cnt + 1;
-            gelu_state <= 1;
-            gelu_valid <= 0;
+            gelu_cnt       <= gelu_cnt + 1;
+            gelu_state     <= 1;
+            gelu_valid     <= 0;
             lut_addr_valid <= (gelu_cnt == 1);
           end else begin
-            gelu_cnt   <= 0;
-            gelu_state <= 0;
-            gelu_valid <= 1;
+            gelu_cnt       <= 0;
+            gelu_state     <= 0;
+            gelu_valid     <= 1;
             lut_addr_valid <= 0;
           end
         end
@@ -365,38 +398,38 @@ module acc_top (
   end
 
   always @(*) begin
-        lut_state_next = lut_state;
-        case (lut_state)
-          0: begin
-            lut_result[3] = lut_sign[3] ? lut_result_cur[31:16] : lut_result_cur[15:0];
-            if (lut_addr_valid) begin
-              lut_state_next = 1;
-            end
-          end
-          1: begin
-            lut_sign_cur = lut_sign[0];
-            lut_addr_cur = lut_addr[0];
-            lut_state_next = 2;
-          end
-          2: begin
-            lut_sign_cur = lut_sign[1];
-            lut_addr_cur = lut_addr[1];
-            lut_result[0] = lut_sign[0] ? lut_result_cur[31:16] : lut_result_cur[15:0];
-            lut_state_next = 3;
-          end
-          3: begin
-            lut_sign_cur = lut_sign[2];
-            lut_addr_cur = lut_addr[2];
-            lut_result[1] = lut_sign[1] ? lut_result_cur[31:16] : lut_result_cur[15:0];
-            lut_state_next = 4;
-          end
-          4: begin
-            lut_sign_cur = lut_sign[3];
-            lut_addr_cur = lut_addr[3];
-            lut_result[2] = lut_sign[2] ? lut_result_cur[31:16] : lut_result_cur[15:0];
-            lut_state_next = 0;
-          end
-        endcase
+    lut_state_next = lut_state;
+    case (lut_state)
+      0: begin
+        lut_result[3] = lut_sign[3] ? lut_result_cur[31:16] : lut_result_cur[15:0];
+        if (lut_addr_valid) begin
+          lut_state_next = 1;
+        end
+      end
+      1: begin
+        lut_sign_cur   = lut_sign[0];
+        lut_addr_cur   = lut_addr[0];
+        lut_state_next = 2;
+      end
+      2: begin
+        lut_sign_cur   = lut_sign[1];
+        lut_addr_cur   = lut_addr[1];
+        lut_result[0]  = lut_sign[0] ? lut_result_cur[31:16] : lut_result_cur[15:0];
+        lut_state_next = 3;
+      end
+      3: begin
+        lut_sign_cur   = lut_sign[2];
+        lut_addr_cur   = lut_addr[2];
+        lut_result[1]  = lut_sign[1] ? lut_result_cur[31:16] : lut_result_cur[15:0];
+        lut_state_next = 4;
+      end
+      4: begin
+        lut_sign_cur   = lut_sign[3];
+        lut_addr_cur   = lut_addr[3];
+        lut_result[2]  = lut_sign[2] ? lut_result_cur[31:16] : lut_result_cur[15:0];
+        lut_state_next = 0;
+      end
+    endcase
   end
 
   always @(posedge clk or negedge rst_n) begin
@@ -404,32 +437,32 @@ module acc_top (
       ofmap_in_valid <= 0;
       ofmap_in       <= 0;
       ofmap_in_cnt   <= 0;
-      ofmap_addr  <= 0;
+      ofmap_addr     <= 0;
       ofmap_in_state <= 0;
     end else begin
       case (ofmap_in_state)
-        0 : begin
+        0: begin
           if (gelu_valid) begin
             ofmap_in_state <= 1;
           end
         end
-        1 : begin
+        1: begin
           if (ofmap_in_cnt < 4) begin
-            ofmap_in_cnt <= ofmap_in_cnt + 1;
-            ofmap_in     <= final_result[ofmap_in_cnt];
+            ofmap_in_cnt   <= ofmap_in_cnt + 1;
+            ofmap_in       <= final_result[ofmap_in_cnt];
             ofmap_in_valid <= 1;
-            ofmap_addr   <= ofmap_addr + 1;
+            ofmap_addr     <= ofmap_addr + 1;
             ofmap_in_state <= 1;
           end else begin
-            ofmap_in_cnt <= 0;
-            ofmap_in     <= 0;
+            ofmap_in_cnt   <= 0;
+            ofmap_in       <= 0;
             ofmap_in_valid <= 0;
             ofmap_in_state <= 0;
           end
         end
-        
+
       endcase
-    end   
+    end
   end
 
 
