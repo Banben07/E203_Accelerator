@@ -346,7 +346,7 @@ module acc_top (
           end
         end
         1: begin
-          if (gelu_cnt < 7) begin
+          if (gelu_cnt < 4) begin
             gelu_cnt       <= gelu_cnt + 1;
             gelu_state     <= 1;
             gelu_valid     <= 0;
