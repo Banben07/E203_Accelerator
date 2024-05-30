@@ -21,6 +21,7 @@ def generate_continuous_fp16_values(min_val, max_val):
     negative_values = fp16_values[(fp16_values < 0) | (fp16_values.view(np.uint16) == 0x8000)]
     
     return positive_values, negative_values
+
 def extract_bits(value, start, end):
     # Extract bits from start to end (inclusive)
     mask = ((1 << (start - end + 1)) - 1) << end
@@ -33,25 +34,17 @@ def generate_tanh_lut():
     tanh_positive_values = np.tanh(positive_values)
     tanh_negative_values = np.tanh(negative_values)
 
-    # Generate positive values LUT
+    # Generate combined LUT
     with open('./tanh_lut.h', 'w') as f:
         f.write('#ifndef TANH_LUT_H\n')
         f.write('#define TANH_LUT_H\n\n')
         
-        f.write('static const uint16_t tanh_lut_positive[][2] = {\n')
+        f.write('static const uint32_t tanh_lut_combined[] = {\n')
         for i in range(len(positive_values)):
-            binary_value = float_to_fp16_bin(tanh_positive_values[i])
-            in_binary_value = float_to_fp16_bin(positive_values[i])
-            extracted_bits = extract_bits(in_binary_value, 14, 3)
-            f.write(f'    {{0x{extracted_bits:03x}, 0x{binary_value:04x}}},\n')
-        f.write('};\n\n')
-        
-        f.write('static const uint16_t tanh_lut_negative[][2] = {\n')
-        for i in range(len(negative_values)):
-            binary_value = float_to_fp16_bin(tanh_negative_values[i])
-            in_binary_value = float_to_fp16_bin(negative_values[i])
-            extracted_bits = extract_bits(in_binary_value, 14, 3)
-            f.write(f'    {{0x{extracted_bits:03x}, 0x{binary_value:04x}}},\n')
+            binary_positive_value = float_to_fp16_bin(tanh_positive_values[i])
+            binary_negative_value = float_to_fp16_bin(tanh_negative_values[i])
+            combined_value = (binary_negative_value << 16) | binary_positive_value
+            f.write(f'    0x{combined_value:08x},\n')
         f.write('};\n\n')
         
         f.write('#endif // TANH_LUT_H\n')

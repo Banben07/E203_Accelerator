@@ -5,7 +5,7 @@
 module icb_slave (
     // icb bus
     input             icb_cmd_valid,
-    output reg        icb_cmd_ready,
+    output            icb_cmd_ready,
     input             icb_cmd_read,
     input      [31:0] icb_cmd_addr,
     input      [31:0] icb_cmd_wdata,
@@ -40,29 +40,33 @@ module icb_slave (
   assign icb_rsp_err = 1'b0;
 
   // cmd ready, icb_cmd_ready
-  always @(negedge rst_n or posedge clk) begin
-    if (!rst_n) begin
-      icb_cmd_ready <= 1'b0;
-    end else begin
-      if (icb_cmd_valid & icb_cmd_ready) begin
-        icb_cmd_ready <= 1'b0;
-      end else if (icb_cmd_valid) begin
-        icb_cmd_ready <= 1'b1;
-      end else begin
-        icb_cmd_ready <= icb_cmd_ready;
-      end
-    end
-  end
+
+  assign icb_cmd_ready = icb_cmd_read? icb_cmd_valid & (~icb_rsp_valid) : icb_cmd_valid;
+
+  // always @(negedge rst_n or posedge clk) begin
+  //   if (!rst_n) begin
+  //     icb_cmd_ready <= 1'b0;
+  //   end else begin
+  //     if (icb_cmd_valid & icb_cmd_ready) begin
+  //       icb_cmd_ready <= 1'b0;
+  //     end else if (icb_cmd_valid) begin
+  //       icb_cmd_ready <= 1'b1;
+  //     end else begin
+  //       icb_cmd_ready <= icb_cmd_ready;
+  //     end
+  //   end
+  // end
 
   // ADDR and PARAM setting
   always @(negedge rst_n or posedge clk) begin
     if (!rst_n) begin
       STAT_REG_CAL <= 32'h0;
+      RAM_SEL <= 2;
       sram_wr_data <= 0;
       sram_wr_addr <= 0;
       sram_wr_en   <= 0;
     end else begin
-      if (icb_cmd_valid & icb_cmd_ready & !icb_cmd_read) begin
+      if (icb_cmd_valid & icb_cmd_ready & !icb_cmd_read & (icb_cmd_addr[31:12] == 20'h10042)) begin
         if (icb_cmd_addr[11:0] == 0) begin
             STAT_REG_CAL <= icb_cmd_wdata;
         end else if (icb_cmd_addr[11:0] == 4) begin
@@ -84,7 +88,7 @@ module icb_slave (
     if (icb_cmd_valid & icb_cmd_ready & icb_cmd_read) begin
       if (icb_cmd_addr >= 8) begin
         sram_rd_en   = 1'h1;
-        sram_rd_addr = icb_cmd_addr[11:0];
+        sram_rd_addr = icb_cmd_addr[11:0]-8;
       end else begin
         sram_rd_en   = 1'h0;
         sram_rd_addr = 8'h0;
@@ -130,14 +134,7 @@ module icb_slave (
       icb_rsp_rdata <= 32'h0;
     end else begin
       if (icb_rsp_valid_r) begin
-        if (icb_cmd_addr_r[12:0] < 8) begin
-          case (icb_cmd_addr_r[3:0])
-            `STAT_REG_ADDR:     icb_rsp_rdata <= STAT_REG_CAL;
-            `DONE_REG_ADDR:     icb_rsp_rdata <= DONE_REG;
-          endcase
-        end else begin
           icb_rsp_rdata <= sram_rd_data;
-        end
       end else begin
         icb_rsp_rdata <= 32'h0;
       end

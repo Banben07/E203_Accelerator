@@ -202,7 +202,7 @@ module conv_control (
               next_dout_reg       = 0;
               next_dout_valid_reg = 0;
             end else begin
-              next_state          = IDLE;
+              next_state          = LB;
               next_ofmap_cnt      = 0;
               next_dout_reg       = 0;
               next_dout_valid_reg = 0;

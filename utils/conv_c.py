@@ -45,23 +45,27 @@ def main():
         output = perform_convolution(ifmap, kernel)
 
         # Format the arrays into binary strings
-        ifmap_list += f"{{{format_fp16_array(ifmap)}}},\n"
-        kernel_list += f"{{{format_fp16_array(kernel)}}},\n"
-        ofmap_list += f"{{{format_fp16_array(output)}}},\n"
+        ifmap_list += f"{format_fp16_array(ifmap)},\n"
+        kernel_list += f"{format_fp16_array(kernel)},\n"
+        ofmap_list += f"{format_fp16_array(output)},\n"
     
     with open("./conv_golden_pattern.h", 'w') as f:
         f.write("#ifndef CONV_GOLDEN_PATTERN_H\n")
         f.write("#define CONV_GOLDEN_PATTERN_H\n\n")
         
-        f.write("float16_t ifmap[30][%d] = {\n" % (ifmap_size[0] * ifmap_size[1] * ifmap_size[2]))
+        total_ifmap_size = ifmap_size[0] * ifmap_size[1] * ifmap_size[2]
+        total_kernel_size = kernel_size[0] * kernel_size[1] * kernel_size[2]
+        total_ofmap_size = output.shape[0] * output.shape[1]
+        
+        f.write(f"float16_t ifmap[{30 * total_ifmap_size}] = {{\n")
         f.write(ifmap_list)
         f.write("};\n\n")
         
-        f.write("float16_t weight[30][%d] = {\n" % (kernel_size[0] * kernel_size[1] * kernel_size[2]))
+        f.write(f"float16_t weight[{30 * total_kernel_size}] = {{\n")
         f.write(kernel_list)
         f.write("};\n\n")
         
-        f.write("float16_t ofmap[30][%d] = {\n" % (output.shape[0] * output.shape[1]))
+        f.write(f"float16_t ofmap[{30 * total_ofmap_size}] = {{\n")
         f.write(ofmap_list)
         f.write("};\n\n")
         
