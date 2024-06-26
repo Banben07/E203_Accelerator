@@ -19,9 +19,9 @@ module acc_top (
     output            dout_valid      // for test
 );
 
-  logic [15:0] STAT_REG_CAL;
+  logic [31:0] STAT_REG_CAL;
 
-  logic [15:0] RAM_SEL;
+  logic [31:0] RAM_SEL;
 
   logic        WEIGHT_FINISH_REG;
 

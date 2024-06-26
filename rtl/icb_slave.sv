@@ -1,5 +1,4 @@
 `define STAT_REG_ADDR 4'h0
-`define DONE_REG_ADDR 4'h4
 
 
 module icb_slave (
@@ -21,11 +20,11 @@ module icb_slave (
     input rst_n,
 
     // reg IO
-    output reg [15:0] STAT_REG_CAL,
-    output reg [15:0] RAM_SEL,
+    output reg [31:0] STAT_REG_CAL,
+    output reg [31:0] RAM_SEL,
 
 
-    input      [15:0] DONE_REG,
+    input       DONE_REG,
 
     output reg [31:0] sram_wr_data,
     output reg [12:0] sram_wr_addr,
@@ -70,7 +69,7 @@ module icb_slave (
         if (icb_cmd_addr[11:0] == 0) begin
             STAT_REG_CAL <= icb_cmd_wdata;
         end else if (icb_cmd_addr[11:0] == 4) begin
-            RAM_SEL <= icb_cmd_wdata[15:0];
+            RAM_SEL <= icb_cmd_wdata;
         end else begin
           sram_wr_data <= icb_cmd_wdata;
           sram_wr_addr <= icb_cmd_addr[11:0] - 8;
@@ -91,11 +90,11 @@ module icb_slave (
         sram_rd_addr = icb_cmd_addr[11:0]-8;
       end else begin
         sram_rd_en   = 1'h0;
-        sram_rd_addr = 8'h0;
+        sram_rd_addr = 13'h0;
       end
     end else begin
       sram_rd_en   = 1'h0;
-      sram_rd_addr = 8'h0;
+      sram_rd_addr = 13'h0;
     end
   end
 
@@ -134,7 +133,11 @@ module icb_slave (
       icb_rsp_rdata <= 32'h0;
     end else begin
       if (icb_rsp_valid_r) begin
+        if (icb_cmd_addr[11:0] == 0) begin
+          icb_rsp_rdata <= {31'b0, DONE_REG};
+        end else begin
           icb_rsp_rdata <= sram_rd_data;
+        end
       end else begin
         icb_rsp_rdata <= 32'h0;
       end
