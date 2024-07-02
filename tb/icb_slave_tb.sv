@@ -77,8 +77,8 @@ module icb_slave_tb ();
 
   initial begin
     $readmemb(`PATTERN, pattern);
-    $readmemh("/home/liuwd/SOC_Design/utils/tanh_lut_positive.txt", pattern_pos);
-    $readmemh("/home/liuwd/SOC_Design/utils/tanh_lut_negative.txt", pattern_neg);
+    $readmemh("./utils/tanh_lut_positive.txt", pattern_pos);
+    $readmemh("./utils/tanh_lut_negative.txt", pattern_neg);
   end
 
   initial begin
