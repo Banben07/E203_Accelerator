@@ -1,0 +1,25 @@
+Design
+	Design Connection Mode: Snapshot
+	Design Agent PID: 219007
+	Design Database: /home/sakamoto/E203_Accelerator/run/xcelium.d/worklib/icb_slave_tb/sv/debug_db/debug_db_design
+Host Info
+	Hostname: ubuntu
+	Indago PID: 218824
+	OS Version: 6.8.0-57-generic
+	OS Architecture: amd64
+Databases
+	Flow Database: /home/sakamoto/E203_Accelerator/run/net.db
+	Log Database: /home/sakamoto/E203_Accelerator/run/net.db
+	SHM Database: /home/sakamoto/E203_Accelerator/run/net.db/net.shm
+Versions
+	xcelium version: 20.09-s009
+	lwd/snapshot version: 20.09-s009
+	Indago Version: 20.09.002-s
+Invocation command: /opt/cadence/indago20.09/tools/bin/indago   -db net.db
+Log Files
+	karaf log: /home/sakamoto/E203_Accelerator/run/indago_logs/indago_karaf.log
+	ida log: /home/sakamoto/E203_Accelerator/run/indago_logs/ida.log
+	indago log: /home/sakamoto/E203_Accelerator/run/indago_logs/indago.log
+	ippe log: /home/sakamoto/E203_Accelerator/run/indago_logs/indago_ippe.log
+Session Recording Time: Fri Apr 11 10:35:49 2025
+

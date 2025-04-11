@@ -1,0 +1,6 @@
+define LIB_MAP ( $LIB_MAP \
+, ../../../../../NangateOpenCellLibrary/Front_End/Verilog/NangateOpenCellLibrary.v => Verilog \
+)
+define LIB_MAP ( $LIB_MAP \
+, ../../../../../NangateOpenCellLibrary/Front_End/Verilog/NangateOpenCellLibrary.v => Verilog \
+)

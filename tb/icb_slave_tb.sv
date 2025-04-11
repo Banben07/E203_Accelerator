@@ -9,7 +9,7 @@
 `define CONTROL_ADDR 12'hF00
 `define STATUS_ADDR 12'hF04
 
-`define PATTERN "./utils/conv_golden_pattern.txt"
+`define PATTERN "/home/sakamoto/E203_Accelerator/utils/conv_golden_pattern.txt"
 `define PATTERN_NUM 30
 
 module icb_slave_tb ();
@@ -77,8 +77,8 @@ module icb_slave_tb ();
 
   initial begin
     $readmemb(`PATTERN, pattern);
-    $readmemh("./utils/tanh_lut_positive.txt", pattern_pos);
-    $readmemh("./utils/tanh_lut_negative.txt", pattern_neg);
+    $readmemh("/home/sakamoto/E203_Accelerator/utils/tanh_lut_positive.txt", pattern_pos);
+    $readmemh("/home/sakamoto/E203_Accelerator/utils/tanh_lut_negative.txt", pattern_neg);
   end
 
   initial begin

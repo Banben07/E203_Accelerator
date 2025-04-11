@@ -1,0 +1,24 @@
+//
+// File created by:  xrun
+// Do not modify this file
+//
+-XLMODE
+./xcelium.d/run.lnx8664.20.09.d
+-RUNMODE
+-sv
+-DEFINE
+NETLIST_SIM
+-VFILE
+/home/sakamoto/NangateOpenCellLibrary/Front_End/Verilog/NangateOpenCellLibrary.v
+/home/sakamoto/E203_Accelerator/output_acc/acc_top_netlist.v
+/home/sakamoto/E203_Accelerator/tb/icb_slave_tb.sv
+/home/sakamoto/E203_Accelerator/rtl/freepdk45_sram_1rw1r_32x8192_8.v
+-CDSLIB
+./xcelium.d/run.lnx8664.20.09.d/cdsrun.lib
+-HDLVAR
+./xcelium.d/run.lnx8664.20.09.d/hdlrun.var
+-MESSAGES
+-UPDATE
+-XLLIBSTORE
+./xcelium.d/run.lnx8664.20.09.d/xllibs
+-ALLOWUNBOUND

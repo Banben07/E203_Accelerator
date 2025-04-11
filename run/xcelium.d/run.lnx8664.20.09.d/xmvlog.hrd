@@ -1,0 +1,9 @@
+//
+// File created by:  xrun
+// Do not modify this file
+//
+-VFILE
+/home/sakamoto/NangateOpenCellLibrary/Front_End/Verilog/NangateOpenCellLibrary.v
+-sv
+-DEFINE
+NETLIST_SIM

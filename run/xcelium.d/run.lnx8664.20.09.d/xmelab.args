@@ -1,0 +1,25 @@
+//
+// File created by:  xrun
+// Do not modify this file
+//
++define+NETLIST_SIM
++sdf_verbose
+-ACCESS
++rwc
+-timescale
+1ns/1ps
+-SDF_FILE
+/home/sakamoto/E203_Accelerator/output_acc/acc_top_typical.sdf
+-LICQUEUE
+-SDF_VERBOSE
+-MESSAGES
+-XLMODE
+./xcelium.d/run.lnx8664.20.09.d
+-RUNMODE
+-CDSLIB
+./xcelium.d/run.lnx8664.20.09.d/cds.lib
+-HDLVAR
+./xcelium.d/run.lnx8664.20.09.d/hdl.var
+-WORK
+worklib
+-HASXLMODE

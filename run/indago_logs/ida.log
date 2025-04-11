@@ -1,0 +1,15 @@
+14:17:51:1751 [com.cadence.smartlog.bl.data.EngineManager.EnginesManager] [FelixStartLevel] INFO  - 
+
+Indago(64):(20.09.002-s) Linked on Sun Nov 8, 13:30:51 2020
+Indago script path: /opt/cadence/indago20.09/tools.lnx86/indago/bin/indago
+DB name: /home/sakamoto/E203_Accelerator/run/net.db
+
+14:17:51:1751 [com.cadence.smartlog.bl.data.smartlogDb.SmartLogDBAdaptor] [FelixStartLevel] INFO  - Dest File: key=2 val=stdout, shortName: stdout
+14:17:52:1752 [com.cadence.low_power.impl.LPLowLevelManager] [FelixStartLevel] INFO  - Collecting supply net Information
+14:17:52:1752 [com.cadence.low_power.impl.LPLowLevelManager] [FelixStartLevel] INFO  - Collecting supply net Information - Done
+14:17:52:1752 [com.cadence.smartlog.bl.common.SLUtils] [TangoTaskManager-0] INFO  - query: 
+14:17:55:1755 [com.cadence.smartlog.bl.data.EngineManager.EnginesManager] [TangoTaskManager-7] INFO  - ############### asking for Selected HDL TOP ########################
+14:18:00:180 [com.cadence.smartlog.bl.data.EngineManager.EnginesManager] [TangoTaskManager-5] WARN  - missing scopeString in EnginesManager.getNavigableScope()
+14:18:00:180 [important] [AWT-EventQueue-0] WARN  - going to call getModuleDefinitionByInstanceFullPath_slowPerformance for path icb_slave_tb which might have a very slow performance
+14:18:00:180 [important] [AWT-EventQueue-0] WARN  - going to call getModuleDefinitionByInstanceFullPath_slowPerformance for path icb_slave_tb.acc_top.u_icb_slave.\STAT_REG_CAL_reg[0]  which might have a very slow performance
+14:18:32:1832 [important] [AWT-EventQueue-0] WARN  - going to call getModuleDefinitionByInstanceFullPath_slowPerformance for path icb_slave_tb.acc_top.csa_tree_genblk2_0__u_gelu_u_float_multi_4_add_76_118_groupi_g2067 which might have a very slow performance

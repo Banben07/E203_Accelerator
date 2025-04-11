@@ -27,8 +27,11 @@ generate:
 sim: generate compile
 	$(SIM) $(SIM_FLAGS) -l sim.log
 
-xrun: generate
+xrun:
 	xrun -f filelist.f -sv -access +rwc -svseed random -sva -input run.tcl
+
+genus:
+	genus -f run_synthesis.tcl
 
 indago:
 	indago -db SmartLogWaves.db

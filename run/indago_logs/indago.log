@@ -1,0 +1,65 @@
+CompilerOracle: exclude javax/swing/text/GlyphView.getBreakSpot
+log4j:WARN No appenders could be found for logger (com.cadence.tie_interfaces.abstractClasses.AbstractLowLevelManager).
+log4j:WARN Please initialize the log4j system properly.
+log4j:WARN See http://logging.apache.org/log4j/1.2/faq.html#noconfig for more info.
+in 'JDACTBDataProvider::openDBInner', dbPath = /home/sakamoto/E203_Accelerator/run/net.db/net.shm, getExplicitLwdFlag() = null
+
+
+**** found lwd dir to be: /home/sakamoto/E203_Accelerator/run/xcelium.d/worklib/icb_slave_tb/sv
+
+in 'SimConnect::loadSnapshotHelper', 'dbH' represents 'net' db, 'lwdDbH' represents 'net' db, PPEAttributes were fetched from 'net' db. PPEAttributes values:
+    isXprop = false
+    cdslib = /home/sakamoto/E203_Accelerator/run/xcelium.d/run.d/cds.lib
+    snapshot = worklib.icb_slave_tb:sv
+    workdir = /home/sakamoto/E203_Accelerator/run
+    xceliumDir = /home/sakamoto/E203_Accelerator/run/xcelium.d
+    rundDir = /home/sakamoto/E203_Accelerator/run/xcelium.d/run.d
+    bits = 64
+    cds_implicit_tmpdir = 
+    cds_alternate_tmpdir = 
+    du_agent = 
+    lwddir = /home/sakamoto/E203_Accelerator/run/xcelium.d/worklib/icb_slave_tb/sv
+    cds_alternate_cdslib = 
+    elab_options = -CDSLIB ./xcelium.d/run.lnx8664.20.09.d/cds.lib -HDLVAR ./xcelium.d/run.lnx8664.20.09.d/hdl.var -WORK worklib -ENABLE_SVMEMOPT -SDF_VERBOSE +define+NETLIST_SIM +sdf_verbose -TIMESCALE 1ns/1ps -MESSAGES -ACCESS +rwc worklib.icb_slave_tb:sv
+    found = true
+    nclsRun = false
+    includeCdslib = true
+    nclsOpts =  -snapshot -cdslib /home/sakamoto/E203_Accelerator/run/xcelium.d/run.d/cds.lib -64
+    isMceMode = false
+    isMceInvolved = false
+    mceLshmDbPath = 
+    lowPowerInformationAvailable = false
+    hasLshmFile = false
+    workdirIsDirectory = true
+    hasOverlayRelatedInformation = true
+    cds_implicit_tmplib = worklib
+    cds_other_implicit_tmplibs = 
+
+in 'SimConnect::execIPPE', cmd = [/opt/cadence/indago20.09/tools.lnx86/simvision/bin/64bit/ippe, -nocopyright, -nowarn, DLNOCL, -xlm_install_root, /opt/cadence/xceliummain20.09, -cdslib, /home/sakamoto/E203_Accelerator/run/xcelium.d/run.d/cds.lib, -snapshot, worklib.icb_slave_tb:sv, -64]
+in 'SimConnect::execIPPE', ippe process pid = 219007
+
+
+in 'SimConnect::_simcontrolConnect' overlay db = net, overlayH = 9, is valid = true, operation = dapOpenOverlay, duFilename = null, isLiveSim = false
+
+Dump DB Order:
+Strap design: net #9
+ --> net #19
+
+End of dump DB Order
+
+
+
+Dump DB Order:
+Strap design: net #9
+ --> net #19
+
+End of dump DB Order
+
+
+in 'JDACTBDataProvider::openDBInner', dbPath = /home/sakamoto/E203_Accelerator/run/net.db/net.shm, getExplicitLwdFlag() = null
+### Excluding compile: javax.swing.text.GlyphView::getBreakSpot
+
+
+in 'JDACTBDataProvider::notifyLiveConnectionDB', sessionId = shell
+
+TEST PRINTING!!

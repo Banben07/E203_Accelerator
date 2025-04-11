@@ -99,27 +99,23 @@ module icb_slave (
   end
 
   reg        icb_rsp_valid_r;
-  reg [31:0] icb_cmd_addr_r;
 
   // response valid, icb_rsp_valid
   always @(negedge rst_n or posedge clk) begin
     if (!rst_n) begin
       icb_rsp_valid   <= 1'h0;
       icb_rsp_valid_r <= 1'b0;
-      icb_cmd_addr_r  <= 32'h0;
     end else begin
       if (icb_cmd_valid & icb_cmd_ready) begin
         if (!icb_cmd_read) begin
           icb_rsp_valid <= 1'h1;
         end else begin
           icb_rsp_valid_r <= 1'h1;
-          icb_cmd_addr_r  <= icb_cmd_addr;
         end
       end else if (icb_rsp_valid & icb_rsp_ready) begin
         icb_rsp_valid <= 1'h0;
       end else if (icb_rsp_valid_r) begin
         icb_rsp_valid_r <= 1'h0;
-        icb_cmd_addr_r  <= 32'h0;
         icb_rsp_valid   <= 1'h1;
       end else begin
         icb_rsp_valid <= icb_rsp_valid;

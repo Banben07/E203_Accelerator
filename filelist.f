@@ -3,7 +3,7 @@
 ./rtl/acc_top.sv
 ./rtl/conv_control.sv
 ./rtl/icb_slave.sv
-./rtl/sram_8k_32b.sv
+./rtl/freepdk45_sram_1rw1r_32x8192_8.v
 ./rtl/gelu.sv
 ./rtl/conv_kernal.sv
 ./rtl/linebuffer_3x3.sv

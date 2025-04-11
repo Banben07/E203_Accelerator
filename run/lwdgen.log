@@ -1,0 +1,15 @@
+
+WARNING: Liberty related data currently cannot be recorded for
+	 post process debug in offline mode. If your design contains
+	 Liberty and you will be debugging this information it is 
+	 recommended that you generate the liberty debug data during
+	 elaboration by using the "-lwd_prepare" option to xrun.
+	 Then run cds-dsn-gen with the "-lwd_complete" option
+	 to finish the data generation.
+
+	 If you do not use "-lwd_complete", any data saved by "-lwd_prepare"
+	 will be overwritten.
+
+	 If you wish to generate all the data during snapshot creation,
+	 then use the "-lwdgen" option to xrun.
+

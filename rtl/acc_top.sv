@@ -125,39 +125,50 @@ module acc_top (
   assign input_read_addr = WEIGHT_FINISH_REG ? ifmap_addr : weight_addr;
   assign input_read_en   = ifmap_read_en || weight_read_en;
 
-  sram_8k_32b u_sram_input (  // 8k x 32b for input
-      .clk  (clk),
-      .wsbn (sram_wr_en & RAM_SEL[0]),
-      .waddr(sram_wr_addr),
-      .wdata(sram_wr_data),
+  freepdk45_sram_1rw1r_32x8192_8 u_sram_input (  // 8k x 32b for input
+      .clk0(clk),
+      .csb0(~(sram_wr_en & RAM_SEL[0])),
+      .web0(1'b0),  // Always write when enabled
+      .wmask0(4'b1111),  // Always write all bytes
+      .addr0(sram_wr_addr),
+      .din0(sram_wr_data),
+      .dout0(),  // Not used
 
-      .csbn (input_read_en),
-      .raddr(input_read_addr),
-      .rdata(input_read_data)
+      .clk1(clk),
+      .csb1(~input_read_en),
+      .addr1(input_read_addr),
+      .dout1(input_read_data)
   );
 
-  sram_8k_32b u_sram_output (  // 8k x 32b for output
-      .clk  (clk),
-      .wsbn (ofmap_in_valid),
-      .waddr(ofmap_addr),
-      .wdata(ofmap_in),
+  freepdk45_sram_1rw1r_32x8192_8 u_sram_output (  // 8k x 32b for output
+      .clk0(clk),
+      .csb0(~ofmap_in_valid),
+      .web0(1'b0),  // Always write when enabled
+      .wmask0(4'b1111),  // Always write all bytes
+      .addr0(ofmap_addr),
+      .din0({16'h0000, ofmap_in}),  // Extend to 32 bits
+      .dout0(),  // Not used
 
-      .csbn (sram_rd_en),
-      .raddr(sram_rd_addr),
-      .rdata(sram_rd_data)
+      .clk1(clk),
+      .csb1(~sram_rd_en),
+      .addr1(sram_rd_addr),
+      .dout1(sram_rd_data)
   );
 
-  sram_8k_32b u_sram_8k_32b_lut (
-      .clk  (clk),
-      .wsbn (sram_wr_en & RAM_SEL[1]),
-      .waddr(sram_wr_addr),
-      .wdata(sram_wr_data),
+  freepdk45_sram_1rw1r_32x8192_8 u_sram_8k_32b_lut (
+      .clk0(clk),
+      .csb0(~(sram_wr_en & RAM_SEL[1])),
+      .web0(1'b0),  // Always write when enabled
+      .wmask0(4'b1111),  // Always write all bytes
+      .addr0(sram_wr_addr),
+      .din0(sram_wr_data),
+      .dout0(),  // Not used
 
-      .csbn (1),
-      .raddr(lut_addr_cur),
-      .rdata(lut_result_cur)
+      .clk1(clk),
+      .csb1(~1'b1),  // Original had csbn(1)
+      .addr1(lut_addr_cur),
+      .dout1(lut_result_cur)
   );
-
 
   always @(posedge clk or negedge rst_n) begin
     if (!rst_n) begin
