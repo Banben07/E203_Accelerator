@@ -1,0 +1,7 @@
+17:44:32:4432 [important] [FelixStartLevel] WARN  - got the following for key values in msg_destination_files: 1
+17:44:32:4432 [important] [FelixStartLevel] WARN  - Dest File: key=1 val=stdout, shortName: stdout
+17:44:32:4432 [important] [Indago DAC notify callback receiver] WARN  - Got dakNotify_State_Exit event with data: why user
+17:44:32:4432 [important] [FelixStartLevel] INFO  - xmsim gcc version is 9.3.0
+17:44:32:4432 [important] [FelixStartLevel] INFO  - indago gcc version is 9.3.0
+17:44:33:4433 [com.cadence.smartlog.bl.common.SLUtils] [TangoTaskManager-1] INFO  - query: 
+17:44:35:4435 [important] [TangoTaskManager-9] INFO  - ScriptingActivator while loop has finished

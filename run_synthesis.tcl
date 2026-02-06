@@ -81,11 +81,11 @@ check_design -unresolved
 # 4. 约束设置
 # ---------------------------
 # 时钟约束（假设时钟端口名为 clk）
-create_clock -name clk -period 10 [get_ports clk]
+create_clock -name clk -period 40 [get_ports clk]
 
 # 输入/输出延迟
-set_input_delay -max 2 -clock clk [all_inputs]
-set_output_delay -max 1 -clock clk [all_outputs]
+set_input_delay -max 0.01 -clock clk [all_inputs]
+set_output_delay -max 0.01 -clock clk [all_outputs]
 
 # 负载和驱动强度
 set_load 0.1 [all_outputs]

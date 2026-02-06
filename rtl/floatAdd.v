@@ -37,7 +37,7 @@ module floatAdd(num1, num2, result);
   wire [4:0] res_exp_same_s, res_exp_diff_s;
 
   assign result = mid_result & {16{~zero}}; //return result with zero flag
-  
+
   //Flags
   assign zero = (num1[14:0] == num2[14:0]) & (~num1[15] == num2[15]);
   assign overflow = ((&big_ex[4:1] & ~big_ex[0]) & sum_carry & sameSign) | inf_num;
@@ -67,108 +67,153 @@ module floatAdd(num1, num2, result);
   //Get shift amount for subtraction
   assign neg_exp = (big_ex < shift_am);
   always@*
-    begin
-      casex(sum)
-        11'b1xxxxxxxxxx: shift_am = 4'd0;
-        11'b01xxxxxxxxx: shift_am = 4'd1;
-        11'b001xxxxxxxx: shift_am = 4'd2;
-        11'b0001xxxxxxx: shift_am = 4'd3;
-        11'b00001xxxxxx: shift_am = 4'd4;
-        11'b000001xxxxx: shift_am = 4'd5;
-        11'b0000001xxxx: shift_am = 4'd6;
-        11'b00000001xxx: shift_am = 4'd7;
-        11'b000000001xx: shift_am = 4'd8;
-        11'b0000000001x: shift_am = 4'd9;
-        default: shift_am = 4'd10;
-      endcase
-    end
+  begin
+    casex(sum)
+      11'b1xxxxxxxxxx:
+        shift_am = 4'd0;
+      11'b01xxxxxxxxx:
+        shift_am = 4'd1;
+      11'b001xxxxxxxx:
+        shift_am = 4'd2;
+      11'b0001xxxxxxx:
+        shift_am = 4'd3;
+      11'b00001xxxxxx:
+        shift_am = 4'd4;
+      11'b000001xxxxx:
+        shift_am = 4'd5;
+      11'b0000001xxxx:
+        shift_am = 4'd6;
+      11'b00000001xxx:
+        shift_am = 4'd7;
+      11'b000000001xx:
+        shift_am = 4'd8;
+      11'b0000000001x:
+        shift_am = 4'd9;
+      default:
+        shift_am = 4'd10;
+    endcase
+  end
 
   //Shift mid_result for sub.
-  always@* 
-    begin
-      case (shift_am)
-        4'd0: sum_shifted =  sum[9:0];
-        4'd1: sum_shifted = {sum[8:0],sum_extension[9]};
-        4'd2: sum_shifted = {sum[7:0],sum_extension[9:8]};
-        4'd3: sum_shifted = {sum[6:0],sum_extension[9:7]};
-        4'd4: sum_shifted = {sum[5:0],sum_extension[9:6]};
-        4'd5: sum_shifted = {sum[4:0],sum_extension[9:5]};
-        4'd6: sum_shifted = {sum[3:0],sum_extension[9:4]};
-        4'd7: sum_shifted = {sum[2:0],sum_extension[9:3]};
-        4'd8: sum_shifted = {sum[1:0],sum_extension[9:2]};
-        4'd9: sum_shifted = {sum[0],  sum_extension[9:1]};
-        default: sum_shifted = sum_extension;
-      endcase
-      
-    end
+  always@*
+  begin
+    case (shift_am)
+      4'd0:
+        sum_shifted =  sum[9:0];
+      4'd1:
+        sum_shifted = {sum[8:0],sum_extension[9]};
+      4'd2:
+        sum_shifted = {sum[7:0],sum_extension[9:8]};
+      4'd3:
+        sum_shifted = {sum[6:0],sum_extension[9:7]};
+      4'd4:
+        sum_shifted = {sum[5:0],sum_extension[9:6]};
+      4'd5:
+        sum_shifted = {sum[4:0],sum_extension[9:5]};
+      4'd6:
+        sum_shifted = {sum[3:0],sum_extension[9:4]};
+      4'd7:
+        sum_shifted = {sum[2:0],sum_extension[9:3]};
+      4'd8:
+        sum_shifted = {sum[1:0],sum_extension[9:2]};
+      4'd9:
+        sum_shifted = {sum[0],  sum_extension[9:1]};
+      default:
+        sum_shifted = sum_extension;
+    endcase
+
+  end
 
   //take small number to exponent of big number
-  always@* 
-    begin
-      case (ex_diff)
-        5'h0: {shifted_small_float,small_extension} = {small_float,10'd0};
-        5'h1: {shifted_small_float,small_extension} = {small_float,9'd0};
-        5'h2: {shifted_small_float,small_extension} = {small_float,8'd0};
-        5'h3: {shifted_small_float,small_extension} = {small_float,7'd0};
-        5'h4: {shifted_small_float,small_extension} = {small_float,6'd0};
-        5'h5: {shifted_small_float,small_extension} = {small_float,5'd0};
-        5'h6: {shifted_small_float,small_extension} = {small_float,4'd0};
-        5'h7: {shifted_small_float,small_extension} = {small_float,3'd0};
-        5'h8: {shifted_small_float,small_extension} = {small_float,2'd0};
-        5'h9: {shifted_small_float,small_extension} = {small_float,1'd0};
-        5'ha: {shifted_small_float,small_extension} = small_float;
-        5'hb: {shifted_small_float,small_extension} = small_float[10:1];
-        5'hc: {shifted_small_float,small_extension} = small_float[10:2];
-        5'hd: {shifted_small_float,small_extension} = small_float[10:3];
-        5'he: {shifted_small_float,small_extension} = small_float[10:4];
-        5'hf: {shifted_small_float,small_extension} = small_float[10:5];
-        5'h10: {shifted_small_float,small_extension} = small_float[10:5];
-        5'h11: {shifted_small_float,small_extension} = small_float[10:6];
-        5'h12: {shifted_small_float,small_extension} = small_float[10:7];
-        5'h13: {shifted_small_float,small_extension} = small_float[10:8];
-        5'h14: {shifted_small_float,small_extension} = small_float[10:9];
-        5'h15: {shifted_small_float,small_extension} = small_float[10];
-        5'h16: {shifted_small_float,small_extension} = 0;
-      endcase
-    end
+  always@*
+  begin
+    case (ex_diff)
+      5'h0:
+        {shifted_small_float,small_extension} = {small_float,10'd0};
+      5'h1:
+        {shifted_small_float,small_extension} = {small_float,9'd0};
+      5'h2:
+        {shifted_small_float,small_extension} = {small_float,8'd0};
+      5'h3:
+        {shifted_small_float,small_extension} = {small_float,7'd0};
+      5'h4:
+        {shifted_small_float,small_extension} = {small_float,6'd0};
+      5'h5:
+        {shifted_small_float,small_extension} = {small_float,5'd0};
+      5'h6:
+        {shifted_small_float,small_extension} = {small_float,4'd0};
+      5'h7:
+        {shifted_small_float,small_extension} = {small_float,3'd0};
+      5'h8:
+        {shifted_small_float,small_extension} = {small_float,2'd0};
+      5'h9:
+        {shifted_small_float,small_extension} = {small_float,1'd0};
+      5'ha:
+        {shifted_small_float,small_extension} = small_float;
+      5'hb:
+        {shifted_small_float,small_extension} = small_float[10:1];
+      5'hc:
+        {shifted_small_float,small_extension} = small_float[10:2];
+      5'hd:
+        {shifted_small_float,small_extension} = small_float[10:3];
+      5'he:
+        {shifted_small_float,small_extension} = small_float[10:4];
+      5'hf:
+        {shifted_small_float,small_extension} = small_float[10:5];
+      5'h10:
+        {shifted_small_float,small_extension} = small_float[10:5];
+      5'h11:
+        {shifted_small_float,small_extension} = small_float[10:6];
+      5'h12:
+        {shifted_small_float,small_extension} = small_float[10:7];
+      5'h13:
+        {shifted_small_float,small_extension} = small_float[10:8];
+      5'h14:
+        {shifted_small_float,small_extension} = small_float[10:9];
+      5'h15:
+        {shifted_small_float,small_extension} = small_float[10];
+      5'h16:
+        {shifted_small_float,small_extension} = 0;
+    endcase
+  end
 
   always@* //if signs are diffrent take 2s compliment of small number
+  begin
+    if(sameSign)
     begin
-      if(sameSign)
-        begin
-          sign_small_float = shifted_small_float;
-        end
-      else
-        begin
-          sign_small_float = ~shifted_small_float + 11'b1;
-        end
+      sign_small_float = shifted_small_float;
     end
+    else
+    begin
+      sign_small_float = ~shifted_small_float + 11'b1;
+    end
+  end
 
   always@* //determine big number
+  begin
+    if(num2[14:10] > num1[14:10])
     begin
-      if(num2[14:10] > num1[14:10])
-        begin
-          bigNum = num2;
-          smallNum = num1;
-        end
-      else if(num2[14:10] == num1[14:10])
-        begin
-          if(num2[9:0] > num1[9:0])
-            begin
-              bigNum = num2;
-              smallNum = num1;
-            end
-          else
-            begin
-              bigNum = num1;
-              smallNum = num2;
-            end
-        end
-      else
-        begin
-          bigNum = num1;
-          smallNum = num2;
-        end
+      bigNum = num2;
+      smallNum = num1;
     end
-    
+    else if(num2[14:10] == num1[14:10])
+    begin
+      if(num2[9:0] > num1[9:0])
+      begin
+        bigNum = num2;
+        smallNum = num1;
+      end
+      else
+      begin
+        bigNum = num1;
+        smallNum = num2;
+      end
+    end
+    else
+    begin
+      bigNum = num1;
+      smallNum = num2;
+    end
+  end
+
 endmodule

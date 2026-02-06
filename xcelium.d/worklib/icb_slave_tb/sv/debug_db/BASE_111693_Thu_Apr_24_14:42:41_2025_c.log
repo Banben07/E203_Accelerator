@@ -1,0 +1,51 @@
+[2025-04-24 14:42:41] Opening database: [/home/sakamoto/E203_Accelerator/xcelium.d/worklib/icb_slave_tb/sv/debug_db], overwrite: 1
+[2025-04-24 14:42:41] Closing database: started idaDesignDBInitialCloseOperations
+[2025-04-24 14:42:41] Closing database: finished idaDesignDBInitialCloseOperations
+[2025-04-24 14:42:41] creating index on table hierarchy column module_definition 
+[2025-04-24 14:42:41] creating index on table design_dictionary column value 
+[2025-04-24 14:42:41] creating index on table design_general column key 
+[2025-04-24 14:42:41] creating index on table liberty_cell_attributes column cell_definition_id 
+[2025-04-24 14:42:41] creating index on table liberty_cell_attributes column related_library_definition_id 
+[2025-04-24 14:42:41] creating index on table connect_logic_net column low_con_net 
+[2025-04-24 14:42:41] creating index on table connect_logic_net column new_high_con_net 
+[2025-04-24 14:42:41] creating index on table power_domain_instances column hdl_scope 
+[2025-04-24 14:42:41] creating index on table power_pins_to_supply_net column instance_name_id 
+[2025-04-24 14:42:41] creating index on table power_pins_to_supply_net column supply_net 
+[2025-04-24 14:42:41] creating index on table lp_pin column module_def 
+[2025-04-24 14:42:41] creating index on table oomr column du_format 
+[2025-04-24 14:42:41] creating index on table oomr columns (src_rep, loc_in_du_format COLLATE NOCASE) 
+[2025-04-24 14:42:41] creating index on table oomr column inst_path_format 
+[2025-04-24 14:42:41] creating index on table oopr column du_format 
+[2025-04-24 14:42:41] creating index on table oopr columns (src_rep, loc_in_du_format) 
+[2025-04-24 14:42:41] creating index on table oopr column inst_path_format 
+[2025-04-24 14:42:41] creating index on table xprop_location column process_location 
+[2025-04-24 14:42:41] creating index on table module_def_include_to_file column file_name 
+[2025-04-24 14:42:41] creating index on table coerced_port column name 
+[2025-04-24 14:42:41] creating index on table coerced_port column module_def 
+[2025-04-24 14:42:41] creating index on table class_inheritance column def_name 
+[2025-04-24 14:42:41] creating index on table class_association column defn_name 
+[2025-04-24 14:42:41] creating index on table lp_instance_data column instance_name 
+[2025-04-24 14:42:41] creating index on table lp_instance_data columns (instance_name, lp_obj_kind) 
+[2025-04-24 14:42:41] creating index on table lp_supply_net_hdl_load column hdl_full_path 
+[2025-04-24 14:42:41] creating index on table lp_supply_net_hdl_load column lp_supply_net_name 
+[2025-04-24 14:42:41] creating index on table lp_supply_net_hdl_driver column driver_hdl_full_path 
+[2025-04-24 14:42:41] creating index on table lp_supply_net_hdl_driver column driver_supply_net_id 
+[2025-04-24 14:42:41] creating index on table lp_power_switch_hdl_load column net_name 
+[2025-04-24 14:42:41] creating index on table lp_file_scope_id columns (lp_file_id, lp_scope_id) 
+[2025-04-24 14:42:41] creating index on table lp_text_ref columns (lp_file_scope_id, line_number) 
+[2025-04-24 14:42:41] creating index on table lp_text_ref column lp_object_id 
+[2025-04-24 14:42:41] creating index on table upf_commands_map columns (original_line, signal) 
+[2025-04-24 14:42:41] creating index on table upf_commands_map column commands_line 
+[2025-04-24 14:42:41] creating index on table source_mapping column src_path 
+[2025-04-24 14:42:41] creating index on table instance_liberty column scope_path_id 
+[2025-04-24 14:42:41] creating index on table liberty_extended_data column liberty_scope_path_id 
+[2025-04-24 14:42:41] creating index on table huge_file_offset column file_id 
+[2025-04-24 14:42:41] creating index on table general_elements_attributes column element_name_id 
+[2025-04-24 14:42:41] creating index on table connect_supply_net_source column csn_id 
+[2025-04-24 14:42:41] creating index on table connect_supply_net_source column src_net_id 
+[2025-04-24 14:42:41] creating index on table connect_supply_net_dest column csn_id 
+[2025-04-24 14:42:41] creating index on table connect_supply_net_dest column dest_port_id 
+[2025-04-24 14:42:41] creating index on table liberty_library column library_definition_id 
+[2025-04-24 14:42:41] creating indices for db Design is done
+[2025-04-24 14:42:41] Closing database: started idaDesignDBFinalCloseOperations
+[2025-04-24 14:42:41] Closing database: finished idaDesignDBFinalCloseOperations

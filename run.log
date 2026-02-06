@@ -1,0 +1,546 @@
+xrun(64): 23.09-s007: (c) Copyright 1995-2024 Cadence Design Systems, Inc.
+TOOL:	xrun(64)	23.09-s007: Started on Jul 03, 2025 at 17:44:24 CST
+xrun
+	-64bit
+	-lwdgen
+	-sv
+	-access +rwc
+	-svseed random
+	-sva
+	-status
+	-f filelist.f
+		./rtl/mem_shift_reg.sv
+		./rtl/addertree9_fp16.sv
+		./rtl/acc_top.sv
+		./rtl/conv_control.sv
+		./rtl/icb_slave.sv
+		./rtl/freepdk45_sram_1rw1r_32x8192_8.v
+		./rtl/gelu.sv
+		./rtl/conv_kernal.sv
+		./rtl/linebuffer_3x3.sv
+		./tb/icb_slave_tb.sv
+		./rtl/floatAdd.v
+		./rtl/floatMult.v
+		./bn/AvgUnit.v
+		./bn/Bn_complete.v
+		./bn/equal.v
+		./bn/bn_multi.v
+		./bn/Bn.v
+		./bn/x_sub_u.v
+		./bn/Square_root.v
+	-errormax 15
+	+UVM_TESTNAME=test0
+	-timescale 1ns/1ps
+	-input run.tcl
+	-l run.log
+Loading snapshot worklib.icb_slave_tb:sv .................... Done
+SVSEED set randomly from command line: 402876081
+xcelium> source /opt/cadence/xceliummain23.09/tools/xcelium/files/xmsimrc
+xcelium> source /opt/cadence/xceliummain23.09/tools/methodology/UVM/CDNS-1.1d/additions/sv/files/tcl/uvm_sim.tcl
+xcelium> ida_database -open -name=SmartLogWaves.db
+xcelium> 
+xcelium> #Probe log messages to SmartLog DB
+xcelium> ida_probe -log 
+xcelium> 
+xcelium> # Probe all HDL, all levels
+xcelium> ida_probe -wave -wave_probe_args=" -all -depth all -memories -packed 0 -unpacked 0 -tasks"
+database -open SmartLogWaves.db/SmartLogWaves.shm 
+Created SHM database SmartLogWaves.db/SmartLogWaves.shm
+
+database -setdefault SmartLogWaves.db/SmartLogWaves.shm
+SmartLogWaves.db/SmartLogWaves.shm is set as default SHM database
+
+probe  -all -depth all -memories -packed 0 -unpacked 0 -tasks -emptyok
+Created probe 1
+
+xcelium> 
+xcelium> run
+Test for ofmap[0]
+expected[0]: 93.625000, actual[0]: 93.625000
+Check PASSED
+--------------------
+Test for ofmap[1]
+expected[1]: 27.625000, actual[1]: 27.687500
+Check PASSED
+--------------------
+Test for ofmap[2]
+expected[2]: 236.250000, actual[2]: 236.125000
+Check PASSED
+--------------------
+Test for ofmap[3]
+expected[3]: 182.875000, actual[3]: 182.875000
+Check PASSED
+--------------------
+Test for ofmap[4]
+expected[4]: -64.187500, actual[4]: -64.187500
+Check PASSED
+--------------------
+Test for ofmap[5]
+expected[5]: -126.312500, actual[5]: -126.125000
+Check PASSED
+--------------------
+Test for ofmap[6]
+expected[6]: 114.375000, actual[6]: 114.250000
+Check PASSED
+--------------------
+Test for ofmap[7]
+expected[7]: 83.500000, actual[7]: 83.812500
+Check PASSED
+--------------------
+Test for ofmap[8]
+expected[8]: -105.000000, actual[8]: -105.187500
+Check PASSED
+--------------------
+Test for ofmap[9]
+expected[9]: -137.875000, actual[9]: -137.875000
+Check PASSED
+--------------------
+Test for ofmap[10]
+expected[10]: 84.375000, actual[10]: 84.687500
+Check PASSED
+--------------------
+Test for ofmap[11]
+expected[11]: 52.437500, actual[11]: 52.500000
+Check PASSED
+--------------------
+Test for ofmap[12]
+expected[12]: -184.000000, actual[12]: -184.125000
+Check PASSED
+--------------------
+Test for ofmap[13]
+expected[13]: 175.875000, actual[13]: 176.000000
+Check PASSED
+--------------------
+Test for ofmap[14]
+expected[14]: 73.375000, actual[14]: 73.562500
+Check PASSED
+--------------------
+Test for ofmap[15]
+expected[15]: -7.953125, actual[15]: -7.906250
+Check PASSED
+--------------------
+Test for ofmap[16]
+expected[16]: -66.375000, actual[16]: -66.187500
+Check PASSED
+--------------------
+Test for ofmap[17]
+expected[17]: 1.750000, actual[17]: 1.843750
+Check FAILED
+--------------------
+Test for ofmap[18]
+expected[18]: 141.250000, actual[18]: 141.250000
+Check PASSED
+--------------------
+Test for ofmap[19]
+expected[19]: 11.375000, actual[19]: 11.289062
+Check FAILED
+--------------------
+Test for ofmap[20]
+expected[20]: 31.281250, actual[20]: 31.437500
+Check PASSED
+--------------------
+Test for ofmap[21]
+expected[21]: 55.343750, actual[21]: 55.312500
+Check PASSED
+--------------------
+Test for ofmap[22]
+expected[22]: 106.875000, actual[22]: 106.812500
+Check PASSED
+--------------------
+Test for ofmap[23]
+expected[23]: -155.625000, actual[23]: -155.500000
+Check PASSED
+--------------------
+Test for ofmap[24]
+expected[24]: -179.500000, actual[24]: -179.500000
+Check PASSED
+--------------------
+Test for ofmap[25]
+expected[25]: 204.375000, actual[25]: 204.375000
+Check PASSED
+--------------------
+Test for ofmap[26]
+expected[26]: -50.375000, actual[26]: -50.406250
+Check PASSED
+--------------------
+Test for ofmap[27]
+expected[27]: -136.250000, actual[27]: -136.500000
+Check PASSED
+--------------------
+Test for ofmap[28]
+expected[28]: 36.218750, actual[28]: 36.062500
+Check PASSED
+--------------------
+Test for ofmap[29]
+expected[29]: -231.375000, actual[29]: -231.250000
+Check PASSED
+--------------------
+Test for ofmap[30]
+expected[30]: 91.625000, actual[30]: 91.750000
+Check PASSED
+--------------------
+Test for ofmap[31]
+expected[31]: 79.000000, actual[31]: 79.125000
+Check PASSED
+--------------------
+Test for ofmap[32]
+expected[32]: 188.250000, actual[32]: 188.125000
+Check PASSED
+--------------------
+Test for ofmap[33]
+expected[33]: -162.000000, actual[33]: -162.000000
+Check PASSED
+--------------------
+Test for ofmap[34]
+expected[34]: 287.500000, actual[34]: 287.500000
+Check PASSED
+--------------------
+Test for ofmap[35]
+expected[35]: -18.250000, actual[35]: -18.375000
+Check PASSED
+--------------------
+Test for ofmap[36]
+expected[36]: 274.250000, actual[36]: 274.000000
+Check PASSED
+--------------------
+Test for ofmap[37]
+expected[37]: -308.750000, actual[37]: -308.250000
+Check PASSED
+--------------------
+Test for ofmap[38]
+expected[38]: 251.500000, actual[38]: 251.375000
+Check PASSED
+--------------------
+Test for ofmap[39]
+expected[39]: -148.500000, actual[39]: -148.500000
+Check PASSED
+--------------------
+Test for ofmap[40]
+expected[40]: -150.875000, actual[40]: -150.875000
+Check PASSED
+--------------------
+Test for ofmap[41]
+expected[41]: 85.375000, actual[41]: 85.375000
+Check PASSED
+--------------------
+Test for ofmap[42]
+expected[42]: -29.093750, actual[42]: -29.187500
+Check PASSED
+--------------------
+Test for ofmap[43]
+expected[43]: -40.875000, actual[43]: -40.968750
+Check PASSED
+--------------------
+Test for ofmap[44]
+expected[44]: 118.875000, actual[44]: 118.687500
+Check PASSED
+--------------------
+Test for ofmap[45]
+expected[45]: -266.500000, actual[45]: -266.250000
+Check PASSED
+--------------------
+Test for ofmap[46]
+expected[46]: -22.062500, actual[46]: -21.937500
+Check PASSED
+--------------------
+Test for ofmap[47]
+expected[47]: 239.750000, actual[47]: 239.500000
+Check PASSED
+--------------------
+Test for ofmap[48]
+expected[48]: -171.250000, actual[48]: -171.375000
+Check PASSED
+--------------------
+Test for ofmap[49]
+expected[49]: -201.500000, actual[49]: -201.500000
+Check PASSED
+--------------------
+Test for ofmap[50]
+expected[50]: -37.437500, actual[50]: -37.531250
+Check PASSED
+--------------------
+Test for ofmap[51]
+expected[51]: 268.250000, actual[51]: 268.250000
+Check PASSED
+--------------------
+Test for ofmap[52]
+expected[52]: 83.312500, actual[52]: 83.375000
+Check PASSED
+--------------------
+Test for ofmap[53]
+expected[53]: -184.625000, actual[53]: -184.500000
+Check PASSED
+--------------------
+Test for ofmap[54]
+expected[54]: -268.000000, actual[54]: -268.000000
+Check PASSED
+--------------------
+Test for ofmap[55]
+expected[55]: 139.000000, actual[55]: 139.000000
+Check PASSED
+--------------------
+Test for ofmap[56]
+expected[56]: 320.500000, actual[56]: 320.500000
+Check PASSED
+--------------------
+Test for ofmap[57]
+expected[57]: -48.562500, actual[57]: -48.437500
+Check PASSED
+--------------------
+Test for ofmap[58]
+expected[58]: 13.031250, actual[58]: 13.000000
+Check PASSED
+--------------------
+Test for ofmap[59]
+expected[59]: -89.812500, actual[59]: -89.562500
+Check PASSED
+--------------------
+Test for ofmap[60]
+expected[60]: 109.187500, actual[60]: 109.125000
+Check PASSED
+--------------------
+Test for ofmap[61]
+expected[61]: 139.500000, actual[61]: 139.250000
+Check PASSED
+--------------------
+Test for ofmap[62]
+expected[62]: -88.125000, actual[62]: -88.250000
+Check PASSED
+--------------------
+Test for ofmap[63]
+expected[63]: 18.312500, actual[63]: 18.375000
+Check PASSED
+--------------------
+Test for ofmap[64]
+expected[64]: -12.742188, actual[64]: -12.687500
+Check PASSED
+--------------------
+Test for ofmap[65]
+expected[65]: -191.500000, actual[65]: -191.500000
+Check PASSED
+--------------------
+Test for ofmap[66]
+expected[66]: -236.500000, actual[66]: -236.500000
+Check PASSED
+--------------------
+Test for ofmap[67]
+expected[67]: 37.562500, actual[67]: 37.687500
+Check PASSED
+--------------------
+Test for ofmap[68]
+expected[68]: 20.500000, actual[68]: 20.562500
+Check PASSED
+--------------------
+Test for ofmap[69]
+expected[69]: -6.140625, actual[69]: -6.062500
+Check PASSED
+--------------------
+Test for ofmap[70]
+expected[70]: -260.000000, actual[70]: -260.000000
+Check PASSED
+--------------------
+Test for ofmap[71]
+expected[71]: 305.250000, actual[71]: 304.750000
+Check PASSED
+--------------------
+Test for ofmap[72]
+expected[72]: -7.812500, actual[72]: -7.640625
+Check PASSED
+--------------------
+Test for ofmap[73]
+expected[73]: 256.250000, actual[73]: 256.500000
+Check PASSED
+--------------------
+Test for ofmap[74]
+expected[74]: 92.250000, actual[74]: 92.312500
+Check PASSED
+--------------------
+Test for ofmap[75]
+expected[75]: -132.500000, actual[75]: -132.625000
+Check PASSED
+--------------------
+Test for ofmap[76]
+expected[76]: -173.625000, actual[76]: -173.500000
+Check PASSED
+--------------------
+Test for ofmap[77]
+expected[77]: 52.093750, actual[77]: 51.937500
+Check PASSED
+--------------------
+Test for ofmap[78]
+expected[78]: -183.000000, actual[78]: -182.875000
+Check PASSED
+--------------------
+Test for ofmap[79]
+expected[79]: -167.250000, actual[79]: -167.000000
+Check PASSED
+--------------------
+Test for ofmap[80]
+expected[80]: 124.375000, actual[80]: 124.250000
+Check PASSED
+--------------------
+Test for ofmap[81]
+expected[81]: -156.500000, actual[81]: -156.500000
+Check PASSED
+--------------------
+Test for ofmap[82]
+expected[82]: -233.875000, actual[82]: -233.625000
+Check PASSED
+--------------------
+Test for ofmap[83]
+expected[83]: 20.609375, actual[83]: 20.625000
+Check PASSED
+--------------------
+Test for ofmap[84]
+expected[84]: 89.312500, actual[84]: 89.375000
+Check PASSED
+--------------------
+Test for ofmap[85]
+expected[85]: 227.625000, actual[85]: 227.250000
+Check PASSED
+--------------------
+Test for ofmap[86]
+expected[86]: 1.250000, actual[86]: 1.375000
+Check FAILED
+--------------------
+Test for ofmap[87]
+expected[87]: -38.875000, actual[87]: -38.750000
+Check PASSED
+--------------------
+Test for ofmap[88]
+expected[88]: 21.093750, actual[88]: 21.046875
+Check PASSED
+--------------------
+Test for ofmap[89]
+expected[89]: 79.875000, actual[89]: 79.750000
+Check PASSED
+--------------------
+Test for ofmap[90]
+expected[90]: -59.250000, actual[90]: -59.250000
+Check PASSED
+--------------------
+Test for ofmap[91]
+expected[91]: -23.906250, actual[91]: -24.093750
+Check PASSED
+--------------------
+Test for ofmap[92]
+expected[92]: 20.859375, actual[92]: 20.843750
+Check PASSED
+--------------------
+Test for ofmap[93]
+expected[93]: 77.000000, actual[93]: 77.125000
+Check PASSED
+--------------------
+Test for ofmap[94]
+expected[94]: 58.187500, actual[94]: 58.156250
+Check PASSED
+--------------------
+Test for ofmap[95]
+expected[95]: -37.687500, actual[95]: -37.625000
+Check PASSED
+--------------------
+Test for ofmap[96]
+expected[96]: -241.750000, actual[96]: -241.625000
+Check PASSED
+--------------------
+Test for ofmap[97]
+expected[97]: 56.843750, actual[97]: 56.718750
+Check PASSED
+--------------------
+Test for ofmap[98]
+expected[98]: 79.000000, actual[98]: 79.000000
+Check PASSED
+--------------------
+Test for ofmap[99]
+expected[99]: -188.000000, actual[99]: -187.750000
+Check PASSED
+--------------------
+Test for ofmap[100]
+expected[100]: 300.500000, actual[100]: 300.500000
+Check PASSED
+--------------------
+Test for ofmap[101]
+expected[101]: -164.500000, actual[101]: -164.500000
+Check PASSED
+--------------------
+Test for ofmap[102]
+expected[102]: -114.562500, actual[102]: -114.562500
+Check PASSED
+--------------------
+Test for ofmap[103]
+expected[103]: 171.125000, actual[103]: 171.250000
+Check PASSED
+--------------------
+Test for ofmap[104]
+expected[104]: 138.250000, actual[104]: 138.125000
+Check PASSED
+--------------------
+Test for ofmap[105]
+expected[105]: -0.953125, actual[105]: -0.968750
+Check PASSED
+--------------------
+Test for ofmap[106]
+expected[106]: -46.031250, actual[106]: -46.000000
+Check PASSED
+--------------------
+Test for ofmap[107]
+expected[107]: 208.750000, actual[107]: 208.750000
+Check PASSED
+--------------------
+Test for ofmap[108]
+expected[108]: 82.500000, actual[108]: 82.562500
+Check PASSED
+--------------------
+Test for ofmap[109]
+expected[109]: -140.750000, actual[109]: -140.875000
+Check PASSED
+--------------------
+Test for ofmap[110]
+expected[110]: 103.250000, actual[110]: 103.375000
+Check PASSED
+--------------------
+Test for ofmap[111]
+expected[111]: 58.750000, actual[111]: 58.625000
+Check PASSED
+--------------------
+Test for ofmap[112]
+expected[112]: 114.250000, actual[112]: 114.375000
+Check PASSED
+--------------------
+Test for ofmap[113]
+expected[113]: 129.250000, actual[113]: 129.000000
+Check PASSED
+--------------------
+Test for ofmap[114]
+expected[114]: 106.000000, actual[114]: 106.000000
+Check PASSED
+--------------------
+Test for ofmap[115]
+expected[115]: -470.250000, actual[115]: -470.250000
+Check PASSED
+--------------------
+Test for ofmap[116]
+expected[116]: 66.687500, actual[116]: 66.687500
+Check PASSED
+--------------------
+Test for ofmap[117]
+expected[117]: 190.375000, actual[117]: 190.375000
+Check PASSED
+--------------------
+Test for ofmap[118]
+expected[118]: 190.375000, actual[118]: 190.500000
+Check PASSED
+--------------------
+Test for ofmap[119]
+expected[119]: -122.375000, actual[119]: -122.562500
+Check PASSED
+--------------------
+Total error count:   3
+Simulation done
+Simulation complete via $finish(1) at time 298425 NS + 0
+./tb/icb_slave_tb.sv:238     $finish;
+xcelium> exit
+xmsim: Memory Usage - Final: 99.9M, Peak: 116.2M, Peak virtual: 452.0M
+xmsim: Main Thread CPU Usage - 0.1s system + 0.3s user = 0.3s total
+xmsim: CPU Usage - 0.1s system + 0.6s user = 0.7s total (0.4s, 192.3% cpu)
+TOOL:	xrun(64)	23.09-s007: Exiting on Jul 03, 2025 at 17:44:25 CST  (total: 00:00:01)

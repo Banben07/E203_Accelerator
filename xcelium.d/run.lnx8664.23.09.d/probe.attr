@@ -1,0 +1,16 @@
+lwd_dir /home/sakamoto/E203_Accelerator/xcelium.d/worklib/icb_slave_tb/sv/debug_db/icb_slave_tb/../..
+snapshot_name worklib.icb_slave_tb:sv
+cells 1
+hostname ubuntu
+work_directory /home/sakamoto/E203_Accelerator
+autofetch 0
+persistent_sources 0
+cdslib ./xcelium.d/run.lnx8664.23.09.d/cds.lib
+cds_implicit_tmplib worklib
+hdlvar ./xcelium.d/run.lnx8664.23.09.d/hdl.var
+platform x86_64
+bits 64
+du-agent YES
+xprop 0
+automsie 0
+cds_libs /home/sakamoto/E203_Accelerator/xcelium.d/run.lnx8664.23.09.d/cds.lib /home/sakamoto/E203_Accelerator/xcelium.d/run.lnx8664.23.09.d/cdsrun.lib /opt/cadence/xceliummain23.09/tools/inca/files/cds.lib /opt/cadence/xceliummain23.09/tools/inca/files/cdsvhdl.lib /opt/cadence/xceliummain23.09/tools/inca/files/cdsvlog.lib /opt/cadence/xceliummain23.09/tools/transrecord/files/cds.lib /opt/cadence/xceliummain23.09/tools/affirma_ams/etc/connect_lib/cds.lib /opt/cadence/xceliummain23.09/tools/affirma_ams/etc/dms/cds.lib

@@ -1,5 +1,5 @@
 xrun(64): 20.09-s009: (c) Copyright 1995-2021 Cadence Design Systems, Inc.
-TOOL:	xrun(64)	20.09-s009: Started on Apr 11, 2025 at 20:22:10 CST
+TOOL:	xrun(64)	20.09-s009: Started on Apr 12, 2025 at 14:25:51 CST
 xrun
 	-R
 	-input wave.tcl
@@ -33,87 +33,83 @@ xcelium>
 xcelium> run
 
 Warning!  Timing violation
-           $setuphold<hold>( posedge CK &&& (RN_AND_NEG_SE === 1'b1):30 NS, negedge D:30 NS,  0.100 : 100 PS,  0.100 : 100 PS );
+           $setuphold<hold>( posedge CK &&& (RN_AND_NEG_SE === 1'b1):75 NS, negedge D:75 NS,  0.100 : 100 PS,  0.100 : 100 PS );
             File: /home/sakamoto/NangateOpenCellLibrary/Front_End/Verilog/NangateOpenCellLibrary.v, line = 4424
            Scope: icb_slave_tb.acc_top.u_icb_slave.\RAM_SEL_reg[0] 
-            Time: 30 NS
+            Time: 75 NS
 
 
 Warning!  Timing violation
-           $setuphold<hold>( posedge CK &&& (NEG_SE_AND_SN === 1'b1):30 NS, posedge D:30 NS,  0.100 : 100 PS,  0.100 : 100 PS );
+           $setuphold<hold>( posedge CK &&& (NEG_SE_AND_SN === 1'b1):75 NS, posedge D:75 NS,  0.100 : 100 PS,  0.100 : 100 PS );
             File: /home/sakamoto/NangateOpenCellLibrary/Front_End/Verilog/NangateOpenCellLibrary.v, line = 4763
            Scope: icb_slave_tb.acc_top.u_icb_slave.\RAM_SEL_reg[1] 
-            Time: 30 NS
+            Time: 75 NS
 
 
 Warning!  Timing violation
-           $setuphold<hold>( posedge CK &&& (RN_AND_SE === 1'b1):30 NS, negedge SI:30 NS,  0.100 : 100 PS,  0.100 : 100 PS );
+           $setuphold<hold>( posedge CK &&& (RN_AND_SE === 1'b1):75 NS, negedge SI:75 NS,  0.100 : 100 PS,  0.100 : 100 PS );
             File: /home/sakamoto/NangateOpenCellLibrary/Front_End/Verilog/NangateOpenCellLibrary.v, line = 4426
            Scope: icb_slave_tb.acc_top.u_icb_slave.\STAT_REG_CAL_reg[0] 
-            Time: 30 NS
+            Time: 75 NS
 
 
 Warning!  Timing violation
-           $setuphold<hold>( posedge CK &&& (NEG_SE_AND_SN === 1'b1):70 NS, negedge D:70 NS,  0.100 : 100 PS,  0.100 : 100 PS );
+           $setuphold<hold>( posedge CK &&& (NEG_SE_AND_SN === 1'b1):175 NS, negedge D:175 NS,  0.100 : 100 PS,  0.100 : 100 PS );
             File: /home/sakamoto/NangateOpenCellLibrary/Front_End/Verilog/NangateOpenCellLibrary.v, line = 4762
            Scope: icb_slave_tb.acc_top.u_icb_slave.\RAM_SEL_reg[1] 
-            Time: 70 NS
+            Time: 175 NS
 
 
 Warning!  Timing violation
-           $setuphold<hold>( posedge CK &&& (RN_AND_NEG_SE === 1'b1):85710 NS, posedge D:85710 NS,  0.100 : 100 PS,  0.100 : 100 PS );
+           $setuphold<hold>( posedge CK &&& (RN_AND_NEG_SE === 1'b1):214275 NS, posedge D:214275 NS,  0.100 : 100 PS,  0.100 : 100 PS );
             File: /home/sakamoto/NangateOpenCellLibrary/Front_End/Verilog/NangateOpenCellLibrary.v, line = 4425
            Scope: icb_slave_tb.acc_top.u_icb_slave.\RAM_SEL_reg[0] 
-            Time: 85710 NS
+            Time: 214275 NS
 
 
 Warning!  Timing violation
-           $setuphold<hold>( posedge CK &&& (NEG_SE_AND_SN === 1'b1):85710 NS, negedge D:85710 NS,  0.100 : 100 PS,  0.100 : 100 PS );
+           $setuphold<hold>( posedge CK &&& (NEG_SE_AND_SN === 1'b1):214275 NS, negedge D:214275 NS,  0.100 : 100 PS,  0.100 : 100 PS );
             File: /home/sakamoto/NangateOpenCellLibrary/Front_End/Verilog/NangateOpenCellLibrary.v, line = 4762
            Scope: icb_slave_tb.acc_top.u_icb_slave.\RAM_SEL_reg[1] 
-            Time: 85710 NS
+            Time: 214275 NS
 
 
 Warning!  Timing violation
-           $setuphold<hold>( posedge CK &&& (RN_AND_SE === 1'b1):85710 NS, posedge SI:85710 NS,  0.100 : 100 PS,  0.100 : 100 PS );
+           $setuphold<hold>( posedge CK &&& (RN_AND_SE === 1'b1):214275 NS, posedge SI:214275 NS,  0.100 : 100 PS,  0.100 : 100 PS );
             File: /home/sakamoto/NangateOpenCellLibrary/Front_End/Verilog/NangateOpenCellLibrary.v, line = 4427
            Scope: icb_slave_tb.acc_top.u_icb_slave.\STAT_REG_CAL_reg[0] 
-            Time: 85710 NS
+            Time: 214275 NS
 
 
 Warning!  Timing violation
-           $setuphold<hold>( posedge CK &&& (RN_AND_NEG_SE === 1'b1):85750 NS, negedge D:85750 NS,  0.100 : 100 PS,  0.100 : 100 PS );
+           $setuphold<hold>( posedge CK &&& (RN_AND_NEG_SE === 1'b1):214375 NS, negedge D:214375 NS,  0.100 : 100 PS,  0.100 : 100 PS );
             File: /home/sakamoto/NangateOpenCellLibrary/Front_End/Verilog/NangateOpenCellLibrary.v, line = 4424
            Scope: icb_slave_tb.acc_top.u_icb_slave.\RAM_SEL_reg[0] 
-            Time: 85750 NS
+            Time: 214375 NS
 
 
 Warning!  Timing violation
-           $setuphold<hold>( posedge CK &&& (NEG_SE_AND_SN === 1'b1):85750 NS, posedge D:85750 NS,  0.100 : 100 PS,  0.100 : 100 PS );
+           $setuphold<hold>( posedge CK &&& (NEG_SE_AND_SN === 1'b1):214375 NS, posedge D:214375 NS,  0.100 : 100 PS,  0.100 : 100 PS );
             File: /home/sakamoto/NangateOpenCellLibrary/Front_End/Verilog/NangateOpenCellLibrary.v, line = 4763
            Scope: icb_slave_tb.acc_top.u_icb_slave.\RAM_SEL_reg[1] 
-            Time: 85750 NS
+            Time: 214375 NS
 
 
 Warning!  Timing violation
-           $setuphold<hold>( posedge CK &&& (RN_AND_NEG_SE === 1'b1):105350 NS, posedge D:105350 NS,  0.100 : 100 PS,  0.100 : 100 PS );
+           $setuphold<hold>( posedge CK &&& (RN_AND_NEG_SE === 1'b1):263375 NS, posedge D:263375 NS,  0.100 : 100 PS,  0.100 : 100 PS );
             File: /home/sakamoto/NangateOpenCellLibrary/Front_End/Verilog/NangateOpenCellLibrary.v, line = 4425
            Scope: icb_slave_tb.acc_top.u_icb_slave.\RAM_SEL_reg[0] 
-            Time: 105350 NS
+            Time: 263375 NS
 
 
 Warning!  Timing violation
-           $setuphold<hold>( posedge CK &&& (RN_AND_SE === 1'b1):105390 NS, negedge SI:105390 NS,  0.100 : 100 PS,  0.100 : 100 PS );
+           $setuphold<hold>( posedge CK &&& (RN_AND_SE === 1'b1):263475 NS, negedge SI:263475 NS,  0.100 : 100 PS,  0.100 : 100 PS );
             File: /home/sakamoto/NangateOpenCellLibrary/Front_End/Verilog/NangateOpenCellLibrary.v, line = 4426
            Scope: icb_slave_tb.acc_top.u_icb_slave.\STAT_REG_CAL_reg[0] 
-            Time: 105390 NS
+            Time: 263475 NS
 
-Simulation interrupted at 11243750 NS + 1
-xcelium> ^C
-xcelium> ^C
-xcelium> ^C
-xcelium> ^C
+Simulation interrupted at 216940050 NS + 0
 xcelium> 
 xmsim: *W,CMUSEX: Control-D in interactive input - one more to exit.
 xcelium> exit
-TOOL:	xrun(64)	20.09-s009: Exiting on Apr 11, 2025 at 20:22:20 CST  (total: 00:00:10)
+TOOL:	xrun(64)	20.09-s009: Exiting on Apr 12, 2025 at 14:26:19 CST  (total: 00:00:28)

@@ -1,0 +1,157 @@
+xrun(64): 23.09-s007: (c) Copyright 1995-2024 Cadence Design Systems, Inc.
+TOOL:	xrun(64)	23.09-s007: Started on Apr 18, 2025 at 16:39:53 CST
+xrun
+	-64bit
+	-lwdgen
+	-sv
+	-access +rwc
+	-svseed random
+	-sva
+	-status
+	-f filelist.f
+		./rtl/mem_shift_reg.sv
+		./rtl/addertree9_fp16.sv
+		./rtl/acc_top.sv
+		./rtl/conv_control.sv
+		./rtl/icb_slave.sv
+		./rtl/freepdk45_sram_1rw1r_32x8192_8.v
+		./rtl/gelu.sv
+		./rtl/conv_kernal.sv
+		./rtl/linebuffer_3x3.sv
+		./tb/icb_slave_tb.sv
+		./rtl/floatAdd.v
+		./rtl/floatMult.v
+		./bn/AvgUnit.v
+		./bn/Bn_complete.v
+		./bn/equal.v
+		./bn/bn_multi.v
+		./bn/Bn.v
+		./bn/x_sub_u.v
+		./bn/Square_root.v
+	-errormax 15
+	-coverage all
+	-covoverwrite
+	-covtest test0
+	-covworkdir cov_work
+	-l compile.log
+	-compile
+	-exit
+file: ./rtl/mem_shift_reg.sv
+	module worklib.mem_shift_reg:sv
+		errors: 0, warnings: 0
+file: ./rtl/addertree9_fp16.sv
+	module worklib.addertree9_fp16:sv
+		errors: 0, warnings: 0
+file: ./rtl/acc_top.sv
+	module worklib.acc_top:sv
+		errors: 0, warnings: 0
+file: ./rtl/conv_control.sv
+	module worklib.conv_control:sv
+		errors: 0, warnings: 0
+file: ./rtl/icb_slave.sv
+	module worklib.icb_slave:sv
+		errors: 0, warnings: 0
+file: ./rtl/freepdk45_sram_1rw1r_32x8192_8.v
+	module worklib.freepdk45_sram_1rw1r_32x8192_8:v
+		errors: 0, warnings: 0
+file: ./rtl/gelu.sv
+	module worklib.gelu:sv
+		errors: 0, warnings: 0
+file: ./rtl/conv_kernal.sv
+	module worklib.conv_kernal:sv
+		errors: 0, warnings: 0
+file: ./rtl/linebuffer_3x3.sv
+	module worklib.linebuffer_3x3:sv
+		errors: 0, warnings: 0
+file: ./tb/icb_slave_tb.sv
+`define WQ0_ADDR 12'h180  // 96*48/8=576，384+576=960
+                                        |
+xmvlog: *W,NONPRT (./tb/icb_slave_tb.sv,2|40): non-printable character (0xef) ignored.
+`define WQ0_ADDR 12'h180  // 96*48/8=576，384+576=960
+                                         |
+xmvlog: *W,NONPRT (./tb/icb_slave_tb.sv,2|41): non-printable character (0xbc) ignored.
+`define WQ0_ADDR 12'h180  // 96*48/8=576，384+576=960
+                                          |
+xmvlog: *W,NONPRT (./tb/icb_slave_tb.sv,2|42): non-printable character (0x8c) ignored.
+`define WQ1_ADDR 12'h3C0  // 96*48/8=576，960+576=1536
+                                        |
+xmvlog: *W,NONPRT (./tb/icb_slave_tb.sv,3|40): non-printable character (0xef) ignored.
+`define WQ1_ADDR 12'h3C0  // 96*48/8=576，960+576=1536
+                                         |
+xmvlog: *W,NONPRT (./tb/icb_slave_tb.sv,3|41): non-printable character (0xbc) ignored.
+`define WQ1_ADDR 12'h3C0  // 96*48/8=576，960+576=1536
+                                          |
+xmvlog: *W,NONPRT (./tb/icb_slave_tb.sv,3|42): non-printable character (0x8c) ignored.
+`define WK0_ADDR 12'h600  // 96*48/8=576，1536+576=2112
+                                        |
+xmvlog: *W,NONPRT (./tb/icb_slave_tb.sv,4|40): non-printable character (0xef) ignored.
+`define WK0_ADDR 12'h600  // 96*48/8=576，1536+576=2112
+                                         |
+xmvlog: *W,NONPRT (./tb/icb_slave_tb.sv,4|41): non-printable character (0xbc) ignored.
+`define WK0_ADDR 12'h600  // 96*48/8=576，1536+576=2112
+                                          |
+xmvlog: *W,NONPRT (./tb/icb_slave_tb.sv,4|42): non-printable character (0x8c) ignored.
+`define WK1_ADDR 12'h840  // 96*48/8=576，2112+576=2688
+                                        |
+xmvlog: *W,NONPRT (./tb/icb_slave_tb.sv,5|40): non-printable character (0xef) ignored.
+`define WK1_ADDR 12'h840  // 96*48/8=576，2112+576=2688
+                                         |
+xmvlog: *W,NONPRT (./tb/icb_slave_tb.sv,5|41): non-printable character (0xbc) ignored.
+`define WK1_ADDR 12'h840  // 96*48/8=576，2112+576=2688
+                                          |
+xmvlog: *W,NONPRT (./tb/icb_slave_tb.sv,5|42): non-printable character (0x8c) ignored.
+`define WV0_ADDR 12'hA80  // 96*48/8=576，2688+576=3264
+                                        |
+xmvlog: *W,NONPRT (./tb/icb_slave_tb.sv,6|40): non-printable character (0xef) ignored.
+`define WV0_ADDR 12'hA80  // 96*48/8=576，2688+576=3264
+                                         |
+xmvlog: *W,NONPRT (./tb/icb_slave_tb.sv,6|41): non-printable character (0xbc) ignored.
+`define WV0_ADDR 12'hA80  // 96*48/8=576，2688+576=3264
+                                          |
+xmvlog: *W,NONPRT (./tb/icb_slave_tb.sv,6|42): non-printable character (0x8c) ignored.
+`define WV1_ADDR 12'hCC0  // 96*48/8=576，3264+576=3840(0xF00)
+                                        |
+xmvlog: *W,NONPRT (./tb/icb_slave_tb.sv,7|40): non-printable character (0xef) ignored.
+`define WV1_ADDR 12'hCC0  // 96*48/8=576，3264+576=3840(0xF00)
+                                         |
+xmvlog: *W,NONPRT (./tb/icb_slave_tb.sv,7|41): non-printable character (0xbc) ignored.
+`define WV1_ADDR 12'hCC0  // 96*48/8=576，3264+576=3840(0xF00)
+                                          |
+xmvlog: *W,NONPRT (./tb/icb_slave_tb.sv,7|42): non-printable character (0x8c) ignored.
+	module worklib.icb_slave_tb:sv
+		errors: 0, warnings: 0
+file: ./rtl/floatAdd.v
+  assign zeroSmall = ~(|small_ex | |small_fra);
+                                   |
+xmvlog: *W,DUPBWO (./rtl/floatAdd.v,56|35): error prone bit-wise OR ('|') sequence detected [4.1.11(IEEE)].
+	module worklib.floatAdd:v
+		errors: 0, warnings: 1
+file: ./rtl/floatMult.v
+	module worklib.floatMult:v
+		errors: 0, warnings: 0
+file: ./bn/AvgUnit.v
+	module worklib.AvgUnit:v
+		errors: 0, warnings: 0
+file: ./bn/Bn_complete.v
+	module worklib.Bn_complete:v
+		errors: 0, warnings: 0
+file: ./bn/equal.v
+	module worklib.equal:v
+		errors: 0, warnings: 0
+file: ./bn/bn_multi.v
+	module worklib.bn_multi:v
+		errors: 0, warnings: 0
+file: ./bn/Bn.v
+	module worklib.Bn:v
+		errors: 0, warnings: 0
+file: ./bn/x_sub_u.v
+	module worklib.x_sub_u:v
+		errors: 0, warnings: 0
+file: ./bn/Square_root.v
+	module worklib.Square_root:v
+		errors: 0, warnings: 0
+	Total errors/warnings found outside modules and primitives:
+		errors: 0, warnings: 18
+xmvlog: Memory Usage - Current physical: 23.5M, Current virtual: 53.4M
+xmvlog: CPU Usage - 0.0s system + 0.0s user = 0.0s total (0.0s, 100.0% cpu)
+TOOL:	xrun(64)	23.09-s007: Exiting on Apr 18, 2025 at 16:39:53 CST  (total: 00:00:00)

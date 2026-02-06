@@ -1,0 +1,8 @@
+14:25:43:2543 [important] [FelixStartLevel] WARN  - got the following for key values in msg_destination_files: 1
+14:25:43:2543 [important] [FelixStartLevel] WARN  - Dest File: key=1 val=stdout, shortName: stdout
+14:25:44:2544 [important] [Indago DAC notify callback receiver] WARN  - Got dakNotify_State_Exit event with data: why user
+14:25:45:2545 [important] [FelixStartLevel] INFO  - xmsim gcc version is 9.3.0
+14:25:45:2545 [important] [FelixStartLevel] INFO  - indago gcc version is 9.3.0
+14:25:46:2546 [com.cadence.smartlog.bl.common.SLUtils] [TangoTaskManager-0] INFO  - query: 
+14:25:50:2550 [important] [TangoTaskManager-2] INFO  - ScriptingActivator while loop has finished
+14:25:50:2550 [important] [AWT-EventQueue-0] WARN  - going to call getModuleDefinitionByInstanceFullPath_slowPerformance for path icb_slave_tb which might have a very slow performance

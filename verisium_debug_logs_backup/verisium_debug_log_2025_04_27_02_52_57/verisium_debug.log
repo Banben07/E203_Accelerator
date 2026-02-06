@@ -1,0 +1,152 @@
+Picked up _JAVA_OPTIONS:  -XX:+ExitOnOutOfMemoryError -XX:OnOutOfMemoryError="touch /home/sakamoto/E203_Accelerator/verisium_debug_logs/out_of_memory_error" 
+CompilerOracle: exclude javax/swing/text/GlyphView.getBreakSpot
+Loading libdac.so from /opt/cadence/verisiumdebug23.09/tools/lib/64bit/libdac.so
+in 'JDACTBDataProvider::openDBInner', dbPath = /home/sakamoto/E203_Accelerator/SmartLogWaves.db/SmartLogWaves.shm, getExplicitLwdFlag() = null
+
+
+**** found lwd dir to be: /home/sakamoto/E203_Accelerator/xcelium.d/worklib/icb_slave_tb/sv
+
+
+
+**** found cdslib to be: /home/sakamoto/E203_Accelerator/xcelium.d/run.d/cds.lib
+
+in 'SimConnect::loadSnapshotHelper', 'dbH' represents 'SmartLogWaves' db, 'lwdDbH' represents 'SmartLogWaves' db, PPEAttributes were fetched from 'SmartLogWaves' db. PPEAttributes values:
+    isAutofetch = false
+    isPersistentSources = false
+    isXprop = false
+    cdslib = /home/sakamoto/E203_Accelerator/xcelium.d/run.d/cds.lib
+    snapshot = worklib.icb_slave_tb:sv
+    workdir = /home/sakamoto/E203_Accelerator
+    xceliumDir = /home/sakamoto/E203_Accelerator/xcelium.d
+    rundDir = /home/sakamoto/E203_Accelerator/xcelium.d/run.d
+    bits = 64
+    cds_implicit_tmpdir = 
+    cds_alternate_tmpdir = 
+    du_agent = 
+    lwddir = /home/sakamoto/E203_Accelerator/xcelium.d/worklib/icb_slave_tb/sv
+    cds_alternate_cdslib = 
+    elab_options = -CDSLIB ./xcelium.d/run.lnx8664.23.09.d/cds.lib -HDLVAR ./xcelium.d/run.lnx8664.23.09.d/hdl.var -WORK worklib -ERROR 15 +UVM_TESTNAME=test0 -TIMESCALE 1ns/1ps -MESSAGES -ACCESS +rwc -loadpli1 /opt/cadence/xceliummain23.09/tools/methodology/UVM/CDNS-1.1d/additions/sv/lib/64bit/libuvmpli.so:uvm_pli_boot -LWDGEN worklib.icb_slave_tb:sv
+    found = true
+    nclsRun = false
+    includeCdslib = true
+    nclsOpts =  -snapshot -cdslib /home/sakamoto/E203_Accelerator/xcelium.d/run.d/cds.lib -64
+    isMceMode = false
+    isMceInvolved = false
+    mceLshmDbPath = 
+    lowPowerInformationAvailable = false
+    hasLshmFile = false
+    workdirIsDirectory = true
+    hasOverlayRelatedInformation = true
+    cds_implicit_tmplib = worklib
+    cds_other_implicit_tmplibs = 
+
+in 'SimConnect::generateDuAgentCommand', cmd = [/opt/cadence/verisiumdebug23.09/tools.lnx86/simvision/bin/64bit/cds-avs-du-agent, -nocopyright, -nowarn, DLNOCL, -xlm_install_root, /opt/cadence/xceliummain23.09, -cdslib, /home/sakamoto/E203_Accelerator/xcelium.d/run.d/cds.lib, -cds_implicit_tmplib, worklib, -lwddir, /home/sakamoto/E203_Accelerator/xcelium.d/worklib/icb_slave_tb/sv/debug_db, -cellname, icb_slave_tb, -64]
+in 'SimConnect::execDuAgent_usingPreEstablishedServiceConnection', duAgent process pid = 9568
+
+
+in 'SimConnect::simControlConnectWithPreEstablishedConnection' overlay db = SmartLogWaves, overlayH = 9, is valid = true, operation = dapOpenOverlay, duFilename = /home/sakamoto/E203_Accelerator/xcelium.d/worklib/icb_slave_tb/sv/debug_db/icb_slave_tb/icb_slave_tb.dsn, isLiveSim = false
+
+Dump DB Order:
+Strap design: SmartLogWaves #9
+ --> SmartLogWaves, path = /home/sakamoto/E203_Accelerator/SmartLogWaves.db/SmartLogWaves.shm/SmartLogWaves.dsn, type = 4, #16
+ --> /home/sakamoto/E203_Accelerator/xcelium.d/worklib/icb_slave_tb/sv/debug_db/icb_slave_tb/icb_slave_tb.dsn, path = /home/sakamoto/E203_Accelerator/xcelium.d/worklib/icb_slave_tb/sv/debug_db/icb_slave_tb/icb_slave_tb.dsn, type = 4, #17
+
+End of dump DB Order
+
+
+
+
+**** found cdslib to be: /home/sakamoto/E203_Accelerator/xcelium.d/run.lnx8664.23.09.d/cds.lib
+
+
+
+**** Lwd path was derived from given DB. Loading lwd file from: /home/sakamoto/E203_Accelerator/xcelium.d/worklib/icb_slave_tb/sv
+
+
+Dump DB Order:
+Strap design: SmartLogWaves #9
+ --> SmartLogWaves, path = /home/sakamoto/E203_Accelerator/SmartLogWaves.db/SmartLogWaves.shm/SmartLogWaves.dsn, type = 4, #16
+ --> /home/sakamoto/E203_Accelerator/xcelium.d/worklib/icb_slave_tb/sv/debug_db/icb_slave_tb/icb_slave_tb.dsn, path = /home/sakamoto/E203_Accelerator/xcelium.d/worklib/icb_slave_tb/sv/debug_db/icb_slave_tb/icb_slave_tb.dsn, type = 4, #17
+
+End of dump DB Order
+
+
+
+
+**** found cdslib to be: /home/sakamoto/E203_Accelerator/xcelium.d/run.lnx8664.23.09.d/cds.lib
+
+
+
+**** Lwd path was derived from given DB. Loading lwd file from: /home/sakamoto/E203_Accelerator/xcelium.d/worklib/icb_slave_tb/sv
+
+### Excluding compile: javax.swing.text.GlyphView::getBreakSpot
+in 'JDACTBDataProvider::notifyLiveConnectionDB', sessionId = shell
+
+
+
+Gtk-Message: 10:52:57.331: Failed to load module "canberra-gtk-module"
+
+
+
+**** found lwd dir to be: /home/sakamoto/E203_Accelerator/xcelium.d/worklib/icb_slave_tb/sv
+
+
+
+**** found cdslib to be: /home/sakamoto/E203_Accelerator/xcelium.d/run.d/cds.lib
+
+
+
+**** found cdslib to be: /home/sakamoto/E203_Accelerator/xcelium.d/run.lnx8664.23.09.d/cds.lib
+
+
+
+**** Lwd path was derived from given DB. Loading lwd file from: /home/sakamoto/E203_Accelerator/xcelium.d/worklib/icb_slave_tb/sv
+
+
+
+**** found lwd dir to be: /home/sakamoto/E203_Accelerator/xcelium.d/worklib/icb_slave_tb/sv
+
+
+
+**** found cdslib to be: /home/sakamoto/E203_Accelerator/xcelium.d/run.d/cds.lib
+
+
+
+**** found cdslib to be: /home/sakamoto/E203_Accelerator/xcelium.d/run.lnx8664.23.09.d/cds.lib
+
+
+
+**** Lwd path was derived from given DB. Loading lwd file from: /home/sakamoto/E203_Accelerator/xcelium.d/worklib/icb_slave_tb/sv
+
+
+
+**** found lwd dir to be: /home/sakamoto/E203_Accelerator/xcelium.d/worklib/icb_slave_tb/sv
+
+
+
+**** found cdslib to be: /home/sakamoto/E203_Accelerator/xcelium.d/run.d/cds.lib
+
+
+
+**** found cdslib to be: /home/sakamoto/E203_Accelerator/xcelium.d/run.lnx8664.23.09.d/cds.lib
+
+
+
+**** Lwd path was derived from given DB. Loading lwd file from: /home/sakamoto/E203_Accelerator/xcelium.d/worklib/icb_slave_tb/sv
+
+
+DT_MESSAGE starting DT for "icb_slave_tb.acc_top.u_conv_control.lb_finish" at 264675000(0) 
+DT_MESSAGE ruled out RHS != LHS "lb_finish <= 0" 
+DT_MESSAGE add contrib changed2 "lb_finish <= ifmap_cnt == 16'h9" 
+DT_MESSAGE ruled out RHS != LHS "lb_finish <= 0" 
+DT_MESSAGE ruled out RHS != LHS "lb_finish <= 0" 
+DT_MESSAGE ruled out RHS != LHS "lb_finish <= 0" 
+DT_MESSAGE driver list reduced to single driver "lb_finish <= ifmap_cnt == 16'h9" 
+
+Dump DB Order:
+Strap design: SmartLogWaves #9
+ --> /home/sakamoto/E203_Accelerator/xcelium.d/worklib/icb_slave_tb/sv/debug_db/icb_slave_tb/icb_slave_tb.dsn, path = /home/sakamoto/E203_Accelerator/xcelium.d/worklib/icb_slave_tb/sv/debug_db/icb_slave_tb/icb_slave_tb.dsn, type = 4, #17
+
+End of dump DB Order
+
+

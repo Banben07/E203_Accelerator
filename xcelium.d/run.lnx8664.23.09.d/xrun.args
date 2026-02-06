@@ -1,0 +1,24 @@
+//
+// File created by:  xrun
+// Do not modify this file
+//
+-64bit
+-lwdgen
+-sv
+-access
++rwc
+-svseed
+random
+-sva
+-status
+-f
+filelist.f
+-errormax
+15
++UVM_TESTNAME=test0
+-timescale
+1ns/1ps
+-input
+run.tcl
+-l
+run.log

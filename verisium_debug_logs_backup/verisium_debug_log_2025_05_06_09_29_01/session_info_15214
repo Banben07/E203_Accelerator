@@ -1,0 +1,29 @@
+Design
+	Design Connection Mode: LWD
+	Design Agent PID: 15397
+	Design/LWD Path: /home/sakamoto/E203_Accelerator/xcelium.d/worklib/icb_slave_tb/sv/debug_db/icb_slave_tb/icb_slave_tb.dsn
+	Design Database: /home/sakamoto/E203_Accelerator/xcelium.d/worklib/icb_slave_tb/sv/debug_db/debug_db_design
+Host Info
+	Hostname: ubuntu
+	Verisium Debug PID: 15214
+	OS Version: 6.8.0-58-generic
+	OS Architecture: amd64
+	Scripting Port: 37761
+Databases
+	Flow Database: /home/sakamoto/E203_Accelerator/SmartLogWaves.db
+	Log Database: /home/sakamoto/E203_Accelerator/SmartLogWaves.db
+	SHM Database: /home/sakamoto/E203_Accelerator/SmartLogWaves.db/SmartLogWaves.shm
+Versions
+	xcelium version: 23.09-s007
+	lwd/snapshot version: 23.09-s007
+	Verisium Debug Version: 23.09.001-s
+Invocation command: /opt/cadence/verisiumdebug23.09/tools/bin/indago   -db SmartLogWaves.db
+Log Files
+	verisium_debug_karaf log: /home/sakamoto/E203_Accelerator/verisium_debug_logs/verisium_debug_karaf.log
+	cdns_vwdbr log: /home/sakamoto/E203_Accelerator/verisium_debug_logs/cdns_vwdbr.log
+	verisium_debug_lwd log: /home/sakamoto/E203_Accelerator/verisium_debug_logs/verisium_debug_lwd.log
+	ida log: /home/sakamoto/E203_Accelerator/verisium_debug_logs/ida.log
+	verisium_debug log: /home/sakamoto/E203_Accelerator/verisium_debug_logs/verisium_debug.log
+	perf log: /home/sakamoto/E203_Accelerator/verisium_debug_logs/perf.log
+Session Recording Time: Tue May  6 17:28:40 2025
+

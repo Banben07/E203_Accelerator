@@ -1,0 +1,18 @@
+{
+    "xlm_snapshot": "icb_slave_tb",
+    "xlm_lib": "worklib",
+    "xlm_view": "sv",
+    "lwd_version": "04\/03\/24+11:45:34",
+    "install_root": "\/opt\/cadence\/xceliummain23.09",
+    "xlm_version": "23.09-s007",
+    "build_date": "2024.04.03",
+    "xlm_plat": "x86_64",
+    "xlm_bits": "64",
+    "real_as_wreal": "0",
+    "encrypted_sources": "0",
+    "reals_recorded": "0",
+    "features":
+    {
+        "AVSREQ_195145": "1"
+    }
+}

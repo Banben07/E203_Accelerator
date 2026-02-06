@@ -1,0 +1,14 @@
+//
+// File created by:  xrun
+// Do not modify this file
+//
++NoArgsToLog
+-64bit
+-COVERAGE
+all
+-COVOVERWRITE
+-COVTEST
+test0
+-COVWORKDIR
+cov_work
+-UPDATE

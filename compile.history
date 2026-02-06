@@ -1,0 +1,5 @@
+s1(18Apr2025:16:38:54):  xrun -64bit -lwdgen -sv -access +rwc -svseed random -sva -status -f filelist.f -errormax 15 -l compile.log -compile -exit 
+s2(18Apr2025:16:38:55):  xrun -64bit -lwdgen -sv -access +rwc -svseed random -sva -status -f filelist.f -errormax 15 +UVM_TESTNAME=test0 -timescale 1ns/1ps -input run.tcl -l run.log 
+s3(18Apr2025:16:38:58):  xrun -64bit -lwdgen -sv -access +rwc -svseed random -sva -status -f filelist.f -errormax 15 -l compile.log -compile -exit 
+s4(18Apr2025:16:38:58):  xrun -64bit -lwdgen -sv -access +rwc -svseed random -sva -status -f filelist.f -errormax 15 +UVM_TESTNAME=test0 -timescale 1ns/1ps -input run.tcl -l run.log 
+s5(18Apr2025:16:39:53):  xrun -64bit -lwdgen -sv -access +rwc -svseed random -sva -status -f filelist.f -errormax 15 -coverage all -covoverwrite -covtest test0 -covworkdir cov_work -l compile.log -compile -exit 

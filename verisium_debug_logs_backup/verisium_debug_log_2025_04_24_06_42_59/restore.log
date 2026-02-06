@@ -1,0 +1,11 @@
+The following components were not restored:
+*******************************************
+
+Current debug state
+*******************
+Not same db therefore can't restore last debug location
+
+Stars
+*****
+Not same db therefore can't restore stars list
+

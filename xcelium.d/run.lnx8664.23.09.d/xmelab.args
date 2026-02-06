@@ -1,0 +1,27 @@
+//
+// File created by:  xrun
+// Do not modify this file
+//
+-loadpli
+/opt/cadence/xceliummain23.09/tools/methodology/UVM/CDNS-1.1d/additions/sv/lib/64bit/libuvmpli.so:uvm_pli_boot
+-LWDGEN
+-ACCESS
++rwc
+-STATUS
+-ERRORMAX
+15
++UVM_TESTNAME=test0
+-timescale
+1ns/1ps
+-no_analogsolver
+-MESSAGES
+-XLMODE
+./xcelium.d/run.lnx8664.23.09.d
+-RUNMODE
+-CDSLIB
+./xcelium.d/run.lnx8664.23.09.d/cds.lib
+-HDLVAR
+./xcelium.d/run.lnx8664.23.09.d/hdl.var
+-WORK
+worklib
+-HASXLMODE

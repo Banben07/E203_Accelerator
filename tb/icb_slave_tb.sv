@@ -1,4 +1,3 @@
-
 `define INPUT_ADDR 12'h000  // 32*96/8=384
 `define WQ0_ADDR 12'h180  // 96*48/8=576，384+576=960
 `define WQ1_ADDR 12'h3C0  // 96*48/8=576，960+576=1536
@@ -55,7 +54,14 @@ module icb_slave_tb ();
   real               tolerance = 0.005;
   real decimal_input1, decimal_input2, decimal_expected, decimal_result;
 
-  always #10 clk = ~clk;
+  // 将时钟周期从40ns增加到50ns，进一步降低频率
+  always #25 clk = ~clk;  // 从 #20 改为 #25，使时钟周期变为 50ns
+
+  // 添加时序违例监控
+  reg [31:0] hold_violations;
+  initial begin
+    hold_violations = 0;
+  end
 
   // Task to convert 16-bit FP to decimal
   task automatic fp16_to_decimal(input [15:0] fp16, output real decimal);

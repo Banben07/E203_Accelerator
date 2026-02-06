@@ -17,7 +17,7 @@ module acc_top (
     output     [15:0] ofmap_out,      // for test
     output            done,           // for test
     output            dout_valid      // for test
-);
+  );
 
   logic [31:0] STAT_REG_CAL;
 
@@ -95,83 +95,85 @@ module acc_top (
   localparam WEIGHT_ADDR_BASE = 4079;
 
   icb_slave u_icb_slave (
-      .clk  (clk),
-      .rst_n(rst_n),
+              .clk  (clk),
+              .rst_n(rst_n),
 
-      .icb_cmd_valid(icb_cmd_valid),
-      .icb_cmd_ready(icb_cmd_ready),
-      .icb_cmd_read (icb_cmd_read),
-      .icb_cmd_addr (icb_cmd_addr),
-      .icb_cmd_wdata(icb_cmd_wdata),
-      .icb_cmd_wmask(icb_cmd_wmask),
-      .icb_rsp_valid(icb_rsp_valid),
-      .icb_rsp_ready(icb_rsp_ready),
-      .icb_rsp_rdata(icb_rsp_rdata),
-      .icb_rsp_err  (icb_rsp_err),
+              .icb_cmd_valid(icb_cmd_valid),
+              .icb_cmd_ready(icb_cmd_ready),
+              .icb_cmd_read (icb_cmd_read),
+              .icb_cmd_addr (icb_cmd_addr),
+              .icb_cmd_wdata(icb_cmd_wdata),
+              .icb_cmd_wmask(icb_cmd_wmask),
+              .icb_rsp_valid(icb_rsp_valid),
+              .icb_rsp_ready(icb_rsp_ready),
+              .icb_rsp_rdata(icb_rsp_rdata),
+              .icb_rsp_err  (icb_rsp_err),
 
-      .STAT_REG_CAL(STAT_REG_CAL),
-      .RAM_SEL     (RAM_SEL),
-      .DONE_REG    (done),
+              .STAT_REG_CAL(STAT_REG_CAL),
+              .RAM_SEL     (RAM_SEL),
+              .DONE_REG    (done),
 
-      .sram_wr_data(sram_wr_data),
-      .sram_wr_addr(sram_wr_addr),
-      .sram_wr_en  (sram_wr_en),
-      .sram_rd_data(sram_rd_data),
-      .sram_rd_addr(sram_rd_addr),
-      .sram_rd_en  (sram_rd_en)
+              .sram_wr_data(sram_wr_data),
+              .sram_wr_addr(sram_wr_addr),
+              .sram_wr_en  (sram_wr_en),
+              .sram_rd_data(sram_rd_data),
+              .sram_rd_addr(sram_rd_addr),
+              .sram_rd_en  (sram_rd_en)
 
-  );
+            );
 
   assign input_read_addr = WEIGHT_FINISH_REG ? ifmap_addr : weight_addr;
   assign input_read_en   = ifmap_read_en || weight_read_en;
 
   freepdk45_sram_1rw1r_32x8192_8 u_sram_input (  // 8k x 32b for input
-      .clk0(clk),
-      .csb0(~(sram_wr_en & RAM_SEL[0])),
-      .web0(1'b0),  // Always write when enabled
-      .wmask0(4'b1111),  // Always write all bytes
-      .addr0(sram_wr_addr),
-      .din0(sram_wr_data),
-      .dout0(),  // Not used
+                                   .clk0(clk),
+                                   .csb0(~(sram_wr_en & RAM_SEL[0])),
+                                   .web0(1'b0),  // Always write when enabled
+                                   .wmask0(4'b1111),  // Always write all bytes
+                                   .addr0(sram_wr_addr),
+                                   .din0(sram_wr_data),
+                                   .dout0(),  // Not used
 
-      .clk1(clk),
-      .csb1(~input_read_en),
-      .addr1(input_read_addr),
-      .dout1(input_read_data)
-  );
+                                   .clk1(clk),
+                                   .csb1(~input_read_en),
+                                   .addr1(input_read_addr),
+                                   .dout1(input_read_data)
+                                 );
 
   freepdk45_sram_1rw1r_32x8192_8 u_sram_output (  // 8k x 32b for output
-      .clk0(clk),
-      .csb0(~ofmap_in_valid),
-      .web0(1'b0),  // Always write when enabled
-      .wmask0(4'b1111),  // Always write all bytes
-      .addr0(ofmap_addr),
-      .din0({16'h0000, ofmap_in}),  // Extend to 32 bits
-      .dout0(),  // Not used
+                                   .clk0(clk),
+                                   .csb0(~ofmap_in_valid),
+                                   .web0(1'b0),  // Always write when enabled
+                                   .wmask0(4'b1111),  // Always write all bytes
+                                   .addr0(ofmap_addr),
+                                   .din0({16'h0000, ofmap_in}),  // Extend to 32 bits
+                                   .dout0(),  // Not used
 
-      .clk1(clk),
-      .csb1(~sram_rd_en),
-      .addr1(sram_rd_addr),
-      .dout1(sram_rd_data)
-  );
+                                   .clk1(clk),
+                                   .csb1(~sram_rd_en),
+                                   .addr1(sram_rd_addr),
+                                   .dout1(sram_rd_data)
+                                 );
 
   freepdk45_sram_1rw1r_32x8192_8 u_sram_8k_32b_lut (
-      .clk0(clk),
-      .csb0(~(sram_wr_en & RAM_SEL[1])),
-      .web0(1'b0),  // Always write when enabled
-      .wmask0(4'b1111),  // Always write all bytes
-      .addr0(sram_wr_addr),
-      .din0(sram_wr_data),
-      .dout0(),  // Not used
+                                   .clk0(clk),
+                                   .csb0(~(sram_wr_en & RAM_SEL[1])),
+                                   .web0(1'b0),  // Always write when enabled
+                                   .wmask0(4'b1111),  // Always write all bytes
+                                   .addr0(sram_wr_addr),
+                                   .din0(sram_wr_data),
+                                   .dout0(),  // Not used
 
-      .clk1(clk),
-      .csb1(~1'b1),  // Original had csbn(1)
-      .addr1(lut_addr_cur),
-      .dout1(lut_result_cur)
-  );
+                                   .clk1(clk),
+                                   .csb1(~1'b1),  // Original had csbn(1)
+                                   .addr1(lut_addr_cur),
+                                   .dout1(lut_result_cur)
+                                 );
 
-  always @(posedge clk or negedge rst_n) begin
-    if (!rst_n) begin
+  always @(posedge clk or negedge rst_n)
+  begin
+    if (!rst_n)
+    begin
       state             <= IDLE;
       weight_addr       <= WEIGHT_ADDR_BASE - 1;
       weight_data       <= 0;
@@ -181,7 +183,9 @@ module acc_top (
       ifmap_data        <= 0;
       ifmap_read_en     <= 0;
       conv_num_valid    <= 0;
-    end else begin
+    end
+    else
+    begin
       state             <= next_state;
       weight_addr       <= next_weight_addr;
       weight_data       <= next_weight_data;
@@ -194,7 +198,8 @@ module acc_top (
     end
   end
 
-  always @(*) begin
+  always @(*)
+  begin
     next_state             = state;
     next_weight_addr       = weight_addr;
     next_weight_data       = weight_data;
@@ -206,7 +211,8 @@ module acc_top (
     next_conv_num_valid    = conv_num_valid;
 
     case (state)
-      IDLE: begin
+      IDLE:
+      begin
         next_weight_addr       = WEIGHT_ADDR_BASE - 1;
         next_weight_data       = 0;
         next_weight_read_en    = 0;
@@ -216,21 +222,28 @@ module acc_top (
         next_ifmap_read_en     = 0;
         next_conv_num_valid    = 0;
 
-        if (STAT_REG_CAL[0]) begin
+        if (STAT_REG_CAL[0])
+        begin
           next_state = WEIGHT_CFG;
-        end else begin
+        end
+        else
+        begin
           next_state = IDLE;
         end
       end
 
-      WEIGHT_CFG: begin
-        if (weight_addr < WEIGHT_ADDR_BASE - 1 + 9 + 2) begin
+      WEIGHT_CFG:
+      begin
+        if (weight_addr < WEIGHT_ADDR_BASE - 1 + 9 + 2)
+        begin
           next_weight_data       = {input_read_data, weight_data[8:1]};
           next_weight_addr       = weight_addr + 1;
           next_weight_read_en    = 1;
           next_state             = WEIGHT_CFG;
           next_WEIGHT_FINISH_REG = 0;
-        end else begin
+        end
+        else
+        begin
           next_weight_addr       = WEIGHT_ADDR_BASE - 1;
           next_weight_data       = weight_data;
           next_weight_read_en    = 0;
@@ -239,14 +252,18 @@ module acc_top (
         end
       end
 
-      START_CAL: begin
-        if (ifmap_addr < 480 + 2) begin
+      START_CAL:
+      begin
+        if (ifmap_addr < 480 + 2)
+        begin
           next_ifmap_data     = input_read_data;
           next_ifmap_addr     = ifmap_addr + 1;
           next_ifmap_read_en  = 1;
           next_conv_num_valid = (ifmap_addr < 2) ? 0 : 1;
           next_state          = START_CAL;
-        end else begin
+        end
+        else
+        begin
           next_ifmap_addr     = ifmap_addr;
           next_conv_num_valid = 0;
           next_ifmap_data     = 0;
@@ -255,7 +272,8 @@ module acc_top (
         end
       end
 
-      default: begin
+      default:
+      begin
         next_state = IDLE;
       end
     endcase
@@ -263,33 +281,36 @@ module acc_top (
 
   generate
     genvar i;
-    for (i = 0; i < 9; i = i + 1) begin
+    for (i = 0; i < 9; i = i + 1)
+    begin
       assign kernel_num_1[i] = weight_data[i][15:0];
       assign kernel_num_2[i] = weight_data[i][31:16];
     end
   endgenerate
 
   conv_control u_conv_control (
-      .clk           (clk),
-      .rst_n         (rst_n),
-      .start         (),
-      .conv_num      (ifmap_data),
-      .conv_num_valid(conv_num_valid),
-      .kernel_num_1  (kernel_num_1),
-      .kernel_num_2  (kernel_num_2),
-      .ofmap_out     (ofmap_out),
-      .dout_valid    (dout_valid),
-      .done          (done)
-  );
+                 .clk           (clk),
+                 .rst_n         (rst_n),
+                 .start         (),
+                 .conv_num      (ifmap_data),
+                 .conv_num_valid(conv_num_valid),
+                 .kernel_num_1  (kernel_num_1),
+                 .kernel_num_2  (kernel_num_2),
+                 .ofmap_out     (ofmap_out),
+                 .dout_valid    (dout_valid),
+                 .done          (done)
+               );
 
   floatMult u_div_100 (
-      .num1  (ofmap_out),
-      .num2  (16'h1419),
-      .result(bn_input_data)
-  );
+              .num1  (ofmap_out),
+              .num2  (16'h1419),
+              .result(bn_input_data)
+            );
 
-  always @(posedge clk or negedge rst_n) begin
-    if (!rst_n) begin
+  always @(posedge clk or negedge rst_n)
+  begin
+    if (!rst_n)
+    begin
       bn_cnt         <= 0;
       bn_input_reg   <= 0;
       bn_start       <= 0;
@@ -305,42 +326,59 @@ module acc_top (
       gelu_valid     <= 0;
 
       lut_addr_valid <= 0;
-    end else begin
+    end
+    else
+    begin
 
-      if (dout_valid) begin
-        if (bn_cnt < 4) begin
+      if (dout_valid)
+      begin
+        if (bn_cnt < 4)
+        begin
           bn_input_reg <= {bn_input_data, bn_input_reg[16*4-1:16]};
-          if (bn_cnt == 3) begin
+          if (bn_cnt == 3)
+          begin
             bn_cnt    <= 0;
             bn_update <= 1;
-          end else begin
+          end
+          else
+          begin
             bn_cnt    <= bn_cnt + 1;
             bn_update <= 0;
           end
         end
-      end else begin
+      end
+      else
+      begin
         bn_update <= 0;
       end
 
       case (bn_state)
-        0: begin
+        0:
+        begin
           bn_valid_cnt <= 0;
           bn_valid     <= 0;
-          if (bn_update) begin
+          if (bn_update)
+          begin
             bn_state <= 1;
             bn_start <= 1;
             bn_input <= bn_input_reg;
-          end else begin
+          end
+          else
+          begin
             bn_state <= 0;
           end
         end
-        1: begin
+        1:
+        begin
           bn_start <= 0;
-          if (bn_valid_cnt < 13) begin
+          if (bn_valid_cnt < 13)
+          begin
             bn_valid_cnt <= bn_valid_cnt + 1;
             bn_state     <= 1;
             bn_valid     <= 0;
-          end else begin
+          end
+          else
+          begin
             bn_valid_cnt <= 0;
             bn_state     <= 0;
             bn_valid     <= 1;
@@ -349,20 +387,26 @@ module acc_top (
       endcase
 
       case (gelu_state)
-        0: begin
+        0:
+        begin
           gelu_valid     <= 0;
           lut_addr_valid <= 0;
-          if (bn_valid) begin
+          if (bn_valid)
+          begin
             gelu_state <= 1;
           end
         end
-        1: begin
-          if (gelu_cnt < 4) begin
+        1:
+        begin
+          if (gelu_cnt < 4)
+          begin
             gelu_cnt       <= gelu_cnt + 1;
             gelu_state     <= 1;
             gelu_valid     <= 0;
             lut_addr_valid <= (gelu_cnt == 1);
-          end else begin
+          end
+          else
+          begin
             gelu_cnt       <= 0;
             gelu_state     <= 0;
             gelu_valid     <= 1;
@@ -375,66 +419,78 @@ module acc_top (
   end
 
   bn_multi u_bn_multi (
-      bn_input,
-      bn_output,
-      clk,
-      bn_start
-  );
+             bn_input,
+             bn_output,
+             clk,
+             bn_start
+           );
 
   generate
     genvar j;
-    for (j = 0; j < 4; j = j + 1) begin
+    for (j = 0; j < 4; j = j + 1)
+    begin
       gelu u_gelu (
-          .clk       (clk),
-          .rst_n     (rst_n),
-          .bn_valid  (bn_valid),
-          .in_fp16   (bn_output[j]),
-          .lut_result(lut_result[j]),
+             .clk       (clk),
+             .rst_n     (rst_n),
+             .bn_valid  (bn_valid),
+             .in_fp16   (bn_output[j]),
+             .lut_result(lut_result[j]),
 
-          .final_result(final_result[j]),
-          .lut_addr    (lut_addr[j]),
-          .lut_sign    (lut_sign[j])
-      );
+             .final_result(final_result[j]),
+             .lut_addr    (lut_addr[j]),
+             .lut_sign    (lut_sign[j])
+           );
 
       // assign lut_result[j] = lut_sign[j] ? lut_result_neg[j] : lut_result_pos[j];
     end
   endgenerate
 
-  always @(posedge clk or negedge rst_n) begin
-    if (!rst_n) begin
+  always @(posedge clk or negedge rst_n)
+  begin
+    if (!rst_n)
+    begin
       lut_state <= 0;
-    end else begin
+    end
+    else
+    begin
       lut_state <= lut_state_next;
     end
   end
 
-  always @(*) begin
+  always @(*)
+  begin
     lut_state_next = lut_state;
     case (lut_state)
-      0: begin
+      0:
+      begin
         lut_result[3] = lut_sign[3] ? lut_result_cur[31:16] : lut_result_cur[15:0];
-        if (lut_addr_valid) begin
+        if (lut_addr_valid)
+        begin
           lut_state_next = 1;
         end
       end
-      1: begin
+      1:
+      begin
         lut_sign_cur   = lut_sign[0];
         lut_addr_cur   = lut_addr[0];
         lut_state_next = 2;
       end
-      2: begin
+      2:
+      begin
         lut_sign_cur   = lut_sign[1];
         lut_addr_cur   = lut_addr[1];
         lut_result[0]  = lut_sign[0] ? lut_result_cur[31:16] : lut_result_cur[15:0];
         lut_state_next = 3;
       end
-      3: begin
+      3:
+      begin
         lut_sign_cur   = lut_sign[2];
         lut_addr_cur   = lut_addr[2];
         lut_result[1]  = lut_sign[1] ? lut_result_cur[31:16] : lut_result_cur[15:0];
         lut_state_next = 4;
       end
-      4: begin
+      4:
+      begin
         lut_sign_cur   = lut_sign[3];
         lut_addr_cur   = lut_addr[3];
         lut_result[2]  = lut_sign[2] ? lut_result_cur[31:16] : lut_result_cur[15:0];
@@ -443,28 +499,38 @@ module acc_top (
     endcase
   end
 
-  always @(posedge clk or negedge rst_n) begin
-    if (!rst_n) begin
+  always @(posedge clk or negedge rst_n)
+  begin
+    if (!rst_n)
+    begin
       ofmap_in_valid <= 0;
       ofmap_in       <= 0;
       ofmap_in_cnt   <= 0;
       ofmap_addr     <= 0;
       ofmap_in_state <= 0;
-    end else begin
+    end
+    else
+    begin
       case (ofmap_in_state)
-        0: begin
-          if (gelu_valid) begin
+        0:
+        begin
+          if (gelu_valid)
+          begin
             ofmap_in_state <= 1;
           end
         end
-        1: begin
-          if (ofmap_in_cnt < 4) begin
+        1:
+        begin
+          if (ofmap_in_cnt < 4)
+          begin
             ofmap_in_cnt   <= ofmap_in_cnt + 1;
             ofmap_in       <= final_result[ofmap_in_cnt];
             ofmap_in_valid <= 1;
             ofmap_addr     <= ofmap_addr + 1;
             ofmap_in_state <= 1;
-          end else begin
+          end
+          else
+          begin
             ofmap_in_cnt   <= 0;
             ofmap_in       <= 0;
             ofmap_in_valid <= 0;
